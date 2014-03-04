@@ -23,3 +23,4 @@ Collate:
     'plotSEMM_legend.R'
     'plotSEMM_probability.R'
     'plotSEMM_setup.R'
+    'plotSEMM-package.R'
