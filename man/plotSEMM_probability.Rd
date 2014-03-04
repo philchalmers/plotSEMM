@@ -1,28 +1,35 @@
 \name{plotSEMM_probability}
 \alias{plotSEMM_probability}
-\title{ Probability plot }
-\description{
-  Requires \code{plotSEMM_setup} be run first. Generates a plot which expresses the mixing probabilities for each latent class conditioned on the latent predictor.  
-}
+\title{Probability plot}
 \usage{
-plotSEMM_probability(EtaName, lnty, lncol, title, leg)
+  plotSEMM_probability(EtaName = Eta1, lnty = 3, lncol = 1,
+    title = "", leg = TRUE)
 }
 \arguments{
-  \item{EtaName}{ Label of the latent predictor.  If no value is provided, defaults to Eta1. }
-  \item{lnty}{ Determines the line types used for the class lines.  If no value is provided, defaults to 3.  See \code{\link{par}} for information about line type. }
-  \item{lncol}{ Determines the line colors used for the class lines.  If no value is provided, defaults to 1.  See \code{\link{par}} for information about line type. }
-  \item{title}{ Titles the graph. }
-  \item{leg}{ Logical variable.  If TRUE, a legend accompanies the graph.  If FALSE, no legend appears.  Defaults to TRUE. }
+  \item{EtaName}{Label of the latent predictor.  If no
+  value is provided, defaults to Eta1.}
+
+  \item{lnty}{Determines the line types used for the class
+  lines.  If no value is provided, defaults to 3.  See
+  \code{\link{par}} for information about line type.}
+
+  \item{lncol}{Determines the line colors used for the
+  class lines.  If no value is provided, defaults to 1.
+  See \code{\link{par}} for information about line type.}
+
+  \item{title}{Titles the graph.}
+
+  \item{leg}{Logical variable.  If TRUE, a legend
+  accompanies the graph.  If FALSE, no legend appears.
+  Defaults to TRUE.}
 }
-\value{
-  None.
+\description{
+  Requires \code{plotSEMM_setup} be run first. Generates a
+  plot which expresses the mixing probabilities for each
+  latent class conditioned on the latent predictor.
 }
-\references{  \url{http://www.bethanykok.com/plotSEMM.html} }
-\author{ Bethany E. Kok, Jolynn Pek, Sonya Sterba and Dan Bauer }
-\seealso{ \code{\link{plotSEMM_setup}},\code{\link{plotSEMM_contour}} }
 \examples{
 \dontrun{
-## 2 class empirical example on positive emotions and heuristic processing in Pek, Sterba, Kok & Bauer (XXXX)
 pi <- c(0.602, 0.398)
 
 alpha1 <- c(3.529, 2.317)
@@ -41,9 +48,16 @@ plotSEMM_setup(pi, alpha1, alpha2, beta21, psi11, psi22)
 plotSEMM_probability()
 
 plotSEMM_probability(EtaName = "Latent Predictor", lnty = 2, title = "Probability")
-
 }
 }
+\author{
+  Bethany Kok and Phil Chalmers
+  \email{rphilip.chalmers@gmail.com}
+}
+\seealso{
+  \code{\link{plotSEMM_setup}},
+  \code{\link{plotSEMM_contour}}
+}
+\keyword{color}
+\keyword{hplot}
 
-\keyword{ hplot }
-\keyword{ color }

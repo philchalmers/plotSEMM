@@ -1,3 +1,48 @@
+#' Nonlinear regression function
+#' 
+#' Requires \code{plotSEMM_setup} be run first.  Generates (a) the potential nonlinear 
+#' regression function; (b) bivariate distribution of the latent variables; 
+#' (c) marginal distributions of the latent variables; (d) within class linear 
+#' regression functions; and (e) within class marginal distributions for the latent variables. 
+#' 
+#' @aliases plotSEMM_contour
+#' @param EtaN2 Label for the X axis.  If no value is provided, defaults to "Eta2." 
+#' @param EtaN1 Label for the Y axis.  If no value is provided, defaults to "Eta1." 
+#' @param classinfo Logical variable. TRUE shows the lines for each class as well as the combined estimate.  
+#'   FALSE shows only the combined estimate.  If no value is provided, defaults to TRUE. 
+#' @param lnty Determines the line types used for the class lines.  If no value is provided, defaults to 3. 
+#'   See \code{\link{par}} for information about line type.
+#' @param lncol Determines the line colors used for the class lines.  If no value is provided, defaults to 1. 
+#'   See \code{\link{par}} for information about line type. 
+#' @param title Titles the graph. 
+#' @param leg Logical variable.  If TRUE, a legend accompanies the graph.  If FALSE, no legend appears. 
+#'   Defaults to TRUE.
+#' @author Bethany Kok and Phil Chalmers \email{rphilip.chalmers@@gmail.com}
+#' @keywords hplot color
+#' @export plotSEMM_contour
+#' @examples 
+#' \dontrun{
+#' ## code for latent variables with two classes
+#' pi <- c(0.602, 0.398)
+#' 
+#' alpha1 <- c(3.529, 2.317)
+#' 
+#' alpha2 <- c(0.02, 0.336)
+#' 
+#' beta21 <- c(0.152, 0.053)
+#' 
+#' psi11 <- c(0.265, 0.265)
+#' 
+#' psi22 <- c(0.023, 0.023)
+#' 
+#' 
+#' plotSEMM_setup(pi, alpha1, alpha2, beta21, psi11, psi22)
+#' 
+#' 
+#' plotSEMM_contour()
+#' 
+#' plotSEMM_contour(EtaN1 = "Latent Predictor", EtaN2 = "Latent Outcome", classinfo = FALSE, lncol = 5) 
+#' }
 plotSEMM_contour <- function(EtaN2 = Eta2, EtaN1 = Eta1, classinfo = TRUE, lnty = 3, lncol = 1, title = "", 
     leg = TRUE) {
     

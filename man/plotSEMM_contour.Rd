@@ -1,29 +1,45 @@
 \name{plotSEMM_contour}
 \alias{plotSEMM_contour}
-\title{ Nonlinear regression function }
-\description{
- Requires \code{plotSEMM_setup} be run first.  Generates (a) the potential nonlinear regression function; (b) bivariate distribution of the latent variables; (c) marginal distributions of the latent variables; (d) within class linear regression functions; and (e) within class marginal distributions for the latent variables. 
-}
+\title{Nonlinear regression function}
 \usage{
-plotSEMM_contour(EtaN2, EtaN1, classinfo, lnty, lncol, title, leg)
+  plotSEMM_contour(EtaN2 = Eta2, EtaN1 = Eta1,
+    classinfo = TRUE, lnty = 3, lncol = 1, title = "",
+    leg = TRUE)
 }
 \arguments{
-  \item{EtaN2}{ Label for the X axis.  If no value is provided, defaults to "Eta2." }
-  \item{EtaN1}{ Label for the Y axis.  If no value is provided, defaults to "Eta1." }
-  \item{classinfo}{ Logical variable. TRUE shows the lines for each class as well as the combined estimate.  FALSE shows only the combined estimate.  If no value is provided, defaults to TRUE. }
-  \item{lnty}{ Determines the line types used for the class lines.  If no value is provided, defaults to 3.  See \code{\link{par}} for information about line type.}
-  \item{lncol}{ Determines the line colors used for the class lines.  If no value is provided, defaults to 1.  See \code{\link{par}} for information about line type. }
-  \item{title}{ Titles the graph. }
-  \item{leg}{ Logical variable.  If TRUE, a legend accompanies the graph.  If FALSE, no legend appears.  Defaults to TRUE.}
-}
+  \item{EtaN2}{Label for the X axis.  If no value is
+  provided, defaults to "Eta2."}
 
-\value{
-  None.
-}
-\references{ \url{http://www.bethanykok.com/plotSEMM.html}  }
-\author{Bethany E. Kok, Jolynn Pek, Sonya Sterba and Dan Bauer }
+  \item{EtaN1}{Label for the Y axis.  If no value is
+  provided, defaults to "Eta1."}
 
-\seealso{ \code{\link{plotSEMM_setup}},\code{\link{plotSEMM_probability}} }
+  \item{classinfo}{Logical variable. TRUE shows the lines
+  for each class as well as the combined estimate.  FALSE
+  shows only the combined estimate.  If no value is
+  provided, defaults to TRUE.}
+
+  \item{lnty}{Determines the line types used for the class
+  lines.  If no value is provided, defaults to 3.  See
+  \code{\link{par}} for information about line type.}
+
+  \item{lncol}{Determines the line colors used for the
+  class lines.  If no value is provided, defaults to 1.
+  See \code{\link{par}} for information about line type.}
+
+  \item{title}{Titles the graph.}
+
+  \item{leg}{Logical variable.  If TRUE, a legend
+  accompanies the graph.  If FALSE, no legend appears.
+  Defaults to TRUE.}
+}
+\description{
+  Requires \code{plotSEMM_setup} be run first.  Generates
+  (a) the potential nonlinear regression function; (b)
+  bivariate distribution of the latent variables; (c)
+  marginal distributions of the latent variables; (d)
+  within class linear regression functions; and (e) within
+  class marginal distributions for the latent variables.
+}
 \examples{
 \dontrun{
 ## code for latent variables with two classes
@@ -39,15 +55,19 @@ psi11 <- c(0.265, 0.265)
 
 psi22 <- c(0.023, 0.023)
 
- 
+
 plotSEMM_setup(pi, alpha1, alpha2, beta21, psi11, psi22)
 
 
 plotSEMM_contour()
 
 plotSEMM_contour(EtaN1 = "Latent Predictor", EtaN2 = "Latent Outcome", classinfo = FALSE, lncol = 5)
+}
+}
+\author{
+  Bethany Kok and Phil Chalmers
+  \email{rphilip.chalmers@gmail.com}
+}
+\keyword{color}
+\keyword{hplot}
 
-}
-}
-\keyword{ hplot }
-\keyword{ color }
