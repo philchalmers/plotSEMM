@@ -1,0 +1,53 @@
+\name{plotSEMM_contour}
+\alias{plotSEMM_contour}
+\title{ Nonlinear regression function }
+\description{
+ Requires \code{plotSEMM_setup} be run first.  Generates (a) the potential nonlinear regression function; (b) bivariate distribution of the latent variables; (c) marginal distributions of the latent variables; (d) within class linear regression functions; and (e) within class marginal distributions for the latent variables. 
+}
+\usage{
+plotSEMM_contour(EtaN2, EtaN1, classinfo, lnty, lncol, title, leg)
+}
+\arguments{
+  \item{EtaN2}{ Label for the X axis.  If no value is provided, defaults to "Eta2." }
+  \item{EtaN1}{ Label for the Y axis.  If no value is provided, defaults to "Eta1." }
+  \item{classinfo}{ Logical variable. TRUE shows the lines for each class as well as the combined estimate.  FALSE shows only the combined estimate.  If no value is provided, defaults to TRUE. }
+  \item{lnty}{ Determines the line types used for the class lines.  If no value is provided, defaults to 3.  See \code{\link{par}} for information about line type.}
+  \item{lncol}{ Determines the line colors used for the class lines.  If no value is provided, defaults to 1.  See \code{\link{par}} for information about line type. }
+  \item{title}{ Titles the graph. }
+  \item{leg}{ Logical variable.  If TRUE, a legend accompanies the graph.  If FALSE, no legend appears.  Defaults to TRUE.}
+}
+
+\value{
+  None.
+}
+\references{ \url{http://www.bethanykok.com/plotSEMM.html}  }
+\author{Bethany E. Kok, Jolynn Pek, Sonya Sterba and Dan Bauer }
+
+\seealso{ \code{\link{plotSEMM_setup}},\code{\link{plotSEMM_probability}} }
+\examples{
+\dontrun{
+## code for latent variables with two classes
+pi <- c(0.602, 0.398)
+
+alpha1 <- c(3.529, 2.317)
+
+alpha2 <- c(0.02, 0.336)
+
+beta21 <- c(0.152, 0.053)
+
+psi11 <- c(0.265, 0.265)
+
+psi22 <- c(0.023, 0.023)
+
+ 
+plotSEMM_setup(pi, alpha1, alpha2, beta21, psi11, psi22)
+
+
+plotSEMM_contour()
+
+plotSEMM_contour(EtaN1 = "Latent Predictor", EtaN2 = "Latent Outcome", classinfo = FALSE, lncol = 5)
+
+}
+}
+\keyword{ hplot }
+\keyword{ color }
