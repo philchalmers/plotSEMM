@@ -8,7 +8,7 @@ Authors@R: c(person("Bethany", "Kok", role = c('ctb')), person("Jolynn",
     person("Dan", "Bauer", role = c('ctb')), person("Phil", "Chalmers", email =
     "rphilip.chalmers@gmail.com", role = c('cre', 'ctb')))
 Description: Contains functions plotSEMM_setup, plotSEMM_contour,
-    plotSEMM_probability and plotSEMM_legend, which generate the
+    and plotSEMM_probability, which generate the
     diagnostic plots proposed by Bauer (2005) to investigate
     nonlinear latent variable interactions in SEMM using LISREL
     output.
@@ -20,7 +20,6 @@ URL: http://www.bethanykok.com/plotSEMM.html
     https://github.com/philchalmers/plotSEMM
 Collate:
     'plotSEMM_contour.R'
-    'plotSEMM_legend.R'
     'plotSEMM_probability.R'
     'plotSEMM_setup.R'
     'plotSEMM-package.R'

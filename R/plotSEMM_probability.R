@@ -15,7 +15,7 @@
 #'   no legend appears.  Defaults to TRUE. 
 #' @author Bethany Kok and Phil Chalmers \email{rphilip.chalmers@@gmail.com}
 #' @keywords hplot color
-#' @export plotSEMM_legend
+#' @export plotSEMM_probability
 #' @seealso \code{\link{plotSEMM_setup}}, \code{\link{plotSEMM_contour}} 
 #' @examples 
 #' \dontrun{ 
