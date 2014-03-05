@@ -3,7 +3,8 @@
 #' Takes user input generated from SEMM software such as Mplus (Muthen & Muthen, 2007), 
 #' Mx (Neale, Boker, Xie & Maes, 2004) or MECOSA (Arminger, Wittenberg, & Schepers, 1996) 
 #' in Gauss and generates model predicted data for processing in graphing functions
-#' \code{plotSEMM_contour} and \code{plotSEMM_probability}.
+#' \code{plotSEMM_contour} and \code{plotSEMM_probability}. Reterns a \code{data.frame}
+#' to be passed to other functions in the package.
 #' 
 #' All the parameter estimates required by the arguments are generated from software with 
 #' the capability of estimating SEMMs. 
@@ -23,7 +24,8 @@
 #' @seealso \code{\link{plotSEMM_contour}},\code{\link{plotSEMM_probability}}
 #' @examples 
 #' \dontrun{ 
-## 2 class empirical example on positive emotions and heuristic processing in Pek, Sterba, Kok & Bauer (XXXX)
+#' # 2 class empirical example on positive emotions and heuristic processing 
+#' # in Pek, Sterba, Kok & Bauer (XXXX)
 #' pi <- c(0.602, 0.398)
 #' 
 #' alpha1 <- c(3.529, 2.317)
@@ -36,7 +38,7 @@
 #' 
 #' psi22 <- c(0.023, 0.023)
 #' 
-#' plotSEMM_setup(pi, alpha1, alpha2, beta21, psi11, psi22)
+#' plotobj <- plotSEMM_setup(pi, alpha1, alpha2, beta21, psi11, psi22)
 #' }
 plotSEMM_setup <- function(pi, alpha1, alpha2, beta21, psi11, psi22) {
     if (!is.vector(pi)) {
@@ -205,8 +207,9 @@ plotSEMM_setup <- function(pi, alpha1, alpha2, beta21, psi11, psi22) {
     }
     z <- outer(Ksi, Eta, denKE)
     
-    SEMLIdatapks <<- data.frame(Ksi, Eta, denKsi, denEta, etah_, etah, I(etahmat), I(z), classes, I(post), 
-        I(pKsi), I(pEta))
+    SEMLIdatapks <- data.frame(Ksi=Ksi, Eta=Eta, denKsi=denKsi, denEta=denEta, 
+                               etah_=etah_, etah=etah, etahmat=I(etahmat), z=I(z), 
+                               classes=classes, post=I(post), pKsi=I(pKsi), pEta=I(pEta))
+    
+    return(SEMLIdatapks)
 }
-
- 

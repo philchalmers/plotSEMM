@@ -2,10 +2,13 @@
 \alias{plotSEMM_probability}
 \title{Probability plot}
 \usage{
-  plotSEMM_probability(EtaName = Eta1, lnty = 3, lncol = 1,
-    title = "", leg = TRUE)
+  plotSEMM_probability(SEMLIdatapks, EtaName = "Eta1",
+    lnty = 3, lncol = 1, title = "", leg = TRUE)
 }
 \arguments{
+  \item{SEMLIdatapks}{object returned from
+  \code{\link{plotSEMM_setup}}}
+
   \item{EtaName}{Label of the latent predictor.  If no
   value is provided, defaults to Eta1.}
 
@@ -30,6 +33,8 @@
 }
 \examples{
 \dontrun{
+# 2 class empirical example on positive emotions and heuristic processing in Pek,
+# Sterba, Kok & Bauer (XXXX)
 pi <- c(0.602, 0.398)
 
 alpha1 <- c(3.529, 2.317)
@@ -43,11 +48,11 @@ psi11 <- c(0.265, 0.265)
 psi22 <- c(0.023, 0.023)
 
 
-plotSEMM_setup(pi, alpha1, alpha2, beta21, psi11, psi22)
+plotobj <- plotSEMM_setup(pi, alpha1, alpha2, beta21, psi11, psi22)
 
-plotSEMM_probability()
+plotSEMM_probability(plotobj)
 
-plotSEMM_probability(EtaName = "Latent Predictor", lnty = 2, title = "Probability")
+plotSEMM_probability(plotobj , EtaName = "Latent Predictor", lnty = 2, title = "Probability")
 }
 }
 \author{

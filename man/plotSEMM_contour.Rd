@@ -2,11 +2,14 @@
 \alias{plotSEMM_contour}
 \title{Nonlinear regression function}
 \usage{
-  plotSEMM_contour(EtaN2 = Eta2, EtaN1 = Eta1,
-    classinfo = TRUE, lnty = 3, lncol = 1, title = "",
-    leg = TRUE)
+  plotSEMM_contour(SEMLIdatapks, EtaN2 = "Eta2",
+    EtaN1 = "Eta1", classinfo = TRUE, lnty = 3, lncol = 1,
+    title = "", leg = TRUE)
 }
 \arguments{
+  \item{SEMLIdatapks}{object returned from
+  \code{\link{plotSEMM_setup}}}
+
   \item{EtaN2}{Label for the X axis.  If no value is
   provided, defaults to "Eta2."}
 
@@ -56,12 +59,13 @@ psi11 <- c(0.265, 0.265)
 psi22 <- c(0.023, 0.023)
 
 
-plotSEMM_setup(pi, alpha1, alpha2, beta21, psi11, psi22)
+plotobj <- plotSEMM_setup(pi, alpha1, alpha2, beta21, psi11, psi22)
 
 
-plotSEMM_contour()
+plotSEMM_contour(plotobj)
 
-plotSEMM_contour(EtaN1 = "Latent Predictor", EtaN2 = "Latent Outcome", classinfo = FALSE, lncol = 5)
+plotSEMM_contour(plotobj, EtaN1 = "Latent Predictor",
+   EtaN2 = "Latent Outcome", classinfo = FALSE, lncol = 5)
 }
 }
 \author{

@@ -2,9 +2,12 @@
 \alias{plotSEMM_legend}
 \title{Legend function for plotSEMM plots}
 \usage{
-  plotSEMM_legend(lnty = 3, lncol = 1)
+  plotSEMM_legend(SEMLIdatapks, lnty = 3, lncol = 1)
 }
 \arguments{
+  \item{SEMLIdatapks}{object returned from
+  \code{\link{plotSEMM_setup}}}
+
   \item{lnty}{Determines the line types used for the class
   lines.  If no value is provided, defaults to 3.  See
   \code{\link{par}} for information about line type.}
@@ -25,6 +28,8 @@
 \examples{
 \dontrun{
 ## code for latent variables with two classes
+# 2 class empirical example on positive emotions and heuristic processing
+#   in Pek, Sterba, Kok & Bauer (XXXX)
 
 pi <- c(0.602, 0.398)
 
@@ -39,12 +44,12 @@ psi11 <- c(0.265, 0.265)
 psi22 <- c(0.023, 0.023)
 
 
-plotSEMM_setup(pi, alpha1, alpha2, beta21, psi11, psi22)
+plotobj <- plotSEMM_setup(pi, alpha1, alpha2, beta21, psi11, psi22)
 
 
-plotSEMM_legend()
+plotSEMM_legend(plotobj)
 
-plotSEMM_legend(6,2)
+plotSEMM_legend(plotobj,6,2)
 }
 }
 \author{
