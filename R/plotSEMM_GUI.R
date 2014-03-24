@@ -48,11 +48,14 @@ plotSEMM_GUI.internal <- function(){
                                                accept=c('text/plain', '.out'))
                     ),
                     
+                    selectInput(inputId="plottype",label="Type of plot to generate:",
+                                choices=c("contour"="contour", 'probability'='probability'), selected="contour"),
+                    
                     #Manual input
                     conditionalPanel(condition = "input.manual == true",
                                      sliderInput(inputId = "nclass",
                                                  label = "Number of latent classes:",
-                                                 min = 1, max = 9, value = 2, step = 1),
+                                                 min = 1, max = 7, value = 2, step = 1),
                                      
                                      hr(),
                                      submitButton(text = "Update # of classes"),
@@ -75,7 +78,62 @@ plotSEMM_GUI.internal <- function(){
                                                       textInputRow(inputId="beta2.21", label="beta 21"),
                                                       textInputRow(inputId="phi2.11", label="phi 11"),
                                                       textInputRow(inputId="phi2.22", label="phi 22")
-                                                      )
+                                                      ),
+                                     
+                                     conditionalPanel(condition = "input.nclass > 2",
+                                                      hr(),
+                                                      h6('Class 3:'),
+                                                      textInputRow(inputId="pi3", label="pi"),
+                                                      textInputRow(inputId="alpha3.1", label="alpha 1"),
+                                                      textInputRow(inputId="alpha3.2", label="alpha 2"),
+                                                      textInputRow(inputId="beta3.21", label="beta 21"),
+                                                      textInputRow(inputId="phi3.11", label="phi 11"),
+                                                      textInputRow(inputId="phi3.22", label="phi 22")
+                                     ),
+                                     
+                                     conditionalPanel(condition = "input.nclass > 3",
+                                                      hr(),
+                                                      h6('Class 4:'),
+                                                      textInputRow(inputId="pi4", label="pi"),
+                                                      textInputRow(inputId="alpha4.1", label="alpha 1"),
+                                                      textInputRow(inputId="alpha4.2", label="alpha 2"),
+                                                      textInputRow(inputId="beta4.21", label="beta 21"),
+                                                      textInputRow(inputId="phi4.11", label="phi 11"),
+                                                      textInputRow(inputId="phi4.22", label="phi 22")
+                                     ),
+                                     
+                                     conditionalPanel(condition = "input.nclass > 4",
+                                                      hr(),
+                                                      h6('Class 5:'),
+                                                      textInputRow(inputId="pi5", label="pi"),
+                                                      textInputRow(inputId="alpha5.1", label="alpha 1"),
+                                                      textInputRow(inputId="alpha5.2", label="alpha 2"),
+                                                      textInputRow(inputId="beta5.21", label="beta 21"),
+                                                      textInputRow(inputId="phi5.11", label="phi 11"),
+                                                      textInputRow(inputId="phi5.22", label="phi 22")
+                                     ),
+                                     
+                                     conditionalPanel(condition = "input.nclass > 5",
+                                                      hr(),
+                                                      h6('Class 6:'),
+                                                      textInputRow(inputId="pi6", label="pi"),
+                                                      textInputRow(inputId="alpha6.1", label="alpha 1"),
+                                                      textInputRow(inputId="alpha6.2", label="alpha 2"),
+                                                      textInputRow(inputId="beta6.21", label="beta 21"),
+                                                      textInputRow(inputId="phi6.11", label="phi 11"),
+                                                      textInputRow(inputId="phi6.22", label="phi 22")
+                                     ),
+                                     
+                                     conditionalPanel(condition = "input.nclass > 6",
+                                                      hr(),
+                                                      h6('Class 7:'),
+                                                      textInputRow(inputId="pi7", label="pi"),
+                                                      textInputRow(inputId="alpha7.1", label="alpha 1"),
+                                                      textInputRow(inputId="alpha7.2", label="alpha 2"),
+                                                      textInputRow(inputId="beta7.21", label="beta 21"),
+                                                      textInputRow(inputId="phi7.11", label="phi 11"),
+                                                      textInputRow(inputId="phi7.22", label="phi 22")
+                                     )
                                      
                     ),
 
@@ -97,17 +155,51 @@ plotSEMM_GUI.internal <- function(){
             
             server = function(input, output) {
                 
-#                 #preamble function here to grab input data
-#                 GUI_setup <- function(input){
-#                     
-#                     return(rnorm(10))
-#                 }
-#                 
-#                 
-#                 output$main_plot <- renderPlot({
-#                     ret <- GUI_setup(input)
-#                     hist(ret)
-#                 })                
+                #preamble function here to grab input data
+                GUI_setup <- function(input){
+                    
+                    nclass <- input$nclass
+                    
+                    if(input$manual){
+                        pi <- alpha1 <- alpha2 <- beta21 <- psi11 <- psi22 <- numeric(nclass)                        
+#                         if(is.null(input$pi1))
+#                             return(NULL)
+                        
+                        #TEMP
+                        pi <- c(0.602, 0.398)                        
+                        alpha1 <- c(3.529, 2.317)                        
+                        alpha2 <- c(0.02, 0.336)                        
+                        beta21 <- c(0.152, 0.053)                        
+                        psi11 <- c(0.265, 0.265)                        
+                        psi22 <- c(0.023, 0.023)                        
+                        test <- c(pi, alpha1, alpha2, beta21, psi11, psi22)
+                        
+                        if(any(is.na(test)))
+                            stop('Must include all input values')
+                        ret <- plotSEMM_setup(pi, alpha1, alpha2, beta21, psi11, psi22)
+                    } else {
+                        
+                        if(!is.null(input$Mplusfile)){
+                            ret <- read(input$Mplusfile)
+                        } else {
+                            return(NULL)
+                        }
+                        
+                        
+                    }
+                    return(ret)
+                }
+                
+                #-----------------------------------------------------------------
+
+                output$main_plot <- renderPlot({
+                    ret <- GUI_setup(input)
+                    if(!is.null(ret)){
+                        plottype <- input$plottype
+                        if(plottype == 'contour') plotSEMM_contour(ret)
+                        if(plottype == 'probability') plotSEMM_probability(ret)
+                    }
+                })                
                 
             } #end server function
             

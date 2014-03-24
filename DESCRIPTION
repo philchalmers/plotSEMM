@@ -12,6 +12,8 @@ Description: Contains functions plotSEMM_setup, plotSEMM_contour,
     diagnostic plots proposed by Bauer (2005) to investigate
     nonlinear latent variable interactions in SEMM using LISREL
     output.
+Imports: 
+    MplusAutomation
 License: GPL (>= 2)
 LazyLoad: yes
 LazyData: yes
