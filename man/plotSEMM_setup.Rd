@@ -30,7 +30,8 @@ Takes user input generated from SEMM software such as Mplus
 2004) or MECOSA (Arminger, Wittenberg, & Schepers, 1996) in
 Gauss and generates model predicted data for processing in
 graphing functions \code{plotSEMM_contour} and
-\code{plotSEMM_probability}.
+\code{plotSEMM_probability}. Reterns a \code{data.frame} to
+be passed to other functions in the package.
 }
 \details{
 All the parameter estimates required by the arguments are
@@ -39,6 +40,8 @@ SEMMs.
 }
 \examples{
 \dontrun{
+# 2 class empirical example on positive emotions and heuristic processing
+# in Pek, Sterba, Kok & Bauer (XXXX)
 pi <- c(0.602, 0.398)
 
 alpha1 <- c(3.529, 2.317)
@@ -51,7 +54,7 @@ psi11 <- c(0.265, 0.265)
 
 psi22 <- c(0.023, 0.023)
 
-plotSEMM_setup(pi, alpha1, alpha2, beta21, psi11, psi22)
+plotobj <- plotSEMM_setup(pi, alpha1, alpha2, beta21, psi11, psi22)
 }
 }
 \author{

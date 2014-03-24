@@ -4,6 +4,7 @@
 #' the mixing probabilities for each latent class conditioned on the latent predictor.  
 #' 
 #' @aliases plotSEMM_probability
+#' @param SEMLIdatapks object returned from \code{\link{plotSEMM_setup}}
 #' @param EtaName Label of the latent predictor.  If no value is provided, defaults to Eta1. 
 #' @param lnty Determines the line types used for the class lines.  If no value is provided, 
 #'   defaults to 3.  See \code{\link{par}} for information about line type. 
@@ -14,11 +15,12 @@
 #'   no legend appears.  Defaults to TRUE. 
 #' @author Bethany Kok and Phil Chalmers \email{rphilip.chalmers@@gmail.com}
 #' @keywords hplot color
-#' @export plotSEMM_legend
+#' @export plotSEMM_probability
 #' @seealso \code{\link{plotSEMM_setup}}, \code{\link{plotSEMM_contour}} 
 #' @examples 
 #' \dontrun{ 
-## 2 class empirical example on positive emotions and heuristic processing in Pek, Sterba, Kok & Bauer (XXXX)
+#' # 2 class empirical example on positive emotions and heuristic processing in Pek, 
+#' # Sterba, Kok & Bauer (XXXX)
 #' pi <- c(0.602, 0.398)
 #' 
 #' alpha1 <- c(3.529, 2.317)
@@ -32,13 +34,14 @@
 #' psi22 <- c(0.023, 0.023)
 #' 
 #' 
-#' plotSEMM_setup(pi, alpha1, alpha2, beta21, psi11, psi22)
+#' plotobj <- plotSEMM_setup(pi, alpha1, alpha2, beta21, psi11, psi22)
 #' 
-#' plotSEMM_probability()
+#' plotSEMM_probability(plotobj)
 #' 
-#' plotSEMM_probability(EtaName = "Latent Predictor", lnty = 2, title = "Probability")
+#' plotSEMM_probability(plotobj , EtaName = "Latent Predictor", lnty = 2, title = "Probability")
 #' }
-plotSEMM_probability <- function(EtaName = Eta1, lnty = 3, lncol = 1, title = "", leg = TRUE) {
+plotSEMM_probability <- function(SEMLIdatapks, EtaName = "Eta1", lnty = 3, lncol = 1, 
+                                 title = "", leg = TRUE) {
     
     # plot 2 probabilities and exogenous variable
     def.par <- par(no.readonly = TRUE)  # save default, for resetting... 

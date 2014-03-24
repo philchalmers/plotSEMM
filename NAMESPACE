@@ -1,4 +1,4 @@
 export(plotSEMM_GUI)
 export(plotSEMM_contour)
-export(plotSEMM_legend)
+export(plotSEMM_probability)
 export(plotSEMM_setup)

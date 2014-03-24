@@ -6,6 +6,7 @@
 #' regression functions; and (e) within class marginal distributions for the latent variables. 
 #' 
 #' @aliases plotSEMM_contour
+#' @param SEMLIdatapks object returned from \code{\link{plotSEMM_setup}}
 #' @param EtaN2 Label for the X axis.  If no value is provided, defaults to "Eta2." 
 #' @param EtaN1 Label for the Y axis.  If no value is provided, defaults to "Eta1." 
 #' @param classinfo Logical variable. TRUE shows the lines for each class as well as the combined estimate.  
@@ -36,15 +37,17 @@
 #' psi22 <- c(0.023, 0.023)
 #' 
 #' 
-#' plotSEMM_setup(pi, alpha1, alpha2, beta21, psi11, psi22)
+#' plotobj <- plotSEMM_setup(pi, alpha1, alpha2, beta21, psi11, psi22)
 #' 
 #' 
-#' plotSEMM_contour()
+#' plotSEMM_contour(plotobj)
 #' 
-#' plotSEMM_contour(EtaN1 = "Latent Predictor", EtaN2 = "Latent Outcome", classinfo = FALSE, lncol = 5) 
+#' plotSEMM_contour(plotobj, EtaN1 = "Latent Predictor", 
+#'    EtaN2 = "Latent Outcome", classinfo = FALSE, lncol = 5) 
 #' }
-plotSEMM_contour <- function(EtaN2 = Eta2, EtaN1 = Eta1, classinfo = TRUE, lnty = 3, lncol = 1, title = "", 
-    leg = TRUE) {
+plotSEMM_contour <- function(SEMLIdatapks, EtaN2 = "Eta2", EtaN1 = "Eta1", 
+                             classinfo = TRUE, lnty = 3, lncol = 1, title = "", 
+                             leg = TRUE) {
     
     # This is to make all 3 graphs on 1 panel for contour
     def.par <- par(no.readonly = TRUE)  # save default, for resetting... 
