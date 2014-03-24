@@ -2,7 +2,7 @@
 \alias{plotSEMM_setup}
 \title{Set up function for plotSEMM}
 \usage{
-  plotSEMM_setup(pi, alpha1, alpha2, beta21, psi11, psi22)
+plotSEMM_setup(pi, alpha1, alpha2, beta21, psi11, psi22)
 }
 \arguments{
   \item{pi}{Vector: \emph{K} marginal class probabilities.}
@@ -25,17 +25,17 @@
   the latent outcome.}
 }
 \description{
-  Takes user input generated from SEMM software such as
-  Mplus (Muthen & Muthen, 2007), Mx (Neale, Boker, Xie &
-  Maes, 2004) or MECOSA (Arminger, Wittenberg, & Schepers,
-  1996) in Gauss and generates model predicted data for
-  processing in graphing functions \code{plotSEMM_contour}
-  and \code{plotSEMM_probability}.
+Takes user input generated from SEMM software such as Mplus
+(Muthen & Muthen, 2007), Mx (Neale, Boker, Xie & Maes,
+2004) or MECOSA (Arminger, Wittenberg, & Schepers, 1996) in
+Gauss and generates model predicted data for processing in
+graphing functions \code{plotSEMM_contour} and
+\code{plotSEMM_probability}.
 }
 \details{
-  All the parameter estimates required by the arguments are
-  generated from software with the capability of estimating
-  SEMMs.
+All the parameter estimates required by the arguments are
+generated from software with the capability of estimating
+SEMMs.
 }
 \examples{
 \dontrun{
@@ -55,11 +55,11 @@ plotSEMM_setup(pi, alpha1, alpha2, beta21, psi11, psi22)
 }
 }
 \author{
-  Bethany Kok and Phil Chalmers
-  \email{rphilip.chalmers@gmail.com}
+Bethany Kok and Phil Chalmers
+\email{rphilip.chalmers@gmail.com}
 }
 \seealso{
-  \code{\link{plotSEMM_contour}},\code{\link{plotSEMM_probability}}
+\code{\link{plotSEMM_contour}},\code{\link{plotSEMM_probability}}
 }
 \keyword{array}
 \keyword{data}

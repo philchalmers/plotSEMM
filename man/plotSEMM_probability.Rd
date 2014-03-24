@@ -2,8 +2,8 @@
 \alias{plotSEMM_probability}
 \title{Probability plot}
 \usage{
-  plotSEMM_probability(EtaName = Eta1, lnty = 3, lncol = 1,
-    title = "", leg = TRUE)
+plotSEMM_probability(EtaName = Eta1, lnty = 3, lncol = 1, title = "",
+  leg = TRUE)
 }
 \arguments{
   \item{EtaName}{Label of the latent predictor.  If no
@@ -24,9 +24,9 @@
   Defaults to TRUE.}
 }
 \description{
-  Requires \code{plotSEMM_setup} be run first. Generates a
-  plot which expresses the mixing probabilities for each
-  latent class conditioned on the latent predictor.
+Requires \code{plotSEMM_setup} be run first. Generates a
+plot which expresses the mixing probabilities for each
+latent class conditioned on the latent predictor.
 }
 \examples{
 \dontrun{
@@ -51,12 +51,12 @@ plotSEMM_probability(EtaName = "Latent Predictor", lnty = 2, title = "Probabilit
 }
 }
 \author{
-  Bethany Kok and Phil Chalmers
-  \email{rphilip.chalmers@gmail.com}
+Bethany Kok and Phil Chalmers
+\email{rphilip.chalmers@gmail.com}
 }
 \seealso{
-  \code{\link{plotSEMM_setup}},
-  \code{\link{plotSEMM_contour}}
+\code{\link{plotSEMM_setup}},
+\code{\link{plotSEMM_contour}}
 }
 \keyword{color}
 \keyword{hplot}

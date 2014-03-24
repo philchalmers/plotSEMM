@@ -2,9 +2,8 @@
 \alias{plotSEMM_contour}
 \title{Nonlinear regression function}
 \usage{
-  plotSEMM_contour(EtaN2 = Eta2, EtaN1 = Eta1,
-    classinfo = TRUE, lnty = 3, lncol = 1, title = "",
-    leg = TRUE)
+plotSEMM_contour(EtaN2 = Eta2, EtaN1 = Eta1, classinfo = TRUE, lnty = 3,
+  lncol = 1, title = "", leg = TRUE)
 }
 \arguments{
   \item{EtaN2}{Label for the X axis.  If no value is
@@ -33,12 +32,12 @@
   Defaults to TRUE.}
 }
 \description{
-  Requires \code{plotSEMM_setup} be run first.  Generates
-  (a) the potential nonlinear regression function; (b)
-  bivariate distribution of the latent variables; (c)
-  marginal distributions of the latent variables; (d)
-  within class linear regression functions; and (e) within
-  class marginal distributions for the latent variables.
+Requires \code{plotSEMM_setup} be run first.  Generates (a)
+the potential nonlinear regression function; (b) bivariate
+distribution of the latent variables; (c) marginal
+distributions of the latent variables; (d) within class
+linear regression functions; and (e) within class marginal
+distributions for the latent variables.
 }
 \examples{
 \dontrun{
@@ -65,8 +64,8 @@ plotSEMM_contour(EtaN1 = "Latent Predictor", EtaN2 = "Latent Outcome", classinfo
 }
 }
 \author{
-  Bethany Kok and Phil Chalmers
-  \email{rphilip.chalmers@gmail.com}
+Bethany Kok and Phil Chalmers
+\email{rphilip.chalmers@gmail.com}
 }
 \keyword{color}
 \keyword{hplot}

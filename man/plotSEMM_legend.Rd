@@ -2,7 +2,7 @@
 \alias{plotSEMM_legend}
 \title{Legend function for plotSEMM plots}
 \usage{
-  plotSEMM_legend(lnty = 3, lncol = 1)
+plotSEMM_legend(lnty = 3, lncol = 1)
 }
 \arguments{
   \item{lnty}{Determines the line types used for the class
@@ -14,13 +14,12 @@
   See \code{\link{par}} for information about line type.}
 }
 \description{
-  Requires \code{plotSEMM_setup} be run first. Generates a
-  legend that identifies different classes and the
-  composite between-class estimate for the
-  \code{plotSEMM_contour} and \code{plotSEMM_probability}
-  plots. Can be used in place of the
-  automatically-generated legends included in
-  \code{plotSEMM_contour} and \code{plotSEMM_probability}.
+Requires \code{plotSEMM_setup} be run first. Generates a
+legend that identifies different classes and the composite
+between-class estimate for the \code{plotSEMM_contour} and
+\code{plotSEMM_probability} plots. Can be used in place of
+the automatically-generated legends included in
+\code{plotSEMM_contour} and \code{plotSEMM_probability}.
 }
 \examples{
 \dontrun{
@@ -48,13 +47,13 @@ plotSEMM_legend(6,2)
 }
 }
 \author{
-  Bethany Kok and Phil Chalmers
-  \email{rphilip.chalmers@gmail.com}
+Bethany Kok and Phil Chalmers
+\email{rphilip.chalmers@gmail.com}
 }
 \seealso{
-  \code{\link{plotSEMM_setup}},
-  \code{\link{plotSEMM_contour}},
-  \code{\link{plotSEMM_probability}}
+\code{\link{plotSEMM_setup}},
+\code{\link{plotSEMM_contour}},
+\code{\link{plotSEMM_probability}}
 }
 \keyword{device}
 \keyword{misc}
