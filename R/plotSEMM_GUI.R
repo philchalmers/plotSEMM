@@ -12,7 +12,6 @@
 #' plotSEMM_GUI()
 #' }
 plotSEMM_GUI <- function(){
-    require(shiny)
     runApp(plotSEMM_GUI.internal())
 }
 
@@ -166,6 +165,8 @@ plotSEMM_GUI.internal <- function(){
                     
                     nclass <- input$nclass
                     ret <- NULL
+                    original_dir <- getwd()
+                    on.exit(setwd(original_dir))
                     if(input$method == 'Manually'){
                         
                         pi <- alpha1 <- alpha2 <- beta21 <- psi11 <- psi22 <- numeric(nclass)

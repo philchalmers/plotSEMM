@@ -17,7 +17,7 @@
 #' @keywords package
 # @importFrom stats anova residuals
 # @importFrom MASS ginv
-# @import lattice GPArotation mvtnorm Rcpp stats4 methods
+#' @import shiny MplusAutomation
 # @exportMethod anova
 # @exportMethod residuals
 # @exportMethod summary
