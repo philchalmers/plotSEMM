@@ -5,7 +5,9 @@
 plotSEMM_GUI()
 }
 \description{
-Something
+Graphical user interface with the shiny package. Supports
+manual input as well as importing from precomputed Mplus
+files.
 }
 \examples{
 \dontrun{

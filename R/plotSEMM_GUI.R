@@ -1,6 +1,7 @@
 #' PlotSEMM GUI
 #' 
-#' Something
+#' Graphical user interface with the shiny package. Supports manual input as well as importing
+#' from precomputed Mplus files. 
 #' 
 #' @aliases plotSEMM_GUI
 #' @author Phil Chalmers \email{rphilip.chalmers@@gmail.com}
@@ -18,11 +19,20 @@ plotSEMM_GUI <- function(){
 plotSEMM_GUI.internal <- function(){
     
     #custom function to put user text input boxes side-by-side
-    textInputRow<-function (inputId, label, value = "") 
-    {
+    numberInputRow<-function (inputId, label, value = "") 
+    {        
         div(style="display:inline-block",
             tags$label(label, `for` = inputId), 
-            tags$input(id = inputId, type = "numeric", value = value,class="input-small"))
+            tags$input(id = inputId, type = "number", value = value,class="input-small"))
+    }
+    
+    #custom file.choose() function (only works locally)
+    file.choose2 <- function(...) {
+        pathname <- NULL
+        tryCatch({
+            pathname <- file.choose()
+            }, error = function(ex) {})
+        pathname
     }
         
         ret <- list(
@@ -38,101 +48,97 @@ plotSEMM_GUI.internal <- function(){
                     h5('Please specify your data either by importing an Mplus output 
                        file or manually'),
                     
-                    checkboxInput(inputId = "manual",
-                                  label = "Specify input manually?",
-                                  value = FALSE),
+                    selectInput(inputId="method", label="Select how you would like to input the parameters:",
+                                choices=c("Mplusfile"="Mplusfile", "Manually"="Manually", " "=" "), selected=" "),
                     
                     #Mplus input
-                    conditionalPanel(condition = "input.manual == false",
-                                     fileInput('Mplusfile', label='Locate Mplus output file (.out)',
-                                               accept=c('text/plain', '.out'))
+                    conditionalPanel(condition = "input.method == 'Mplusfile'",
+                                     textInput(inputId='Mpath', label='Directory containing Mplus files:',
+                                               value=getwd())
                     ),
                     
                     selectInput(inputId="plottype",label="Type of plot to generate:",
                                 choices=c("contour"="contour", 'probability'='probability'), selected="contour"),
                     
                     #Manual input
-                    conditionalPanel(condition = "input.manual == true",
+                    conditionalPanel(condition = "input.method == 'Manually'",
                                      sliderInput(inputId = "nclass",
                                                  label = "Number of latent classes:",
-                                                 min = 1, max = 7, value = 2, step = 1),
-                                     
-                                     hr(),
-                                     submitButton(text = "Update # of classes"),
+                                                 min = 2, max = 7, value = 2, step = 1),
                                      
                                      hr(),    
                                      h6('Class 1:'),
-                                     textInputRow(inputId="pi1", label="pi"),
-                                     textInputRow(inputId="alpha1.1", label="alpha 1"),
-                                     textInputRow(inputId="alpha1.2", label="alpha 2"),
-                                     textInputRow(inputId="beta1.21", label="beta 21"),
-                                     textInputRow(inputId="phi1.11", label="phi 11"),
-                                     textInputRow(inputId="phi1.22", label="phi 22"),
+                                     numberInputRow(inputId="pi1", label="pi"),
+                                     numberInputRow(inputId="alpha1.1", label="alpha 1"),
+                                     numberInputRow(inputId="alpha2.1", label="alpha 2"),
+                                     numberInputRow(inputId="beta21.1", label="beta 21"),
+                                     numberInputRow(inputId="psi11.1", label="psi 11"),
+                                     numberInputRow(inputId="psi22.1", label="psi 22"),
                                      
                                      conditionalPanel(condition = "input.nclass > 1",
                                                       hr(),
                                                       h6('Class 2:'),
-                                                      textInputRow(inputId="pi2", label="pi"),
-                                                      textInputRow(inputId="alpha2.1", label="alpha 1"),
-                                                      textInputRow(inputId="alpha2.2", label="alpha 2"),
-                                                      textInputRow(inputId="beta2.21", label="beta 21"),
-                                                      textInputRow(inputId="phi2.11", label="phi 11"),
-                                                      textInputRow(inputId="phi2.22", label="phi 22")
+                                                      numberInputRow(inputId="pi2", label="pi"),
+                                                      numberInputRow(inputId="alpha1.2", label="alpha 1"),
+                                                      numberInputRow(inputId="alpha2.2", label="alpha 2"),
+                                                      numberInputRow(inputId="beta21.2", label="beta 21"),
+                                                      numberInputRow(inputId="psi11.2", label="psi 11"),
+                                                      numberInputRow(inputId="psi22.2", label="psi 22")
                                                       ),
                                      
                                      conditionalPanel(condition = "input.nclass > 2",
                                                       hr(),
                                                       h6('Class 3:'),
-                                                      textInputRow(inputId="pi3", label="pi"),
-                                                      textInputRow(inputId="alpha3.1", label="alpha 1"),
-                                                      textInputRow(inputId="alpha3.2", label="alpha 2"),
-                                                      textInputRow(inputId="beta3.21", label="beta 21"),
-                                                      textInputRow(inputId="phi3.11", label="phi 11"),
-                                                      textInputRow(inputId="phi3.22", label="phi 22")
+                                                      numberInputRow(inputId="pi3", label="pi"),
+                                                      numberInputRow(inputId="alpha1.3", label="alpha 1"),
+                                                      numberInputRow(inputId="alpha2.3", label="alpha 2"),
+                                                      numberInputRow(inputId="beta21.3", label="beta 21"),
+                                                      numberInputRow(inputId="psi11.3", label="psi 11"),
+                                                      numberInputRow(inputId="psi22.3", label="psi 22")
                                      ),
                                      
                                      conditionalPanel(condition = "input.nclass > 3",
                                                       hr(),
                                                       h6('Class 4:'),
-                                                      textInputRow(inputId="pi4", label="pi"),
-                                                      textInputRow(inputId="alpha4.1", label="alpha 1"),
-                                                      textInputRow(inputId="alpha4.2", label="alpha 2"),
-                                                      textInputRow(inputId="beta4.21", label="beta 21"),
-                                                      textInputRow(inputId="phi4.11", label="phi 11"),
-                                                      textInputRow(inputId="phi4.22", label="phi 22")
+                                                      numberInputRow(inputId="pi4", label="pi"),
+                                                      numberInputRow(inputId="alpha1.4", label="alpha 1"),
+                                                      numberInputRow(inputId="alpha2.4", label="alpha 2"),
+                                                      numberInputRow(inputId="beta21.4", label="beta 21"),
+                                                      numberInputRow(inputId="psi11.4", label="psi 11"),
+                                                      numberInputRow(inputId="psi22.4", label="psi 22")
                                      ),
                                      
                                      conditionalPanel(condition = "input.nclass > 4",
                                                       hr(),
                                                       h6('Class 5:'),
-                                                      textInputRow(inputId="pi5", label="pi"),
-                                                      textInputRow(inputId="alpha5.1", label="alpha 1"),
-                                                      textInputRow(inputId="alpha5.2", label="alpha 2"),
-                                                      textInputRow(inputId="beta5.21", label="beta 21"),
-                                                      textInputRow(inputId="phi5.11", label="phi 11"),
-                                                      textInputRow(inputId="phi5.22", label="phi 22")
+                                                      numberInputRow(inputId="pi5", label="pi"),
+                                                      numberInputRow(inputId="alpha1.5", label="alpha 1"),
+                                                      numberInputRow(inputId="alpha2.5", label="alpha 2"),
+                                                      numberInputRow(inputId="beta21.5", label="beta 21"),
+                                                      numberInputRow(inputId="psi11.5", label="psi 11"),
+                                                      numberInputRow(inputId="psi22.5", label="psi 22")
                                      ),
                                      
                                      conditionalPanel(condition = "input.nclass > 5",
                                                       hr(),
                                                       h6('Class 6:'),
-                                                      textInputRow(inputId="pi6", label="pi"),
-                                                      textInputRow(inputId="alpha6.1", label="alpha 1"),
-                                                      textInputRow(inputId="alpha6.2", label="alpha 2"),
-                                                      textInputRow(inputId="beta6.21", label="beta 21"),
-                                                      textInputRow(inputId="phi6.11", label="phi 11"),
-                                                      textInputRow(inputId="phi6.22", label="phi 22")
+                                                      numberInputRow(inputId="pi6", label="pi"),
+                                                      numberInputRow(inputId="alpha1.6", label="alpha 1"),
+                                                      numberInputRow(inputId="alpha2.6", label="alpha 2"),
+                                                      numberInputRow(inputId="beta21.6", label="beta 21"),
+                                                      numberInputRow(inputId="psi11.6", label="psi 11"),
+                                                      numberInputRow(inputId="psi22.6", label="psi 22")
                                      ),
                                      
                                      conditionalPanel(condition = "input.nclass > 6",
                                                       hr(),
                                                       h6('Class 7:'),
-                                                      textInputRow(inputId="pi7", label="pi"),
-                                                      textInputRow(inputId="alpha7.1", label="alpha 1"),
-                                                      textInputRow(inputId="alpha7.2", label="alpha 2"),
-                                                      textInputRow(inputId="beta7.21", label="beta 21"),
-                                                      textInputRow(inputId="phi7.11", label="phi 11"),
-                                                      textInputRow(inputId="phi7.22", label="phi 22")
+                                                      numberInputRow(inputId="pi7", label="pi"),
+                                                      numberInputRow(inputId="alpha1.7", label="alpha 1"),
+                                                      numberInputRow(inputId="alpha2.7", label="alpha 2"),
+                                                      numberInputRow(inputId="beta21.7", label="beta 21"),
+                                                      numberInputRow(inputId="psi11.7", label="psi 11"),
+                                                      numberInputRow(inputId="psi22.7", label="psi 22")
                                      )
                                      
                     ),
@@ -146,7 +152,7 @@ plotSEMM_GUI.internal <- function(){
                 #------------------------------------------------------------------------
                 
                 mainPanel(
-                    plotOutput(outputId = "main_plot", height = "700px", width = "700px")
+                    plotOutput(outputId = "main_plot", height = '800px', width = "100%")
                     )
             
                 ), #end pageWithSidebar
@@ -159,33 +165,59 @@ plotSEMM_GUI.internal <- function(){
                 GUI_setup <- function(input){
                     
                     nclass <- input$nclass
-                    
-                    if(input$manual){
-                        pi <- alpha1 <- alpha2 <- beta21 <- psi11 <- psi22 <- numeric(nclass)                        
-#                         if(is.null(input$pi1))
-#                             return(NULL)
+                    ret <- NULL
+                    if(input$method == 'Manually'){
                         
-                        #TEMP
-                        pi <- c(0.602, 0.398)                        
-                        alpha1 <- c(3.529, 2.317)                        
-                        alpha2 <- c(0.02, 0.336)                        
-                        beta21 <- c(0.152, 0.053)                        
-                        psi11 <- c(0.265, 0.265)                        
-                        psi22 <- c(0.023, 0.023)                        
+                        pi <- alpha1 <- alpha2 <- beta21 <- psi11 <- psi22 <- numeric(nclass)
+                        if(is.na(input$pi2))
+                            return(NULL)
+                        Names <- names(input)
+                        pi.names <- paste0('pi', 1:7)
+                        alpha1.names <- paste0('alpha1.', 1:7)
+                        alpha2.names <- paste0('alpha2.', 1:7)
+                        beta21.names <- paste0('beta21.', 1:7)
+                        psi11.names <- paste0('psi11.', 1:7)
+                        psi22.names <- paste0('psi22.', 1:7)                        
+                        for(i in 1L:nclass){
+                            pi[i] <- input[[Names[which(Names %in% pi.names)[i]]]]
+                            alpha1[i] <- input[[Names[which(Names %in% alpha1.names)[i]]]]
+                            alpha2[i] <- input[[Names[which(Names %in% alpha2.names)[i]]]]
+                            beta21[i] <- input[[Names[which(Names %in% beta21.names)[i]]]]
+                            psi11[i] <- input[[Names[which(Names %in% psi11.names)[i]]]]
+                            psi22[i] <- input[[Names[which(Names %in% psi22.names)[i]]]]                            
+                        }
                         test <- c(pi, alpha1, alpha2, beta21, psi11, psi22)
-                        
                         if(any(is.na(test)))
-                            stop('Must include all input values')
+                            stop('Must include all input values for each class')
                         ret <- plotSEMM_setup(pi, alpha1, alpha2, beta21, psi11, psi22)
-                    } else {
+                    } else if(input$method == 'Mplusfile'){
                         
-                        if(!is.null(input$Mplusfile)){
-                            ret <- read(input$Mplusfile)
+                        if(!is.null(input$Mpath)){
+                            files <- dir()
+                            file <- files[grepl("*\\.out$", files)]
+                            if(!length(file))
+                                return(NULL)
+                            if(length(file) > 1L)
+                                stop('Multiple .out files in specifed directory')
+                            read <- MplusAutomation::readModels(file)
                         } else {
                             return(NULL)
                         }
-                        
-                        
+                        ovars <- strsplit(toupper(read$input$variable$names), split = ' ')[[1L]]
+                        pi <- read$class_counts$modelEstimated$proportion
+                        pars <- read$parameters[[1L]]
+                        pars <- pars[!(pars$param %in% ovars), ] #latents only
+                        tmp <- min(which(grepl("*\\.ON$", pars$paramHeader)))
+                        ON <- pars$paramHeader[tmp]
+                        DV <- strsplit(ON, '.ON')[[1L]]
+                        IV <- pars$param[tmp]
+                        pars <- pars[pars$param %in% c(IV,DV), ] 
+                        alpha1 <- pars$est[pars$paramHeader == 'Means']
+                        alpha2 <- pars$est[pars$paramHeader == 'Intercepts']
+                        beta21 <- pars$est[pars$paramHeader == ON]
+                        psi11 <- pars$est[pars$paramHeader == 'Variances']
+                        psi22 <- pars$est[pars$paramHeader == 'Residual.Variances']
+                        ret <- plotSEMM_setup(pi, alpha1, alpha2, beta21, psi11, psi22)
                     }
                     return(ret)
                 }
