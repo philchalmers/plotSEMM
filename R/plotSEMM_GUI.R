@@ -145,7 +145,7 @@ plotSEMM_GUI.internal <- function(){
 
                     hr(),
 
-                    submitButton(text = "Submit")
+                    submitButton(text = "Submit/Update")
                     
                     ), #end sidebarPanel
                 
@@ -193,6 +193,7 @@ plotSEMM_GUI.internal <- function(){
                     } else if(input$method == 'Mplusfile'){
                         
                         if(!is.null(input$Mpath)){
+                            setwd(input$Mpath)
                             files <- dir()
                             file <- files[grepl("*\\.out$", files)]
                             if(!length(file))
