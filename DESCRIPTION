@@ -15,7 +15,8 @@ Description: Contains functions plotSEMM_setup, plotSEMM_contour,
 Depends:
     shiny
 Imports:
-    MplusAutomation
+    MplusAutomation,
+    plotrix
 License: GPL (>= 2)
 LazyLoad: yes
 LazyData: yes

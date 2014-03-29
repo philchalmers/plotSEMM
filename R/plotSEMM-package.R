@@ -17,7 +17,7 @@
 #' @keywords package
 # @importFrom stats anova residuals
 # @importFrom MASS ginv
-#' @import shiny MplusAutomation
+#' @import shiny MplusAutomation plotrix
 # @exportMethod anova
 # @exportMethod residuals
 # @exportMethod summary

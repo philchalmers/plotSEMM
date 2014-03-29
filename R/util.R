@@ -1,0 +1,50 @@
+examplePlot <- function(){    
+    plot(c(0,120), c(10,50), axes=FALSE, frame.plot=FALSE, type='n', xlab='', ylab='')
+    
+    draw.circle(20, 35, 10)
+    text(20, 35, expression(eta[1]))
+    draw.circle(80, 35, 10)
+    text(80, 35, expression(eta[2]))
+    draw.circle(105, 35, 5)
+    text(105, 35, expression(zeta))
+    
+    arrows(31,35,69,35, length=.2)
+    text(47, 38, expression(beta[12]))
+    arrows(99,35,91,35, length=.1)
+    draw.arc(5, 35, 3, deg1=320, deg2=20)
+    text(5, 38, expression(psi[11]))
+    draw.arc(115, 35, 3, deg1=0, deg2=140)
+    draw.arc(115, 35, 3, deg1=220, deg2=360)
+    text(115, 38, expression(psi[22]))
+    
+    polygon(c(15,25,20), c(45,45,50))
+    text(20,47, '1')
+    polygon(c(15,25,20)+60, c(45,45,50))
+    text(80,47, '1')
+    arrows(20,44,20,40, length=.1)
+    text(25,42, expression(alpha[1]))
+    arrows(80,44,80,40, length=.1)
+    text(85,42, expression(alpha[2]))
+    
+    polygon(c(15,25,25,15), c(15,15,20,20))
+    text(20,17,expression(y[2]))
+    polygon(c(15,25,25,15)-15, c(15,15,20,20))
+    text(20-15,17,expression(y[1]))
+    polygon(c(15,25,25,15)+15, c(15,15,20,20))
+    text(20+15,17,expression(y[3]))
+    
+    polygon(c(75,85,85,75), c(15,15,20,20))
+    text(80,17,expression(y[5]))
+    polygon(c(75,85,85,75)-15, c(15,15,20,20))
+    text(80-15,17,expression(y[4]))
+    polygon(c(75,85,85,75)+15, c(15,15,20,20))
+    text(80+15,17,expression(y[6]))
+    
+    arrows(20,30,20,21, length=.2)
+    arrows(20,30,20-15,21, length=.2)
+    arrows(20,30,20+15,21, length=.2)
+    
+    arrows(80,30,80,21, length=.2)
+    arrows(80,30,80-15,21, length=.2)
+    arrows(80,30,80+15,21, length=.2)
+}

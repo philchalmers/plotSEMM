@@ -234,7 +234,7 @@ plotSEMM_GUI.internal <- function(){
                         plottype <- input$plottype
                         if(plottype == 'contour') plotSEMM_contour(ret)
                         if(plottype == 'probability') plotSEMM_probability(ret)
-                    }
+                    } else examplePlot()
                 })                
                 
             } #end server function
