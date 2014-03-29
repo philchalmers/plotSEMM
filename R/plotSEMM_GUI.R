@@ -48,7 +48,7 @@ plotSEMM_GUI.internal <- function(){
                        file or manually'),
                     
                     selectInput(inputId="method", label="Select how you would like to input the parameters:",
-                                choices=c("Mplusfile"="Mplusfile", "Manually"="Manually", " "=" "), selected=" "),
+                                choices=c("Mplus file"="Mplusfile", "Manually"="Manually", " "=" "), selected=" "),
                     
                     #Mplus input
                     conditionalPanel(condition = "input.method == 'Mplusfile'",
