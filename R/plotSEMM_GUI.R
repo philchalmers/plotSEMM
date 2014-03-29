@@ -40,19 +40,21 @@ plotSEMM_GUI.internal <- function(){
             ui = pageWithSidebar(
                 
                 # Application title
-                headerPanel("Plot_SEMM"),
+                headerPanel("PlotSEMM"),
                 
                 sidebarPanel(
                     
-                    h5('Please specify your data either by importing an Mplus output 
-                       file or manually'),
+                    h4('Please specify your data either by importing an Mplus output 
+                       file or manually.'),
+                    h5('Note: The \'Mplus file\' option requires that only one
+                       Mplus output file (.out) is in the refered directory.'),
                     
                     selectInput(inputId="method", label="Select how you would like to input the parameters:",
                                 choices=c("Mplus file"="Mplusfile", "Manually"="Manually", " "=" "), selected=" "),
                     
                     #Mplus input
                     conditionalPanel(condition = "input.method == 'Mplusfile'",
-                                     textInput(inputId='Mpath', label='Directory containing Mplus files:',
+                                     textInput(inputId='Mpath', label='Directory containing Mplus file:',
                                                value=getwd())
                     ),
                     
