@@ -1,7 +1,7 @@
 plotSEMM_ci <- function(SEMLIdatapks, lnty = 3, lncol = 1) {
     
     #requires setup from plotSEMM_setup2
-    if(!SEMLIdatapks$setup2) 
+    if(!SEMLIdatapks$setup2[1L]) 
         stop('plotSEMM_ci requires a setup model that included the parameter ACOV matrix')
     def.par <- par(no.readonly = TRUE)
     

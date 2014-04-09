@@ -1,5 +1,6 @@
 plotSEMM_setup2 <- function(setup, alpha = .05){
     
+    #only supports 2 or more classes 
     #requires Mplus read in file as input; setup <- read.plotSEMM_wACOV(read)
 
     nclass <- classes <- setup$nclass
