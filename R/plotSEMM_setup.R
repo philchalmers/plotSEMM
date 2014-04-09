@@ -209,7 +209,8 @@ plotSEMM_setup <- function(pi, alpha1, alpha2, beta21, psi11, psi22) {
     
     SEMLIdatapks <- data.frame(Ksi=Ksi, Eta=Eta, denKsi=denKsi, denEta=denEta, 
                                etah_=etah_, etah=etah, etahmat=I(etahmat), z=I(z), 
-                               classes=classes, post=I(post), pKsi=I(pKsi), pEta=I(pEta))
+                               classes=classes, post=I(post), pKsi=I(pKsi), pEta=I(pEta),
+                               setup2=FALSE)
     
     return(SEMLIdatapks)
 }
