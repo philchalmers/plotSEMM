@@ -13,6 +13,7 @@ Description: Contains functions plotSEMM_setup, plotSEMM_contour,
     nonlinear latent variable interactions in SEMM using LISREL
     output.
 Depends:
+    plyr,
     shiny
 Imports:
     MplusAutomation,

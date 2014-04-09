@@ -16,5 +16,5 @@ plotSEMM_ci <- function(SEMLIdatapks, lnty = 3, lncol = 1) {
     points(SEMLIdatapks$x, SEMLIdatapks$UCLall_, col = 4, lwd = 1.5, lty = 3, pch = 4)
     legend("bottomleft", legend = c("Aggregate Function", "Delta Method 90% Confidence Interval", "Delta Method 90% Confidence Envelope", 
                                     "Bootstrap 90% Confidence Interval"), lwd = c(2, 1, 1, 1), lty = c(1, 0, 2, 0), 
-           pch = c(NA, 1, NA, 4), col = c(1, 2, 2, 4), bty = "n", cex = .7)   
+           pch = c(NA, 1, NA, 4), col = c(1, 2, 2, 4), bty = "n")   
 }

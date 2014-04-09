@@ -24,15 +24,6 @@ plotSEMM_GUI.internal <- function(){
             tags$label(label, `for` = inputId), 
             tags$input(id = inputId, type = "number", value = value,class="input-small"))
     }
-    
-    #custom file.choose() function (only works locally)
-    file.choose2 <- function(...) {
-        pathname <- NULL
-        tryCatch({
-            pathname <- file.choose()
-            }, error = function(ex) {})
-        pathname
-    }
         
         ret <- list(
             
@@ -59,7 +50,16 @@ plotSEMM_GUI.internal <- function(){
                     ),
                     
                     selectInput(inputId="plottype",label="Type of plot to generate:",
-                                choices=c("contour"="contour", 'probability'='probability'), selected="contour"),
+                                choices=c("contour"="contour", 'probability'='probability',
+                                          "confidence interval (Mplus input only)"="ci"), 
+                                selected="contour"),
+                    
+                    conditionalPanel(condition = "input.plottype == 'ci'",
+                                     shiny::checkboxInput(inputId='linesearch', 
+                                               label='Run line search algorithm to test the null hypothesis that there
+                                               is a linear trend? Will plot a potential line if found.',
+                                               value=FALSE)
+                    ),
                     
                     #Manual input
                     conditionalPanel(condition = "input.method == 'Manually'",
@@ -203,25 +203,33 @@ plotSEMM_GUI.internal <- function(){
                                 return(NULL)
                             if(length(file) > 1L)
                                 stop('Multiple .out files in specifed directory')
-                            read <- MplusAutomation::readModels(file)
+                            read <- MplusAutomation::readModels(file, recursive=TRUE)
                         } else {
                             return(NULL)
                         }
-                        ovars <- strsplit(toupper(read$input$variable$names), split = ' ')[[1L]]
-                        pi <- read$class_counts$modelEstimated$proportion
-                        pars <- read$parameters[[1L]]
-                        pars <- pars[!(pars$param %in% ovars), ] #latents only
-                        tmp <- min(which(grepl("*\\.ON$", pars$paramHeader)))
-                        ON <- pars$paramHeader[tmp]
-                        DV <- strsplit(ON, '.ON')[[1L]]
-                        IV <- pars$param[tmp]
-                        pars <- pars[pars$param %in% c(IV,DV), ] 
-                        alpha1 <- pars$est[pars$paramHeader == 'Means']
-                        alpha2 <- pars$est[pars$paramHeader == 'Intercepts']
-                        beta21 <- pars$est[pars$paramHeader == ON]
-                        psi11 <- pars$est[pars$paramHeader == 'Variances']
-                        psi22 <- pars$est[pars$paramHeader == 'Residual.Variances']
-                        ret <- plotSEMM_setup(pi, alpha1, alpha2, beta21, psi11, psi22)
+                        if(input$plottype != 'ci'){
+                            ovars <- strsplit(toupper(read$input$variable$names), split = ' ')[[1L]]
+                            pi <- read$class_counts$modelEstimated$proportion
+                            pars <- read$parameters[[1L]]
+                            pars <- pars[!(pars$param %in% ovars), ] #latents only
+                            tmp <- min(which(grepl("*\\.ON$", pars$paramHeader)))
+                            ON <- pars$paramHeader[tmp]
+                            DV <- strsplit(ON, '.ON')[[1L]]
+                            IV <- pars$param[tmp]
+                            pars <- pars[pars$param %in% c(IV,DV), ] 
+                            alpha1 <- pars$est[pars$paramHeader == 'Means']
+                            alpha2 <- pars$est[pars$paramHeader == 'Intercepts']
+                            beta21 <- pars$est[pars$paramHeader == ON]
+                            psi11 <- pars$est[pars$paramHeader == 'Variances']
+                            psi22 <- pars$est[pars$paramHeader == 'Residual.Variances']
+                            ret <- plotSEMM_setup(pi, alpha1, alpha2, beta21, psi11, psi22)
+                        } else {
+                            setup <- read.plotSEMM_wACOV(read)
+                            ret <- plotSEMM_setup2(setup)
+                            if(input$linesearch){
+                                browser() #TODO implement line search
+                            }
+                        }
                     }
                     return(ret)
                 }
@@ -234,6 +242,7 @@ plotSEMM_GUI.internal <- function(){
                         plottype <- input$plottype
                         if(plottype == 'contour') plotSEMM_contour(ret)
                         if(plottype == 'probability') plotSEMM_probability(ret)
+                        if(plottype == 'ci') plotSEMM_ci(ret)
                     } else examplePlot()
                 })                
                 
