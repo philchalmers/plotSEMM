@@ -227,7 +227,8 @@ plotSEMM_GUI.internal <- function(){
                             setup <- read.plotSEMM_wACOV(read)
                             ret <- plotSEMM_setup2(setup)
                             if(input$linesearch){
-                                browser() #TODO implement line search
+                                browser()
+                                search <- .Call('linear', , , ret$x)
                             }
                         }
                     }
@@ -242,7 +243,7 @@ plotSEMM_GUI.internal <- function(){
                         plottype <- input$plottype
                         if(plottype == 'contour') plotSEMM_contour(ret)
                         if(plottype == 'probability') plotSEMM_probability(ret)
-                        if(plottype == 'ci') plotSEMM_ci(ret)
+                        if(plottype == 'ci') plotSEMM_ci(ret, lineasearch=input$linesearch)
                     } else examplePlot()
                 })                
                 

@@ -17,9 +17,11 @@ Depends:
     shiny
 Imports:
     MplusAutomation,
+    Rcpp,
     plotrix
 License: GPL (>= 2)
 LazyLoad: yes
 LazyData: yes
+LinkingTo: Rcpp
 Repository: github
 URL: https://github.com/philchalmers/plotSEMM

@@ -1,4 +1,4 @@
-plotSEMM_ci <- function(SEMLIdatapks, lnty = 3, lncol = 1) {
+plotSEMM_ci <- function(SEMLIdatapks, linesearch, lnty = 3, lncol = 1) {
     
     #requires setup from plotSEMM_setup2
     if(!SEMLIdatapks$setup2[1L]) 
@@ -17,4 +17,8 @@ plotSEMM_ci <- function(SEMLIdatapks, lnty = 3, lncol = 1) {
     legend("bottomleft", legend = c("Aggregate Function", "Delta Method 90% Confidence Interval", "Delta Method 90% Confidence Envelope", 
                                     "Bootstrap 90% Confidence Interval"), lwd = c(2, 1, 1, 1), lty = c(1, 0, 2, 0), 
            pch = c(NA, 1, NA, 4), col = c(1, 2, 2, 4), bty = "n")   
+    
+    if(linesearch){
+        browser()
+    }
 }

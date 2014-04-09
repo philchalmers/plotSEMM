@@ -8,6 +8,7 @@
 #'
 #' @name plotSEMM
 #' @docType package
+#' @useDynLib plotSEMM
 #' @title Graphing nonlinear relations among latent variables from Structural Equation Mixture Models
 #' @author Bethany Kok and Phil Chalmers \email{rphilip.chalmers@@gmail.com}
 #' @references
