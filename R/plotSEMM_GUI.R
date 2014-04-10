@@ -57,7 +57,7 @@ plotSEMM_GUI.internal <- function(){
                     conditionalPanel(condition = "input.plottype == 'ci'",
                                      shiny::checkboxInput(inputId='linesearch', 
                                                label='Run line search algorithm to test the null hypothesis that there
-                                               is a linear trend? Will plot a potential line if found.',
+                                               is a linear trend? Will plot a thicker green line if found.',
                                                value=FALSE)
                     ),
                     
@@ -227,8 +227,9 @@ plotSEMM_GUI.internal <- function(){
                             setup <- read.plotSEMM_wACOV(read)
                             ret <- plotSEMM_setup2(setup)
                             if(input$linesearch){
-                                browser()
-                                search <- .Call('linear', , , ret$x)
+                                search <- .Call('linear', matrix(ret$LCLall_), 
+                                                matrix(ret$UCLall_), ret$x)
+                                attr(ret, "search") <- search
                             }
                         }
                     }
@@ -243,7 +244,7 @@ plotSEMM_GUI.internal <- function(){
                         plottype <- input$plottype
                         if(plottype == 'contour') plotSEMM_contour(ret)
                         if(plottype == 'probability') plotSEMM_probability(ret)
-                        if(plottype == 'ci') plotSEMM_ci(ret, lineasearch=input$linesearch)
+                        if(plottype == 'ci') plotSEMM_ci(ret, linesearch=input$linesearch)
                     } else examplePlot()
                 })                
                 

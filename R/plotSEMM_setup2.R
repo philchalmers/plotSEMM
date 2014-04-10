@@ -1,4 +1,4 @@
-plotSEMM_setup2 <- function(setup, alpha = .05){
+plotSEMM_setup2 <- function(setup, alpha = .025){
     
     #only supports 2 or more classes 
     #requires Mplus read in file as input; setup <- read.plotSEMM_wACOV(read)
@@ -397,36 +397,12 @@ plotSEMM_setup2 <- function(setup, alpha = .05){
     }
     
     etah_ <- y
-    
-    # supress lines/points to plot when data is sparse
-    
-    etah_[denKsi <= 0.02] <- NA
-    etah_[denEta <= 0.02] <- NA
-    
     lo_ <- lo
     hi_ <- hi
     slo_ <- slo
     shi_ <- shi
-    
-    lo_[denKsi <= 0.02] <- NA
-    lo_[denEta <= 0.02] <- NA
-    hi_[denKsi <= 0.02] <- NA
-    hi_[denEta <= 0.02] <- NA
-    
-    slo_[denKsi <= 0.02] <- NA
-    slo_[denEta <= 0.02] <- NA
-    shi_[denKsi <= 0.02] <- NA
-    shi_[denEta <= 0.02] <- NA
-    
-    
     LCLall_ <- LCLall
-    UCLall_ <- UCLall
-    
-    LCLall_[denKsi <= 0.02] <- NA
-    LCLall_[denEta <= 0.02] <- NA
-    UCLall_[denKsi <= 0.02] <- NA
-    UCLall_[denEta <= 0.02] <- NA
-        
+    UCLall_ <- UCLall        
     
     SEMLIdatapks <- data.frame(Ksi, Eta, denKsi, denEta, etah_, I(etahmat), 
                                I(z), classes, I(post), I(pKsi), I(pEta), LCLall_,

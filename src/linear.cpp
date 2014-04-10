@@ -68,8 +68,8 @@ RcppExport SEXP linear(SEXP RlbCE, SEXP RubCE, SEXP Rx)
                 count(i) += inside(i, j);
             if(count(i) == points){
                 ret["linearity"] = 1;
-                ret["y1"] = inside(i, 0);
-                ret["y2"] = inside(i, points-1);
+                ret["y1"] = lines(i, 0);
+                ret["y2"] = lines(i, points-1);
                 return(ret);
             }
         }
