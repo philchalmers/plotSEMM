@@ -51,9 +51,10 @@ examplePlot <- function(){
 }
 
 # Bootstrap function
-bs.CI <- function(setup){
+bs.CI <- function(read){
     browser()
-    draws <- pickNdraws(setup$nparm)
+    ACOV <- read$tech3$paramCov.savedata
+    draws <- pickNdraws(ncol(ACOV))
     
     
     #OLD CODE TO BE MODIFIED

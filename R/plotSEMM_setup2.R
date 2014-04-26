@@ -1,4 +1,4 @@
-plotSEMM_setup2 <- function(setup, alpha = .025, boot = FALSE){
+plotSEMM_setup2 <- function(setup, alpha = .025, boot = NULL){
     
     #only supports 2 or more classes 
     #requires Mplus read in file as input; setup <- read.plotSEMM_wACOV(read)
@@ -405,8 +405,8 @@ plotSEMM_setup2 <- function(setup, alpha = .025, boot = FALSE){
     UCLall_ <- UCLall   
     
     bs_lo <- bs_high <- NULL
-    if(boot){
-        bs <- bs.CI(setup)
+    if(!is.null(boot)){
+        bs <- bs.CI(boot)
         bs_lo <- bs$lb
         bs_high <- bs$ub
     }
