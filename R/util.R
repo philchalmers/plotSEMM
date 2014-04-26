@@ -111,11 +111,20 @@ bs.CI <- function(read){
         
         #load the jittered pars
         tmpmod <- loadMplusJitter(samplepars, spec, jitter)
-        
-        #check if psi is PD
+        redraw <- FALSE
+        for(i in 1L:nclass){
+            tmp <- tmpmod[[i]]$psi
+            tmp[is.na(tmp)] <- 0
+            if(is(try(chol(tmp), silent=TRUE), 'try-error'))
+                redraw <- TRUE
+        }
+        if(redraw) next
         
         #perform computations...whatever they are, eventually assigning to bs.y
+        browser()
         
+        
+        #increment and break
         iter <- iter + 1
         if(iter == draws) break
     }
@@ -201,6 +210,13 @@ pickNdraws <- function(npars){
 }
     
 loadMplusJitter <- function(samplepars, spec, jitter){
-    browser()
-    
+    for(g in 1:length(samplepars)){
+        for(i in 1:length(samplepars[[g]])){
+            tmp <- samplepars[[g]][[i]] 
+            pick <- spec[[g]][[i]] != 0 & !is.na(spec[[g]][[i]])
+            tmp[pick] <- tmp[pick] + jitter[spec[[g]][[i]][pick]]
+            samplepars[[g]][[i]] <- tmp
+        }
+    }
+    samplepars
 }
