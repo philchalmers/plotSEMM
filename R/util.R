@@ -50,13 +50,77 @@ examplePlot <- function(){
     arrows(80,30,80+15,21, length=.2)
 }
 
-# Bootstrap function
+# Bootstrap function. Be very careful not to allocate huge objects to avoid memory issues
 bs.CI <- function(read){
-    browser()
     ACOV <- read$tech3$paramCov.savedata
-    draws <- pickNdraws(ncol(ACOV))
+    nclass <- length(read$tech1[[1L]]) - 1L
+    omitpars <- c()
+    for(i in 1L:nclass){
+        tmp <- read$tech1[[1L]][[i]]
+        omitpars <- c(omitpars, unique(na.omit(as.numeric(tmp$theta))), 
+            unique(na.omit(as.numeric(tmp$lambda))))
+    }
+    nomitpars <- sum(unique(omitpars) != 0)
+    draws <- pickNdraws(ncol(ACOV) - nomitpars)
+    iter <- 0
+    is.variance <- logical(ncol(ACOV))
+    cholL <- chol(ACOV)
+    points <- 250
+    lb.CE <- ub.CE <- matrix(0,1,points)
     
+    #construct spcification model with real parameters as list
+    spec <- read$tech1$parameterSpecification
+    samplepars <- spec
+    pars <- read$parameters$unstandardized
+    opars <- colnames(spec[[1L]]$theta)
+    lpars <- unique(pars[, 'param'][!(pars[, 'param'] %in% opars)])
+    exo <- pars[pars[, 'param'] %in% lpars & pars[, 'paramHeader'] == 'Means' & 
+                     pars[, 'LatentClass'] == 1, 'param']
+    endo <- colnames(spec[[1L]]$lambda)
+    endo <- endo[endo != exo]
+    for(i in 1L:nclass){
+        cls <- pars[pars[,'LatentClass'] == i, ]
+        samplepars[[i]]$nu <- cls[cls[, 'paramHeader'] == 'Intercepts' & 
+                                      cls[, 'param'] %in% opars, 'est']
+        tmp <- cls[grepl('\\.BY', cls[, 'paramHeader']), ]
+        endoind <- grepl(endo, tmp[,'paramHeader'])
+        lambdas <- samplepars[[i]]$lambda
+        tmp <- cls[grepl('\\.BY', cls[, 'paramHeader']) & 
+                       cls[, 'param'] %in% opars, 'est']
+        lambdas[endoind, colnames(lambdas) == endo] <- tmp[endoind]
+        lambdas[!endoind, colnames(lambdas) != endo] <- tmp[!endoind]
+        samplepars[[i]]$lambda <- lambdas
+        diag(samplepars[[i]]$theta) <- cls[cls[, 'paramHeader'] == 'Residual.Variances' & 
+                                         cls[, 'param'] %in% opars, 'est']
+        samplepars[[i]]$alpha <- c(cls[cls[, 'paramHeader'] == 'Means'
+                                       & cls[, 'param'] == exo, 'est'],
+                                   cls[cls[, 'paramHeader'] == 'Intercepts'
+                                       & cls[, 'param'] == endo, 'est'])
+        samplepars[[i]]$beta[2,1] <- cls[grepl('\\.ON', cls[, 'paramHeader']), 'est']
+        diag(samplepars[[i]]$psi) <- c(cls[cls[, 'paramHeader'] == 'Variances'
+                                         & cls[, 'param'] == exo, 'est'],
+                                       cls[cls[, 'paramHeader'] == 'Residual.Variances'
+                                           & cls[, 'param'] == endo, 'est'])
+    }
+    samplepars[[nclass + 1L]]$alpha.c <- c(pars[!(pars[,'param'] %in% 
+                                                      c(opars, exo, endo)), 'est'], 0)
     
+    while(TRUE){
+        
+        jitter <- rnorm(ncol(ACOV)) %*% cholL
+        
+        #load the jittered pars
+        tmpmod <- loadMplusJitter(samplepars, spec, jitter)
+        
+        #check if psi is PD
+        
+        #perform computations...whatever they are, eventually assigning to bs.y
+        
+        iter <- iter + 1
+        if(iter == draws) break
+    }
+    
+    #---------------------------------------------------------------- # BEGIN DEADCODE
     #OLD CODE TO BE MODIFIED
     #Parametric bootstrap replicates
     draws <- 1425 #8 parameters requires 1425 draws
@@ -93,14 +157,16 @@ bs.CI <- function(read){
             bs.c2.pi_[d,]*(bs.estimates[d,5]+bs.estimates[d,6]*x)  
     }
     
+    #---------------------------------------------------------------- # END DEADCODE
+    
     #Taking min and max of each "slice" to form CE
     lb.CE <- matrix(0,1,points)
     ub.CE <- matrix(0,1,points)
     for (p in 1:points){
         lb.CE[p] <- min(bs.y[,p])
         ub.CE[p] <- max(bs.y[,p])
-    }
-    ret <- list(lb =lb.CE, ub = ub.CE)
+    }    
+    ret <- list(lb = lb.CE, ub = ub.CE)
     return(ret)
 }
 
@@ -134,3 +200,7 @@ pickNdraws <- function(npars){
     draws
 }
     
+loadMplusJitter <- function(samplepars, spec, jitter){
+    browser()
+    
+}
