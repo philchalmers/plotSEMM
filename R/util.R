@@ -49,3 +49,87 @@ examplePlot <- function(){
     arrows(80,30,80-15,21, length=.2)
     arrows(80,30,80+15,21, length=.2)
 }
+
+# Bootstrap function
+bs.CI <- function(setup){
+    browser()
+    draws <- pickNdraws(setup$nparm)
+    
+    
+    #OLD CODE TO BE MODIFIED
+    #Parametric bootstrap replicates
+    draws <- 1425 #8 parameters requires 1425 draws
+    draws_ <- draws + 100
+    L <- chol(acov)
+    Z <- rnorm(matrix(0,draws_,length(mean)))
+    Z <- matrix(Z,draws_,length(mean))
+    bs.estimates <-  Z%*%L + matrix(1,draws_,1)%*%as.matrix(mean,1,length(mean))
+    
+    #select bs replicates with no negative variances
+    bs.estimates <- bs.estimates[bs.estimates[,8]>0,][1:draws,]
+    
+    #Bootstrapped aggregate function
+    #mixing probabilities
+    bs.c1.pi <- exp(bs.estimates[,7])/(exp(bs.estimates[,7])+exp(0))
+    bs.c2.pi <- exp(0)/(exp(bs.estimates[,7])+exp(0))
+    
+    bs.c1.phi <-matrix(0,draws,points)
+    bs.c2.phi <-matrix(0,draws,points)
+    bs.D <-matrix(0,draws,points)
+    bs.c1.pi_ <-matrix(0,draws,points)
+    bs.c2.pi_ <-matrix(0,draws,points)
+    bs.y <- matrix(0,draws,points)
+    
+    for(d in 1:draws){
+        bs.c1.phi[d,] <- dnorm(x,mean=bs.estimates[d,1],sd=sqrt(bs.estimates[d,8]))
+        bs.c2.phi[d,] <- dnorm(x,mean=bs.estimates[d,4],sd=sqrt(bs.estimates[d,8]))
+        bs.D[d,] <- bs.c1.pi[d]*bs.c1.phi[d,] + bs.c2.pi[d]*bs.c2.phi[d,]
+        bs.c1.pi_[d,] <- (bs.c1.pi[d]*bs.c1.phi[d,])/bs.D[d,]
+        bs.c2.pi_[d,] <- (bs.c2.pi[d]*bs.c2.phi[d,])/bs.D[d,]
+        
+        #bootstrapped y function
+        bs.y[d,] <- bs.c1.pi_[d,]*(bs.estimates[d,2]+bs.estimates[d,3]*x) +
+            bs.c2.pi_[d,]*(bs.estimates[d,5]+bs.estimates[d,6]*x)  
+    }
+    
+    #Taking min and max of each "slice" to form CE
+    lb.CE <- matrix(0,1,points)
+    ub.CE <- matrix(0,1,points)
+    for (p in 1:points){
+        lb.CE[p] <- min(bs.y[,p])
+        ub.CE[p] <- max(bs.y[,p])
+    }
+    ret <- list(lb =lb.CE, ub = ub.CE)
+    return(ret)
+}
+
+pickNdraws <- function(npars){ 
+    #95% only
+    draws <- switch(as.character(npars), 
+           "8" = 14255,
+           "9" = 29945,
+           "10" = 61976,
+           "11" = 126671,
+           "12" = 256130,
+           "13" = 513079,
+           "14" = 1019382,
+           "15" = 2010562,
+           "16" = 3939636,
+           "17" = 7674248,
+           "18" = 14868770,
+           "19" = 28667700,
+           "20" = 55024760,
+           "21" = 105117600,
+           "22" = 200272600,
+           "23" = 379989400,
+           "24" = 718584600,
+           "25" = 1354673000,
+           "26" = 2546395000,
+           "27" = 4773392000,
+           "28" = 8924985000,
+           "29" = 16646750000,
+            "default" = stop('bootstrap CIs only supported in models with 8 to 29 parameters'))
+    
+    draws
+}
+    

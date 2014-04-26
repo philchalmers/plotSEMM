@@ -1,4 +1,4 @@
-plotSEMM_setup2 <- function(setup, alpha = .025){
+plotSEMM_setup2 <- function(setup, alpha = .025, boot = FALSE){
     
     #only supports 2 or more classes 
     #requires Mplus read in file as input; setup <- read.plotSEMM_wACOV(read)
@@ -402,10 +402,18 @@ plotSEMM_setup2 <- function(setup, alpha = .025){
     slo_ <- slo
     shi_ <- shi
     LCLall_ <- LCLall
-    UCLall_ <- UCLall        
+    UCLall_ <- UCLall   
+    
+    bs_lo <- bs_high <- NULL
+    if(boot){
+        bs <- bs.CI(setup)
+        bs_lo <- bs$lb
+        bs_high <- bs$ub
+    }
     
     SEMLIdatapks <- data.frame(Ksi, Eta, denKsi, denEta, etah_, I(etahmat), 
                                I(z), classes, I(post), I(pKsi), I(pEta), LCLall_,
-                               UCLall_, lo_, hi_, slo_, shi_, x, alpha=alpha, setup2=TRUE)
+                               UCLall_, lo_, hi_, slo_, shi_, x, alpha=alpha, setup2=TRUE,
+                               boot=boot, bs_lo, bs_high)
     SEMLIdatapks
 }
