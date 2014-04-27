@@ -236,13 +236,21 @@ plotSEMM_GUI.internal <- function(){
                             setup <- read.plotSEMM_wACOV(read)
                             ret <- plotSEMM_setup2(setup, boot=if(boot) read else NULL)
                             if(input$linesearch){
-                                search <- .Call('linear', matrix(ret$LCLall_), 
-                                                matrix(ret$UCLall_), ret$x)
-                                attr(ret, "search") <- search
+                                lines <- .Call('linear', ret$slo_, ret$shi_, ret$x)
+                                line <- which(rowSums(t(ret$slo_<= t(lines)) &
+                                                              t(ret$shi_ >= t(lines))) == ncol(lines))
+                                if(length(line)){
+                                    line <- min(line)
+                                    attr(ret, "search") <- rbind(ret$x, lines[line,])
+                                }
                                 if(boot){
-                                    search <- .Call('linear', matrix(ret$bs_lo), 
-                                                    matrix(ret$bs_high), ret$x)
-                                    attr(ret, "search.bs") <- search
+                                    lines <- .Call('linear', ret$bs_lo, ret$bs_high, ret$x)
+                                    line <- which(rowSums(t(ret$bs_lo <= t(lines)) &
+                                                              t(ret$bs_high >= t(lines))) == ncol(lines))
+                                    if(length(line)){
+                                        line <- min(line)
+                                        attr(ret, "search.bs") <- rbind(ret$x, lines[line,])
+                                    }
                                 }
                             }
                         }

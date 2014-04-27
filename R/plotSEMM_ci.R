@@ -23,24 +23,30 @@ plotSEMM_ci <- function(SEMLIdatapks, linesearch, lnty = 3, lncol = 1) {
     pch = c(NA, 1, NA, 4)
     col = c(1, 2, 2, 4)
     if(SEMLIdatapks$boot[1]){
-        points(SEMLIdatapks$x, SEMLIdatapks$bs_lo, col = 5, lwd = 1.5, lty = 3, pch = 4)
-        points(SEMLIdatapks$x, SEMLIdatapks$bs_high, col = 5, lwd = 1.5, lty = 3, pch = 4)        
+        lines(SEMLIdatapks$x, SEMLIdatapks$bs_lo, col = 4, lwd = 1.5, lty = 3, pch = 4)
+        lines(SEMLIdatapks$x, SEMLIdatapks$bs_high, col = 4, lwd = 1.5, lty = 3, pch = 4)        
         legend <- c(legend, 'Bootstrap 95% Confidence Envelope')
-        lwd <- c(lwd, 1); lty <- c(lty, 2); pch = c(pch, 4); col = c(col, 5)
+        lwd <- c(lwd, 1); lty <- c(lty, 2); pch = c(pch, NA); col = c(col, 4)
     }
     legend("bottomleft", legend = legend, lwd = lwd, lty = lty, 
            pch = pch, col = col, bty = "n")
     if(linesearch){
+        found <- FALSE
         search <- attr(SEMLIdatapks, 'search')
-        if(search$linearity == 1){
-            x <- SEMLIdatapks$x
-            lines(c(x[1], x[length(x)]), c(search$y1, search$y2), col = 'green', lwd=4)
-            if(SEMLIdatapks$boot[1]){
-                search <- attr(SEMLIdatapks, 'search.bs')
-                lines(c(x[1], x[length(x)]), c(search$y1, search$y2), col = 'yellow', lwd=4)
-            }
-        } else {
-            #probably should add text or something to the plot saying search didn't find anything
+        if(length(search)){
+            found <- TRUE
+            nc <- ncol(search)
+            lines(c(search[1,1], search[1,nc]), c(search[2,1], search[2,nc]), col = 'green', lwd=4)
         }
+        if(SEMLIdatapks$boot[1]){            
+            search <- attr(SEMLIdatapks, 'search.bs')
+            if(length(search)){
+                found <- TRUE
+                nc <- ncol(search)
+                lines(c(search[1,1], search[1,nc]), c(search[2,1], search[2,nc]), col = 'yellow', lwd=4)
+            }   
+        }
+        if(!found)
+            title('Linearity algorithm test did not find a suitable line within Confidence Ellipse(s)')
     }
 }
