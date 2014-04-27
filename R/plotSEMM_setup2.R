@@ -404,7 +404,7 @@ plotSEMM_setup2 <- function(setup, alpha = .025, boot = NULL){
     LCLall_ <- LCLall
     UCLall_ <- UCLall   
     
-    bs_lo <- bs_high <- NULL
+    bs_lo <- bs_high <- 0
     if(!is.null(boot)){
         bs <- bs.CI(boot, x=x)
         bs_lo <- bs$lb

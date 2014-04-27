@@ -62,7 +62,6 @@ bs.CI <- function(read, x){
     }
     nomitpars <- sum(unique(omitpars) != 0) + nclass # also to remove latent residual vars count
     draws <- pickNdraws(ncol(ACOV) - nomitpars)
-    draws <- 5000 #REMOVE
     iter <- 0
     is.variance <- logical(ncol(ACOV))
     cholL <- chol(ACOV)
@@ -134,10 +133,8 @@ bs.CI <- function(read, x){
         if(iter == 0L){
             lb.CE <- ub.CE <- bs.y
         } else {
-            pick <- !is.nan(bs.y) #this is weird....why is there NaNs in lower parts of bs.y?
-            if(!all(pick)) browser()
-            lb.CE[lb.CE > bs.y & pick] <- bs.y[lb.CE > bs.y & pick]
-            ub.CE[ub.CE < bs.y & pick] <- bs.y[ub.CE < bs.y & pick]
+            lb.CE[lb.CE > bs.y] <- bs.y[lb.CE > bs.y]
+            ub.CE[ub.CE < bs.y] <- bs.y[ub.CE < bs.y]
         }
         
         #increment and break
@@ -150,7 +147,7 @@ bs.CI <- function(read, x){
 }
 
 pickNdraws <- function(npars){ 
-    #95% only
+    #95% only for now
     draws <- switch(as.character(npars), 
            "8" = 14255,
            "9" = 29945,

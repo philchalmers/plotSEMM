@@ -57,8 +57,16 @@ plotSEMM_GUI.internal <- function(){
                     conditionalPanel(condition = "input.plottype == 'ci'",
                                      shiny::checkboxInput(inputId='linesearch', 
                                                label='Run line search algorithm to test the null hypothesis that there
-                                               is a linear trend? Will plot a thicker green line if found.',
+                                               is a linear trend? Will plot a thicker green (delta) or yellow (bootstrap) 
+                                               line if found.',
                                                value=FALSE)
+                    ),
+                    
+                    conditionalPanel(condition = "input.plottype == 'ci'",
+                                     shiny::checkboxInput(inputId='boot', 
+                                                          label='Estimate bootstrapped confidence ellipse? Can take a prolonged
+                                                          amount of time to estimate (2-30+ minutes, depending on model complexity).',
+                                                          value=FALSE)
                     ),
                     
                     #Manual input
@@ -224,7 +232,7 @@ plotSEMM_GUI.internal <- function(){
                             psi22 <- pars$est[pars$paramHeader == 'Residual.Variances']
                             ret <- plotSEMM_setup(pi, alpha1, alpha2, beta21, psi11, psi22)
                         } else {
-                            boot <- TRUE
+                            boot <- input$boot
                             setup <- read.plotSEMM_wACOV(read)
                             ret <- plotSEMM_setup2(setup, boot=if(boot) read else NULL)
                             if(input$linesearch){
