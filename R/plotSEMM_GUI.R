@@ -248,7 +248,7 @@ plotSEMM_GUI.internal <- function(){
                                     line <- which(rowSums(t(ret$bs_lo <= t(lines)) &
                                                               t(ret$bs_high >= t(lines))) == ncol(lines))
                                     if(length(line)){
-                                        line <- min(line)
+                                        line <- max(line)
                                         attr(ret, "search.bs") <- rbind(ret$x, lines[line,])
                                     }
                                 }
