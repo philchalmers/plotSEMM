@@ -51,7 +51,7 @@ examplePlot <- function(){
 }
 
 # Bootstrap function. Be very careful not to allocate huge objects to avoid memory issues
-bs.CI <- function(read){
+bs.CI <- function(read, x){
     ACOV <- read$tech3$paramCov.savedata
     nclass <- length(read$tech1[[1L]]) - 1L
     omitpars <- c()
@@ -60,13 +60,13 @@ bs.CI <- function(read){
         omitpars <- c(omitpars, unique(na.omit(as.numeric(tmp$theta))), 
             unique(na.omit(as.numeric(tmp$lambda))))
     }
-    nomitpars <- sum(unique(omitpars) != 0)
+    nomitpars <- sum(unique(omitpars) != 0) + nclass # also to remove latent residual vars count
     draws <- pickNdraws(ncol(ACOV) - nomitpars)
+    draws <- 5000 #REMOVE
     iter <- 0
     is.variance <- logical(ncol(ACOV))
     cholL <- chol(ACOV)
     points <- 250
-    lb.CE <- ub.CE <- matrix(0,1,points)
     
     #construct spcification model with real parameters as list
     spec <- read$tech1$parameterSpecification
@@ -120,61 +120,31 @@ bs.CI <- function(read){
         }
         if(redraw) next
         
-        #perform computations...whatever they are, eventually assigning to bs.y
-        browser()
-        
+        #perform computations
+        bs.pi <- exp(tmpmod[[nclass + 1]][[1]]) / sum(exp(tmpmod[[nclass + 1]][[1]]))
+        bs.phi <- matrix(NA, length(x), nclass)
+        for(i in 1L:nclass)
+            bs.phi[,i] <- dnorm(x, tmpmod[[i]]$alpha[1L], sqrt(tmpmod[[i]]$psi[1L,1L]))
+        tmp <- t(bs.pi * t(bs.phi))
+        bs.pi_ <- tmp / rowSums(tmp)
+        bs.y <- numeric(length(x))
+        for(i in 1L:nclass)
+            bs.y <- bs.y + bs.pi_[,i] * (tmpmod[[i]]$alpha[2L] + 
+                                            tmpmod[[i]]$beta[2L,1L] * x)
+        if(iter == 0L){
+            lb.CE <- ub.CE <- bs.y
+        } else {
+            pick <- !is.nan(bs.y) #this is weird....why is there NaNs in lower parts of bs.y?
+            if(!all(pick)) browser()
+            lb.CE[lb.CE > bs.y & pick] <- bs.y[lb.CE > bs.y & pick]
+            ub.CE[ub.CE < bs.y & pick] <- bs.y[ub.CE < bs.y & pick]
+        }
         
         #increment and break
         iter <- iter + 1
         if(iter == draws) break
     }
     
-    #---------------------------------------------------------------- # BEGIN DEADCODE
-    #OLD CODE TO BE MODIFIED
-    #Parametric bootstrap replicates
-    draws <- 1425 #8 parameters requires 1425 draws
-    draws_ <- draws + 100
-    L <- chol(acov)
-    Z <- rnorm(matrix(0,draws_,length(mean)))
-    Z <- matrix(Z,draws_,length(mean))
-    bs.estimates <-  Z%*%L + matrix(1,draws_,1)%*%as.matrix(mean,1,length(mean))
-    
-    #select bs replicates with no negative variances
-    bs.estimates <- bs.estimates[bs.estimates[,8]>0,][1:draws,]
-    
-    #Bootstrapped aggregate function
-    #mixing probabilities
-    bs.c1.pi <- exp(bs.estimates[,7])/(exp(bs.estimates[,7])+exp(0))
-    bs.c2.pi <- exp(0)/(exp(bs.estimates[,7])+exp(0))
-    
-    bs.c1.phi <-matrix(0,draws,points)
-    bs.c2.phi <-matrix(0,draws,points)
-    bs.D <-matrix(0,draws,points)
-    bs.c1.pi_ <-matrix(0,draws,points)
-    bs.c2.pi_ <-matrix(0,draws,points)
-    bs.y <- matrix(0,draws,points)
-    
-    for(d in 1:draws){
-        bs.c1.phi[d,] <- dnorm(x,mean=bs.estimates[d,1],sd=sqrt(bs.estimates[d,8]))
-        bs.c2.phi[d,] <- dnorm(x,mean=bs.estimates[d,4],sd=sqrt(bs.estimates[d,8]))
-        bs.D[d,] <- bs.c1.pi[d]*bs.c1.phi[d,] + bs.c2.pi[d]*bs.c2.phi[d,]
-        bs.c1.pi_[d,] <- (bs.c1.pi[d]*bs.c1.phi[d,])/bs.D[d,]
-        bs.c2.pi_[d,] <- (bs.c2.pi[d]*bs.c2.phi[d,])/bs.D[d,]
-        
-        #bootstrapped y function
-        bs.y[d,] <- bs.c1.pi_[d,]*(bs.estimates[d,2]+bs.estimates[d,3]*x) +
-            bs.c2.pi_[d,]*(bs.estimates[d,5]+bs.estimates[d,6]*x)  
-    }
-    
-    #---------------------------------------------------------------- # END DEADCODE
-    
-    #Taking min and max of each "slice" to form CE
-    lb.CE <- matrix(0,1,points)
-    ub.CE <- matrix(0,1,points)
-    for (p in 1:points){
-        lb.CE[p] <- min(bs.y[,p])
-        ub.CE[p] <- max(bs.y[,p])
-    }    
     ret <- list(lb = lb.CE, ub = ub.CE)
     return(ret)
 }

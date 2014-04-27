@@ -224,12 +224,18 @@ plotSEMM_GUI.internal <- function(){
                             psi22 <- pars$est[pars$paramHeader == 'Residual.Variances']
                             ret <- plotSEMM_setup(pi, alpha1, alpha2, beta21, psi11, psi22)
                         } else {
+                            boot <- TRUE
                             setup <- read.plotSEMM_wACOV(read)
-                            ret <- plotSEMM_setup2(setup)
+                            ret <- plotSEMM_setup2(setup, boot=if(boot) read else NULL)
                             if(input$linesearch){
                                 search <- .Call('linear', matrix(ret$LCLall_), 
                                                 matrix(ret$UCLall_), ret$x)
                                 attr(ret, "search") <- search
+                                if(boot){
+                                    search <- .Call('linear', matrix(ret$bs_lo), 
+                                                    matrix(ret$bs_high), ret$x)
+                                    attr(ret, "search.bs") <- search
+                                }
                             }
                         }
                     }

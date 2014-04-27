@@ -406,7 +406,7 @@ plotSEMM_setup2 <- function(setup, alpha = .025, boot = NULL){
     
     bs_lo <- bs_high <- NULL
     if(!is.null(boot)){
-        bs <- bs.CI(boot)
+        bs <- bs.CI(boot, x=x)
         bs_lo <- bs$lb
         bs_high <- bs$ub
     }
@@ -414,6 +414,6 @@ plotSEMM_setup2 <- function(setup, alpha = .025, boot = NULL){
     SEMLIdatapks <- data.frame(Ksi, Eta, denKsi, denEta, etah_, I(etahmat), 
                                I(z), classes, I(post), I(pKsi), I(pEta), LCLall_,
                                UCLall_, lo_, hi_, slo_, shi_, x, alpha=alpha, setup2=TRUE,
-                               boot=boot, bs_lo, bs_high)
+                               boot=!is.null(boot), bs_lo, bs_high)
     SEMLIdatapks
 }
