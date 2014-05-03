@@ -10,11 +10,15 @@ examplePlot <- function(){
     text(105, 35, expression(zeta), cex=cex)
     
     arrows(31,35,69,35, length=.2)
-    text(47, 38, expression(beta[12]), cex=cex)
+    text(47, 38, expression(beta[21]), cex=cex)
     arrows(99,35,91,35, length=.1)
     draw.arc(5, 35, 3, deg1=320, deg2=20)
+    arrows(112.7, 35.98, 112.55, 35.92, length=.15)
+    arrows(112.7, 34, 112.55, 34.06, length=.15)
     text(5, 38, expression(psi[11]), cex=cex)
     draw.arc(115, 35, 3, deg1=0, deg2=140)
+    arrows(7.62,35.68, 7.635, 35.67, length=.15)
+    arrows(7.6,34.3, 7.615, 34.31, length=.15)
     draw.arc(115, 35, 3, deg1=220, deg2=360)
     text(115, 38, expression(psi[22]), cex=cex)
     
