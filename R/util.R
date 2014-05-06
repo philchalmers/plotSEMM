@@ -55,7 +55,7 @@ examplePlot <- function(){
 }
 
 # Bootstrap function. Be very careful not to allocate huge objects to avoid memory issues
-bs.CI <- function(read, x){
+bs.CI <- function(read, x, alpha){
     ACOV <- read$tech3$paramCov.savedata
     nclass <- length(read$tech1[[1L]]) - 1L
     omitpars <- c()
@@ -65,7 +65,7 @@ bs.CI <- function(read, x){
             unique(na.omit(as.numeric(tmp$lambda))))
     }
     nomitpars <- sum(unique(omitpars) != 0) + nclass # also to remove latent residual vars count
-    draws <- pickNdraws(ncol(ACOV) - nomitpars)
+    draws <- pickNdraws(ncol(ACOV) - nomitpars, alpha=alpha)
     iter <- 0
     is.variance <- logical(ncol(ACOV))
     cholL <- chol(ACOV)
@@ -150,33 +150,60 @@ bs.CI <- function(read, x){
     return(ret)
 }
 
-pickNdraws <- function(npars){ 
+pickNdraws <- function(npars, alpha){ 
     #95% only for now
-    draws <- switch(as.character(npars), 
-           "8" = 14255,
-           "9" = 29945,
-           "10" = 61976,
-           "11" = 126671,
-           "12" = 256130,
-           "13" = 513079,
-           "14" = 1019382,
-           "15" = 2010562,
-           "16" = 3939636,
-           "17" = 7674248,
-           "18" = 14868770,
-           "19" = 28667700,
-           "20" = 55024760,
-           "21" = 105117600,
-           "22" = 200272600,
-           "23" = 379989400,
-           "24" = 718584600,
-           "25" = 1354673000,
-           "26" = 2546395000,
-           "27" = 4773392000,
-           "28" = 8924985000,
-           "29" = 16646750000,
-            "default" = stop('bootstrap CIs only supported in models with 8 to 29 parameters'))
-    
+    if(alpha == .025){
+        draws <- switch(as.character(npars), 
+               "8" = 14255,
+               "9" = 29945,
+               "10" = 61976,
+               "11" = 126671,
+               "12" = 256130,
+               "13" = 513079,
+               "14" = 1019382,
+               "15" = 2010562,
+               "16" = 3939636,
+               "17" = 7674248,
+               "18" = 14868770,
+               "19" = 28667700,
+               "20" = 55024760,
+               "21" = 105117600,
+               "22" = 200272600,
+               "23" = 379989400,
+               "24" = 718584600,
+               "25" = 1354673000,
+               "26" = 2546395000,
+               "27" = 4773392000,
+               "28" = 8924985000,
+               "29" = 16646750000,
+                "default" = stop('bootstrap CIs only supported in models with 8 to 29 parameters'))
+    } else {
+        draws <- switch(as.character(npars), 
+                        "8" = 4586,
+                        "9" = 9232,
+                        "10" = 18352,
+                        "11" = 36095,
+                        "12" = 70351,
+                        "13" = 136042,
+                        "14" = 261257,
+                        "15" = 498651,
+                        "16" = 946541,
+                        "17" = 1787852,
+                        "18" = 3361809,
+                        "19" = 6295567,
+                        "20" = 11745310,
+                        "21" = 21836900,
+                        "22" = 40469420,
+                        "23" = 74777710,
+                        "24" = 137789200,
+                        "25" = 253241500,
+                        "26" = 464303700,
+                        "27" = 849338400,
+                        "28" = 1550345000,
+                        "29" = 2824215000,
+                        "default" = stop('bootstrap CIs only supported in models with 8 to 29 parameters'))
+    }
+        
     draws
 }
     

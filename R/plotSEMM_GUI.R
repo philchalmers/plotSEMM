@@ -55,6 +55,11 @@ plotSEMM_GUI.internal <- function(){
                                 selected="contour"),
                     
                     conditionalPanel(condition = "input.plottype == 'ci'",
+                                     selectInput(inputId='CI', label='Confidence interval',
+                                                 choices=c("95%", "90%"), selected="95%")
+                    ),
+                    
+                    conditionalPanel(condition = "input.plottype == 'ci'",
                                      shiny::checkboxInput(inputId='plot_deltaci', 
                                                           label='Plot the confidence intervals using
                                                           the Delta method?',
@@ -256,7 +261,8 @@ plotSEMM_GUI.internal <- function(){
                         } else {
                             boot <- input$boot
                             setup <- read.plotSEMM_wACOV(read)
-                            ret <- plotSEMM_setup2(setup, boot=if(boot) read else NULL)
+                            ret <- plotSEMM_setup2(setup, boot=if(boot) read else NULL,
+                                                   alpha = ifelse(input$CI == "95%", .025, .05))
                             if(input$linesearch){
                                 lines <- .Call('linear', ret$slo_, ret$shi_, ret$x)
                                 line <- which(rowSums(t(ret$slo_<= t(lines)) &
@@ -291,7 +297,8 @@ plotSEMM_GUI.internal <- function(){
                         if(plottype == 'ci') plotSEMM_ci(ret, linesearch=input$linesearch,
                                                          deltaci=input$plot_deltaci,
                                                          bsci=input$plot_bsci,
-                                                         deltace=input$plot_deltace)
+                                                         deltace=input$plot_deltace,
+                                                         ninty_five=input$CI == "95%")
                     } else examplePlot()
                 })                
                 
