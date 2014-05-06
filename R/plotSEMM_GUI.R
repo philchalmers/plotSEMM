@@ -55,6 +55,28 @@ plotSEMM_GUI.internal <- function(){
                                 selected="contour"),
                     
                     conditionalPanel(condition = "input.plottype == 'ci'",
+                                     shiny::checkboxInput(inputId='plot_deltaci', 
+                                                          label='Plot the confidence intervals using
+                                                          the Delta method?',
+                                                          value=TRUE)
+                    ),
+                    
+                    conditionalPanel(condition = "input.plottype == 'ci'",
+                                     shiny::checkboxInput(inputId='plot_bsci', 
+                                                          label='Plot the confidence intervals using
+                                                          the Bootstrap method?',
+                                                          value=TRUE)
+                    ),
+                    
+                    conditionalPanel(condition = "input.plottype == 'ci'",
+                                     shiny::checkboxInput(inputId='plot_deltace', 
+                                                          label='Plot the confidence ellipse using
+                                                          the Delta method?',
+                                                          value=TRUE)
+                    ),
+                    
+                    
+                    conditionalPanel(condition = "input.plottype == 'ci'",
                                      shiny::checkboxInput(inputId='linesearch', 
                                                label='Run line search algorithm to test the null hypothesis that there
                                                is a linear trend? Will plot a thicker green (delta) or yellow (bootstrap) 
@@ -266,7 +288,10 @@ plotSEMM_GUI.internal <- function(){
                         plottype <- input$plottype
                         if(plottype == 'contour') plotSEMM_contour(ret)
                         if(plottype == 'probability') plotSEMM_probability(ret)
-                        if(plottype == 'ci') plotSEMM_ci(ret, linesearch=input$linesearch)
+                        if(plottype == 'ci') plotSEMM_ci(ret, linesearch=input$linesearch,
+                                                         deltaci=input$plot_deltaci,
+                                                         bsci=input$plot_bsci,
+                                                         deltace=input$plot_deltace)
                     } else examplePlot()
                 })                
                 

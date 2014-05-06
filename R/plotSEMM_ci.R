@@ -1,4 +1,5 @@
-plotSEMM_ci <- function(SEMLIdatapks, linesearch, lnty = 3, lncol = 1) {
+plotSEMM_ci <- function(SEMLIdatapks, linesearch, lnty = 3, lncol = 1, deltaci=TRUE, 
+                        deltace=TRUE, bsci=TRUE) {
     
     #requires setup from plotSEMM_setup2
     if(!SEMLIdatapks$setup2[1L]) 
@@ -10,12 +11,18 @@ plotSEMM_ci <- function(SEMLIdatapks, linesearch, lnty = 3, lncol = 1) {
     # plot(SEMLIdatapks$x,SEMLIdatapks$y,type='n',xlab='Latent Predictor', ylab='Latent Outcome')
     plot(SEMLIdatapks$Ksi, SEMLIdatapks$Eta, type = "n", xlab = "Latent Predictor", ylab = "Latent Outcome")
     lines(SEMLIdatapks$x, SEMLIdatapks$etah_, col = 1, lwd = 2)
-    points(SEMLIdatapks$x, SEMLIdatapks$lo_, col = 2, lwd = 1.5, lty = 2)
-    points(SEMLIdatapks$x, SEMLIdatapks$hi_, col = 2, lwd = 1.5, lty = 2)
-    lines(SEMLIdatapks$x, SEMLIdatapks$slo_, col = 2, lwd = 1.5, lty = 2)
-    lines(SEMLIdatapks$x, SEMLIdatapks$shi_, col = 2, lwd = 1.5, lty = 2)
-    points(SEMLIdatapks$x, SEMLIdatapks$LCLall_, col = 4, lwd = 1.5, lty = 3, pch = 4)
-    points(SEMLIdatapks$x, SEMLIdatapks$UCLall_, col = 4, lwd = 1.5, lty = 3, pch = 4)
+    if(deltaci){
+        points(SEMLIdatapks$x, SEMLIdatapks$lo_, col = 2, lwd = 1.5, lty = 2)
+        points(SEMLIdatapks$x, SEMLIdatapks$hi_, col = 2, lwd = 1.5, lty = 2)
+    }
+    if(deltace){
+        lines(SEMLIdatapks$x, SEMLIdatapks$slo_, col = 2, lwd = 1.5, lty = 2)
+        lines(SEMLIdatapks$x, SEMLIdatapks$shi_, col = 2, lwd = 1.5, lty = 2)
+    }
+    if(bsci){
+        points(SEMLIdatapks$x, SEMLIdatapks$LCLall_, col = 4, lwd = 1.5, lty = 3, pch = 4)
+        points(SEMLIdatapks$x, SEMLIdatapks$UCLall_, col = 4, lwd = 1.5, lty = 3, pch = 4)
+    }
     legend = c("Aggregate Function", "Delta Method 95% Confidence Interval", "Delta Method 95% Confidence Envelope", 
                "Bootstrap 95% Confidence Interval")
     lwd = c(2, 1, 1, 1)
