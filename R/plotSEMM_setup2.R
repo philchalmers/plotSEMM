@@ -409,7 +409,7 @@ plotSEMM_setup2 <- function(setup, alpha = .025, boot = NULL){
     
     bs_lo <- bs_high <- 0
     if(!is.null(boot)){
-        bs <- bs.CI(boot, x=x, alpha=alpha)
+        bs <- bs.CE(boot, x=x, alpha=alpha)
         bs_lo <- bs$lb
         bs_high <- bs$ub
     }

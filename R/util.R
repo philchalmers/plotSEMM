@@ -54,8 +54,8 @@ examplePlot <- function(){
     arrows(80,30,80+15,21, length=.2)
 }
 
-# Bootstrap function. Be very careful not to allocate huge objects to avoid memory issues
-bs.CI <- function(read, x, alpha){
+# Bootstrap ellipse function. Be very careful not to allocate huge objects to avoid memory issues
+bs.CE <- function(read, x, alpha){
     ACOV <- read$tech3$paramCov.savedata
     nclass <- length(read$tech1[[1L]]) - 1L
     omitpars <- c()
