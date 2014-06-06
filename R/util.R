@@ -55,7 +55,7 @@ examplePlot <- function(){
 }
 
 # Bootstrap ellipse function. Be very careful not to allocate huge objects to avoid memory issues
-bs.CE <- function(read, x, alpha){
+bs.CE <- function(read, x, alpha, boot = FALSE){
     ACOV <- read$tech3$paramCov.savedata
     nclass <- length(read$tech1[[1L]]) - 1L
     omitpars <- c()
@@ -65,11 +65,12 @@ bs.CE <- function(read, x, alpha){
             unique(na.omit(as.numeric(tmp$lambda))), unique(na.omit(as.numeric(tmp$nu))))
     }
     nomitpars <- sum(unique(omitpars) != 0) + nclass # also to remove latent residual vars count
-    draws <- pickNdraws(ncol(ACOV) - nomitpars, alpha=alpha)
+    draws <- if(boot) 1000 else pickNdraws(ncol(ACOV) - nomitpars, alpha=alpha)
     iter <- 0
     is.variance <- logical(ncol(ACOV))
     cholL <- chol(ACOV)
     points <- 250
+    bs.yall <- NULL
     
     #construct spcification model with real parameters as list
     spec <- read$tech1$parameterSpecification
@@ -136,9 +137,11 @@ bs.CE <- function(read, x, alpha){
                                             tmpmod[[i]]$beta[2L,1L] * x)
         if(iter == 0L){
             lb.CE <- ub.CE <- bs.y
+            if(boot) bs.yall <- matrix(bs.y, draws, length(bs.y), byrow=TRUE)
         } else {
             lb.CE[lb.CE > bs.y] <- bs.y[lb.CE > bs.y]
             ub.CE[ub.CE < bs.y] <- bs.y[ub.CE < bs.y]
+            if(boot) bs.yall[iter + 1L, ] <- bs.y
         }
         
         #increment and break
@@ -146,7 +149,7 @@ bs.CE <- function(read, x, alpha){
         if(iter == draws) break
     }
     
-    ret <- list(lb = lb.CE, ub = ub.CE)
+    ret <- list(lb = lb.CE, ub = ub.CE, bs.yall = bs.yall)
     return(ret)
 }
 

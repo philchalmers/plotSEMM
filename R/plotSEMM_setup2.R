@@ -1,4 +1,4 @@
-plotSEMM_setup2 <- function(setup, alpha = .025, boot = NULL){
+plotSEMM_setup2 <- function(setup, alpha = .025, boot = NULL, boot.CE=FALSE){
     
     #only supports 2 or more classes 
     #requires Mplus read in file as input; setup <- read.plotSEMM_wACOV(read)
@@ -247,145 +247,18 @@ plotSEMM_setup2 <- function(setup, alpha = .025, boot = NULL){
     # delta method simultaneous confidence intervals
     slo <- y - sq * se
     shi <- y + sq * se
-    
-    
-    ct <- 0
-    varorder <- c()
-    alpha_loc1 <- vector(mode = "numeric", length = classes)
-    kappa_loc <- vector(mode = "numeric", length = classes)
-    psi_loc1 <- vector(mode = "numeric", length = classes)
-    phi_loc <- vector(mode = "numeric", length = classes)
-    for (i in 1:classes) {
-        varorder <- c(varorder, alpha_loc[i + ct])
-        alpha_loc1[i] <- alpha_loc[i + ct]
-        psi_loc1[i] <- psi_loc[i + ct]
-        ct <- ct + 1
-    }
-    
-    ct <- 0
-    for (i in 2:(classes + 1)) {
-        varorder <- c(varorder, alpha_loc[i + ct])
-        kappa_loc[i - 1] <- alpha_loc[i + ct]
-        phi_loc[i - 1] <- psi_loc[i + ct]
-        ct <- ct + 1
-    }
-    
-    varorder <- c(varorder, beta_loc)
-    
-    # ct <- 0 equal <- NULL for (i in 3:classes*2) { if (!identical(psi_loc[1],psi_loc[i+ct]) &
-    # !identical(psi_loc[2],psi_loc[i+ct+1])) equal<-TRUE else equal<- FALSE ct <- ct + 1 }
-    
-    # equal <- NULL if (identical(means[psi_loc[1]],means[psi_loc[3]]) & identical(means[psi_loc[2]],means[psi_loc[4]]))
-    # equal<-TRUE else equal<- FALSE
-    
-    equal <- NULL
-    if (identical(means[psi_loc[1]], means[psi_loc[3]])) 
-        equal <- TRUE else equal <- FALSE
-    
-    # if (!equal) { for(i in 1:(classes-1)){ for(i in 1:classes) { varorder <-c(varorder,psi_loc[i+ct]) alpha_loc1[i] <-
-    # alpha_loc[i+ct] psi_loc1[i] <- psi_loc[i+ct] ct <- ct+1} } }
-    
-    ct <- 0
-    if (!equal) {
-        for (i in 1:(classes)) {
-            varorder <- c(varorder, psi_loc[i + ct])
-            ct <- ct + 1
-        }
-    }
-    
-    if (equal) {
-        varorder <- c(varorder, psi_loc[1])
-    }
-    
-    varorder <- c(varorder, c_loc)
-    
-    # selecting submatrices of acov vector of variable positions
-    
-    acov0 <- acov[varorder, varorder]
-    means0 = means[varorder]
-    
-    # generating the data
-    draws = 1000
-    L = chol(acov0)  #chol decomposition of acov
-    Z = rnorm(matrix(0, draws, length(means0)))  #random normal variates
-    Z = matrix(Z, draws, length(means0))  #placing in matrix form
-    Sim_est = Z %*% L + matrix(1, draws, 1) %*% means0  #getting simulated values
-    
-    # not seeing the point of this code.  the Missing variable isn't used elsewhere missing <- 0 for (i in 1:nrow(Sim_est)){ if
-    # (Sim_est[i,7]<0) missing = missing+1 }
-    
-    yall <- NULL
-    
-    if (!equal) {
-        for (i in seq(LB, UB, length = points)) {
-            yy <- 0
-            placeholder <- 0
-            for (j in 1:classes) {
-                if (j < classes) {
-                  placeholder = placeholder + exp(Sim_est[, classes * 4 + j]) * dnorm(i, mean = Sim_est[, j], sd = sqrt(Sim_est[, 
-                    classes * 3 + j]))
-                } else {
-                  placeholder = placeholder + dnorm(i, mean = Sim_est[, classes], sd = sqrt(Sim_est[, classes * 4]))
-                }
-            }
-            
-            for (k in 1:classes) {
-                if (k < classes) {
-                  yy = yy + (exp(Sim_est[, classes * 4 + k]) * dnorm(i, mean = Sim_est[, k], sd = sqrt(Sim_est[, classes * 3 + 
-                    k])) * (Sim_est[, classes + k] + Sim_est[, classes * 2 + k] * i))/placeholder
-                } else {
-                  yy = yy + (dnorm(i, mean = Sim_est[, classes], sd = sqrt(Sim_est[, classes * 4])) * (Sim_est[, classes * 2] + 
-                    Sim_est[, classes * 3] * i))/placeholder
-                }
-            }
-            
-            yall = rbind(yall, yy)
-        }
-    }
-    
-    if (equal) {
-        for (i in seq(LB, UB, length = points)) {
-            
-            yy <- 0
-            placeholder <- 0
-            for (j in 1:classes) {
-                if (j < classes) {
-                  placeholder = placeholder + exp(Sim_est[, classes * 3 + 1 + j]) * dnorm(i, mean = Sim_est[, j], sd = sqrt(Sim_est[, 
-                    classes * 3 + 1]))
-                } else {
-                  placeholder = placeholder + dnorm(i, mean = Sim_est[, classes], sd = sqrt(Sim_est[, classes * 3 + 1]))
-                }
-            }
-            
-            for (k in 1:classes) {
-                if (k < classes) {
-                  yy = yy + (exp(Sim_est[, classes * 3 + 1 + k]) * dnorm(i, mean = Sim_est[, k], sd = sqrt(Sim_est[, classes * 
-                    3 + 1])) * (Sim_est[, classes + k] + Sim_est[, classes * 2 + k] * i))/placeholder
-                } else {
-                  yy = yy + (dnorm(i, mean = Sim_est[, classes], sd = sqrt(Sim_est[, classes * 3 + 1])) * (Sim_est[, classes * 
-                    2] + Sim_est[, classes * 3] * i))/placeholder
-                }
-            }
-            
-            
-            
-            yall = rbind(yall, yy)
-        }
-    }
-    
-    
-    
-    # sorting before getting upper and lower CI values
-    for (i in 1:nrow(yall)) {
-        yall[i, ] = sort(yall[i, ])
-    }
-    
+                
+    #boostrap CI's
+    draws <- 1000
+    bs <- bs.CE(boot, x=x, alpha=alpha, boot=TRUE)
+    yall <- bs$bs.yall
+    yall <- apply(yall, 2, sort)
     LCL = (alpha/2) * draws
-    UCL = (1 - (alpha/2)) * draws
+    UCL = (1 - (alpha/2)) * draws    
+    LCLall = yall[LCL, ]
+    UCLall = yall[UCL, ]
     
-    LCLall = yall[, LCL]
-    UCLall = yall[, UCL]
-    
+    #old prep coding
     Ksi <- Eta1
     Eta <- Eta2
     denKsi <- sumpi
@@ -408,8 +281,8 @@ plotSEMM_setup2 <- function(setup, alpha = .025, boot = NULL){
     UCLall_ <- UCLall   
     
     bs_lo <- bs_high <- 0
-    if(!is.null(boot)){
-        bs <- bs.CE(boot, x=x, alpha=alpha)
+    if(boot.CE){
+        bs <- bs.CE(boot, x=x, alpha=alpha, boot=FALSE)
         bs_lo <- bs$lb
         bs_high <- bs$ub
     }

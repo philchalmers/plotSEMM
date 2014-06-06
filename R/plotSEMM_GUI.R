@@ -261,7 +261,7 @@ plotSEMM_GUI.internal <- function(){
                         } else {
                             boot <- input$boot
                             setup <- read.plotSEMM_wACOV(read)
-                            ret <- plotSEMM_setup2(setup, boot=if(boot) read else NULL,
+                            ret <- plotSEMM_setup2(setup, boot=read, boot.CE=boot,
                                                    alpha = ifelse(input$CI == "95%", .025, .05))
                             if(input$linesearch){
                                 lines <- .Call('linear', ret$slo_, ret$shi_, ret$x)
