@@ -2,6 +2,8 @@ read.plotSEMM_wACOV <- function(read){
     
     #apparently I need to do read in the results.dat file for now
     tmp <- read$input$savedata
+    if(is.null(tmp))
+        stop('ACOV matrix could not be read in')
     tmp <- strsplit(tmp, '=')
     results_f <- NULL
     for(i in 1L:length(tmp))

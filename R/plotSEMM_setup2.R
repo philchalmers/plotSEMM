@@ -3,6 +3,7 @@ plotSEMM_setup2 <- function(setup, alpha = .025, boot = NULL){
     #only supports 2 or more classes 
     #requires Mplus read in file as input; setup <- read.plotSEMM_wACOV(read)
 
+    points <- 50
     nclass <- classes <- setup$nclass
     nparam <- setup$nparm; acov <- setup$acov; loc <- setup$loc
     c_loc <- loc$c_loc; alpha_loc <- loc$alpha_loc; beta_loc <- loc$beta_loc; 
@@ -95,8 +96,8 @@ plotSEMM_setup2 <- function(setup, alpha = .025, boot = NULL){
     
     # computations for contour plot
     
-    Eta1 <- seq(LEta1, UEta1, length = 47)
-    Eta2 <- seq(LEta2, UEta2, length = 47)
+    Eta1 <- seq(LEta1, UEta1, length = points)
+    Eta2 <- seq(LEta2, UEta2, length = points)
     
     
     r <- vector(mode = "numeric", length = classes)
@@ -129,30 +130,30 @@ plotSEMM_setup2 <- function(setup, alpha = .025, boot = NULL){
     # of code for computing I(z)
     # ----------------------------------------------------------------------------------------------------------------------
     
-    x <- seq(LEta1, UEta1, length = 47)
-    x2 <- seq(LEta2, UEta2, length = 47)
+    x <- seq(LEta1, UEta1, length = points)
+    x2 <- seq(LEta2, UEta2, length = points)
     
-    phi <- array(data = 0, c(47, classes))
+    phi <- array(data = 0, c(points, classes))
     for (i in 1:classes) {
         phi[, i] <- dnorm(x, mean = alphaarray[1, i], sd = sqrt(psiarray[1, i]))
     }
     
     
-    a_pi <- array(data = 0, c(47, classes))
-    a_pi2 <- array(data = 0, c(47, classes))
+    a_pi <- array(data = 0, c(points, classes))
+    a_pi2 <- array(data = 0, c(points, classes))
     for (i in 1:classes) {
         a_pi[, i] <- pi_v[i] * dnorm(x, mean = MuEta_1[i], sd = sqrt(VEta_1[i]))
         a_pi2[, i] <- pi_v[i] * dnorm(x2, mean = MuEta_2[i], sd = sqrt(VEta_2[i]))
     }
     
-    sumpi <- array(data = 0, c(47, 1))
-    sumpi2 <- array(data = 0, c(47, 1))
+    sumpi <- array(data = 0, c(points, 1))
+    sumpi2 <- array(data = 0, c(points, 1))
     for (i in 1:classes) {
         sumpi[, 1] <- sumpi[, 1] + a_pi[, i]
         sumpi2[, 1] <- sumpi2[, 1] + a_pi2[, i]
     }
     
-    pi <- array(data = 0, c(47, classes))
+    pi <- array(data = 0, c(points, classes))
     for (i in 1:classes) {
         pi[, i] <- a_pi[, i]/sumpi[, 1]
     }
@@ -168,9 +169,9 @@ plotSEMM_setup2 <- function(setup, alpha = .025, boot = NULL){
     }
     
     
-    dalpha <- array(data = 0, c(47, classes))
-    dphi <- array(data = 0, c(47, classes))
-    dc <- array(data = 0, c(47, classes - 1))
+    dalpha <- array(data = 0, c(points, classes))
+    dphi <- array(data = 0, c(points, classes))
+    dc <- array(data = 0, c(points, classes - 1))
     for (i in 1:classes) {
         for (j in 1:classes) {
             if (i != j) {
@@ -186,20 +187,22 @@ plotSEMM_setup2 <- function(setup, alpha = .025, boot = NULL){
             i])) * (1/D^2)
     }
     
-    for (i in 1:(classes - 1)) {
-        for (j in 1:(classes)) {
-            if (i != j) {
-                dc[, i] <- dc[, i] + (exp(ci_v[j]) * phi[, j] * ((alphaarray[2, i] - alphaarray[2, j]) + (gamma[i] - gamma[j]) * 
-                  x))
-                
-                
+    if(classes > 1){
+        for (i in 1:(classes - 1)) {
+            for (j in 1:(classes)) {
+                if (i != j) {
+                    dc[, i] <- dc[, i] + (exp(ci_v[j]) * phi[, j] * ((alphaarray[2, i] - alphaarray[2, j]) + (gamma[i] - gamma[j]) * 
+                      x))
+                    
+                    
+                }
             }
+            dc[, i] <- dc[, i] * exp(ci_v[i]) * phi[, i] * (1/D^2)
         }
-        dc[, i] <- dc[, i] * exp(ci_v[i]) * phi[, i] * (1/D^2)
     }
     
-    dkappa <- array(data = 0, c(47, classes))
-    dgamma <- array(data = 0, c(47, classes))
+    dkappa <- array(data = 0, c(points, classes))
+    dgamma <- array(data = 0, c(points, classes))
     for (i in 1:classes) {
         dkappa[, i] <- exp(ci_v[i]) * phi[, i]/D
         dgamma[, i] <- exp(ci_v[i]) * phi[, i] * x/D
@@ -231,7 +234,7 @@ plotSEMM_setup2 <- function(setup, alpha = .025, boot = NULL){
     
     deriv <- c(deriv, dc, dphi)
     
-    deriv <- matrix(deriv, nrow = 47, ncol = p)
+    deriv <- matrix(deriv, nrow = points, ncol = p)
     
     se <- sqrt(diag(deriv %*% acovd %*% t(deriv)))
     q <- abs(qnorm(alpha/2, mean = 0, sd = 1))
@@ -314,7 +317,7 @@ plotSEMM_setup2 <- function(setup, alpha = .025, boot = NULL){
     yall <- NULL
     
     if (!equal) {
-        for (i in seq(LB, UB, length = 47)) {
+        for (i in seq(LB, UB, length = points)) {
             yy <- 0
             placeholder <- 0
             for (j in 1:classes) {
@@ -341,7 +344,7 @@ plotSEMM_setup2 <- function(setup, alpha = .025, boot = NULL){
     }
     
     if (equal) {
-        for (i in seq(LB, UB, length = 47)) {
+        for (i in seq(LB, UB, length = points)) {
             
             yy <- 0
             placeholder <- 0

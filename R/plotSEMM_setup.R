@@ -63,23 +63,28 @@ plotSEMM_setup <- function(pi, alpha1, alpha2, beta21, psi11, psi22) {
     classes <- length(beta21)
     
     alphaarray <- array(data = 0, c(2, 1, classes))
+        j <- 0 #modified to make sure it's correct
     for (i in 1:classes) {
         alphaarray[1, 1, i] <- alpha1[i]
         alphaarray[2, 1, i] <- alpha2[i]
+        j <- j+1
     }
     
     gammaarray <- array(data = 0, c(2, 2, classes))
+        j <- 0
     for (i in 1:classes) {
         gammaarray[2, 1, i] <- beta21[i]
+        j <- j+1
     }
     
     psiarray <- array(data = 0, c(2, 2, classes))
+        j <- 0
     for (i in 1:classes) {
         psiarray[1, 1, i] <- psi11[i]
         psiarray[2, 2, i] <- psi22[i]
+        j <- j+1
     }
-    
-    
+        
     
     IMPCOV <- array(data = NA, c(2, 2, classes))
     IMPMEAN <- array(data = NA, c(2, 2, classes))
@@ -111,7 +116,7 @@ plotSEMM_setup <- function(pi, alpha1, alpha2, beta21, psi11, psi22) {
     
     
     
-    iter <- 47
+    points <- 50 #number of points to plot
     
     overallmuKSI <- 0
     overallmuETA <- 0
@@ -142,8 +147,8 @@ plotSEMM_setup <- function(pi, alpha1, alpha2, beta21, psi11, psi22) {
     upperboundEta <- overallmuETA + 3 * sqrt(overallvETA)
     lowerboundEta <- overallmuETA - 3 * sqrt(overallvETA)
     
-    Ksi <- seq(lowerboundKsi, upperboundKsi, length = 47)
-    Eta <- seq(lowerboundEta, upperboundEta, length = 47)
+    Ksi <- seq(lowerboundKsi, upperboundKsi, length = points)
+    Eta <- seq(lowerboundEta, upperboundEta, length = points)
     
     pKsi <- matrix(data = 0, nrow = length(Ksi), ncol = classes)
     for (i in 1:classes) {
@@ -184,7 +189,7 @@ plotSEMM_setup <- function(pi, alpha1, alpha2, beta21, psi11, psi22) {
     }
     
     etah_ <- etah
-    etah_[denKsi <= 0.02] <- NA
+    etah_[denKsi <= 0.02] <- NA 
     etah_[denEta <= 0.02] <- NA
     
     r <- vector(mode = "numeric", length = classes)
