@@ -1,4 +1,4 @@
-plotSEMM_setup2 <- function(setup, alpha = .025, boot = NULL, boot.CE=FALSE){
+plotSEMM_setup2 <- function(setup, alpha = .025, boot = NULL, boot.CE=FALSE, boot.CI=TRUE){
     
     #only supports 2 or more classes 
     #requires Mplus read in file as input; setup <- read.plotSEMM_wACOV(read)
@@ -249,14 +249,18 @@ plotSEMM_setup2 <- function(setup, alpha = .025, boot = NULL, boot.CE=FALSE){
     shi <- y + sq * se
                 
     #boostrap CI's
-    draws <- 1000
-    bs <- bs.CE(boot, x=x, alpha=alpha, boot=TRUE)
-    yall <- bs$bs.yall
-    yall <- apply(yall, 2, sort)
-    LCL = (alpha/2) * draws
-    UCL = (1 - (alpha/2)) * draws    
-    LCLall = yall[LCL, ]
-    UCLall = yall[UCL, ]
+    if(boot.CI){
+        draws <- 1000
+        bs <- bs.CE(boot, x=x, alpha=alpha, boot=TRUE)
+        yall <- bs$bs.yall
+        yall <- apply(yall, 2, sort)
+        LCL = (alpha/2) * draws
+        UCL = (1 - (alpha/2)) * draws    
+        LCLall = yall[LCL, ]
+        UCLall = yall[UCL, ]
+    } else {
+        LCLall <- UCLall <- numeric(length(lo))
+    }
     
     #old prep coding
     Ksi <- Eta1
