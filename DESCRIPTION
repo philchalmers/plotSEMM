@@ -13,12 +13,13 @@ Description: Contains functions plotSEMM_setup, plotSEMM_contour,
     nonlinear latent variable interactions in SEMM using LISREL
     output.
 Depends:
-    plyr,
     shiny
 Imports:
+    plyr,
     MplusAutomation,
     Rcpp,
     plotrix
+Roxygen: list(wrap = FALSE)
 License: GPL (>= 2)
 LazyLoad: yes
 LazyData: yes

@@ -18,6 +18,7 @@
 #'   latent outcome on the latent predictor.
 #' @param psi11 Vector: \emph{K} within-class variances of the latent predictor. 
 #' @param psi22 Vector: \emph{K} within-class variances of the latent outcome.
+#' @param points number of points to use. Default is 50
 #' @author Bethany Kok and Phil Chalmers \email{rphilip.chalmers@@gmail.com}
 #' @keywords dplot data manip array
 #' @export plotSEMM_setup
@@ -40,7 +41,7 @@
 #' 
 #' plotobj <- plotSEMM_setup(pi, alpha1, alpha2, beta21, psi11, psi22)
 #' }
-plotSEMM_setup <- function(pi, alpha1, alpha2, beta21, psi11, psi22) {
+plotSEMM_setup <- function(pi, alpha1, alpha2, beta21, psi11, psi22, points = 50) {
     if (!is.vector(pi)) {
         print("Error:Probabilities must be provided as a vector")
     }
@@ -113,10 +114,6 @@ plotSEMM_setup <- function(pi, alpha1, alpha2, beta21, psi11, psi22) {
         alpha[i] = alphaarray[2, 1, i]
         gamma[i] = gammaarray[2, 1, i]
     }
-    
-    
-    
-    points <- 50 #number of points to plot
     
     overallmuKSI <- 0
     overallmuETA <- 0

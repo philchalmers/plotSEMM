@@ -1,9 +1,9 @@
-plotSEMM_setup2 <- function(setup, alpha = .025, boot = NULL, boot.CE=FALSE, boot.CI=TRUE){
+plotSEMM_setup2 <- function(setup, alpha = .025, boot = NULL, boot.CE=FALSE, boot.CI=TRUE,
+                            points = 50){
     
     #only supports 2 or more classes 
     #requires Mplus read in file as input; setup <- read.plotSEMM_wACOV(read)
 
-    points <- 50
     nclass <- classes <- setup$nclass
     nparam <- setup$nparm; acov <- setup$acov; loc <- setup$loc
     c_loc <- loc$c_loc; alpha_loc <- loc$alpha_loc; beta_loc <- loc$beta_loc; 
