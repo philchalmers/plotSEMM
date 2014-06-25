@@ -75,7 +75,7 @@ plotSEMM_GUI.internal <- function(){
                     
                     conditionalPanel(condition = "input.plottype == 'ci'",
                                      shiny::checkboxInput(inputId='plot_deltace', 
-                                                          label='Plot the confidence ellipse using
+                                                          label='Plot the confidence envelope using
                                                           the Delta method?',
                                                           value=TRUE)
                     ),
@@ -91,7 +91,7 @@ plotSEMM_GUI.internal <- function(){
                     
                     conditionalPanel(condition = "input.plottype == 'ci'",
                                      shiny::checkboxInput(inputId='boot', 
-                                                          label='Estimate bootstrapped confidence ellipse? Can take a prolonged
+                                                          label='Estimate bootstrapped confidence envelope? Can take a prolonged
                                                           amount of time to estimate (2-30+ minutes, depending on model complexity).',
                                                           value=FALSE)
                     ),
