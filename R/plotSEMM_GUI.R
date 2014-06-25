@@ -100,7 +100,7 @@ plotSEMM_GUI.internal <- function(){
                     conditionalPanel(condition = "input.method == 'Manually'",
                                      sliderInput(inputId = "nclass",
                                                  label = "Number of latent classes:",
-                                                 min = 2, max = 7, value = 2, step = 1),
+                                                 min = 1, max = 7, value = 2, step = 1),
                                      
                                      hr(),    
                                      h6('Class 1:'),
@@ -207,7 +207,7 @@ plotSEMM_GUI.internal <- function(){
                     if(input$method == 'Manually'){
                         
                         pi <- alpha1 <- alpha2 <- beta21 <- psi11 <- psi22 <- numeric(nclass)
-                        if(is.na(input$pi2))
+                        if(is.na(input$pi1))
                             return(NULL)
                         Names <- names(input)
                         pi.names <- paste0('pi', 1:7)
