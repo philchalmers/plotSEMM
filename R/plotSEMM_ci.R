@@ -46,7 +46,7 @@ plotSEMM_ci <- function(SEMLIdatapks, linesearch, lnty = 3, lncol = 1, deltaci=T
     if(linesearch){
         found <- FALSE
         search <- attr(SEMLIdatapks, 'search')
-        if(length(search)){
+        if(length(search) && deltace){
             found <- TRUE
             nc <- ncol(search)
             lines(c(search[1,1], search[1,nc]), c(search[2,1], search[2,nc]), col = 'green', lwd=4)

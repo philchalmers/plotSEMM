@@ -4,15 +4,17 @@ read.plotSEMM_wACOV <- function(read){
     tmp <- read$input$savedata
     if(is.null(tmp))
         stop('ACOV matrix could not be read in')
-    tmp <- strsplit(tmp, '=')
+    tmp <- gsub(' ', '', tmp)
+    tmp <- gsub(';', '', tmp)
+    tmp1 <- strsplit(tmp, '=')
+    tmp2 <- strsplit(tmp, 'is')
+    if(any(sapply(tmp1, length) == 2L)) tmp <- tmp1
+    else tmp <- tmp2
     results_f <- NULL
     for(i in 1L:length(tmp))
         if(grepl('results', tmp[[i]][1L])) results_f <- tmp[[i]][2L]
-    if(is.null(results_f)){
+    if(is.null(results_f))
         stop('Mplus results file not found. Please save using \'results = filename.dat \' ')
-    } else {
-        results_f <- strsplit(results_f, ';')[[1]]
-    }
     dat <- t(read.table(results_f, sep=' ', header=FALSE, fill=TRUE))
     dat <- dat[!is.na(dat)]
     read$means <- matrix(dat)

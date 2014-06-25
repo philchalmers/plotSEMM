@@ -41,7 +41,7 @@ plotSEMM_GUI.internal <- function(){
                        Mplus output file (.out) is in the refered directory.'),
                     
                     selectInput(inputId="method", label="Select how you would like to input the parameters:",
-                                choices=c("Mplus file"="Mplusfile", "Manually"="Manually", " "=" "), selected=" "),
+                                choices=c("Mplus File"="Mplusfile", "Manual Input"="Manually", " "=" "), selected=" "),
                     
                     #Mplus input
                     conditionalPanel(condition = "input.method == 'Mplusfile'",
@@ -181,7 +181,7 @@ plotSEMM_GUI.internal <- function(){
 
                     hr(),
 
-                    submitButton(text = "Submit/Update")
+                    submitButton(text = "Update")
                     
                     ), #end sidebarPanel
                 
@@ -238,7 +238,7 @@ plotSEMM_GUI.internal <- function(){
                                 return(NULL)
                             if(length(file) > 1L)
                                 stop('Multiple .out files in specifed directory')
-                            read <- MplusAutomation::readModels(file, recursive=TRUE)
+                            read <- suppressWarnings(MplusAutomation::readModels(file, recursive=TRUE))
                         } else {
                             return(NULL)
                         }
