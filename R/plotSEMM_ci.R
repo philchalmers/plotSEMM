@@ -60,6 +60,6 @@ plotSEMM_ci <- function(SEMLIdatapks, linesearch, lnty = 3, lncol = 1, deltaci=T
             }   
         }
         if(!found)
-            title('Linearity algorithm test did not find a suitable line within Confidence Ellipse(s)')
+            title('Linearity algorithm test did not find a suitable line within Confidence Envelope(s)')
     }
 }

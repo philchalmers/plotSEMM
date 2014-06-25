@@ -294,6 +294,6 @@ plotSEMM_setup2 <- function(setup, alpha = .025, boot = NULL, boot.CE=FALSE, boo
     SEMLIdatapks <- data.frame(Ksi, Eta, denKsi, denEta, etah_, I(etahmat), 
                                I(z), classes, I(post), I(pKsi), I(pEta), LCLall_,
                                UCLall_, lo_, hi_, slo_, shi_, x, alpha=alpha, setup2=TRUE,
-                               boot=!is.null(boot), bs_lo, bs_high)
+                               boot=boot.CE, bs_lo, bs_high)
     SEMLIdatapks
 }
