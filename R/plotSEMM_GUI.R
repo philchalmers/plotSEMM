@@ -92,7 +92,7 @@ plotSEMM_GUI.internal <- function(){
                                                    value=FALSE),
                                      
                                      textInput(inputId='save_filename', label='Saved data file name:',
-                                               value='plotSEMM_saved_data.Rdata'),
+                                               value='plotSEMM_saved_data.Rdata')
                                      
                     ),                    
                     
