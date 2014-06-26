@@ -43,16 +43,17 @@ plotSEMM_GUI.internal <- function(){
                     selectInput(inputId="method", label="Select how you would like to input the parameters:",
                                 choices=c("Mplus File"="Mplusfile", "Manual Input"="Manually", " "=" "), selected=" "),
                     
-                    #Mplus input
+                    conditionalPanel(condition = "input.method != ' '",
+                        selectInput(inputId="plottype",label="Type of plot to generate:",
+                                    choices=c("contour"="contour", 'probability'='probability',
+                                              "confidence interval (Mplus input only)"="ci"), 
+                                    selected="contour")
+                    ),
+                    
                     conditionalPanel(condition = "input.method == 'Mplusfile'",
                                      textInput(inputId='Mpath', label='Directory containing Mplus file:',
                                                value=getwd())
                     ),
-                    
-                    selectInput(inputId="plottype",label="Type of plot to generate:",
-                                choices=c("contour"="contour", 'probability'='probability',
-                                          "confidence interval (Mplus input only)"="ci"), 
-                                selected="contour"),
                     
                     conditionalPanel(condition = "input.plottype == 'ci'",
                                      selectInput(inputId='CI', label='Confidence interval',
