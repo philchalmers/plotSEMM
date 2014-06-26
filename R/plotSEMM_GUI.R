@@ -55,27 +55,66 @@ plotSEMM_GUI.internal <- function(){
                                                value=getwd())
                     ),
                     
+                    ###
+                    # tech extras for plotting features
+                    conditionalPanel(condition = "input.method != ' '",
+                                     checkboxInput(inputId='tech_extras', 
+                                                   label='Override various defaults of the generated plots?',
+                                                   value=FALSE)
+                    ),
+                    
+                    conditionalPanel(condition = "input.tech_extras == true",
+                                     
+                                     selectInput(inputId="legend_location", label="Legend location",
+                                                 choices=c("none"="none", "bottomright"="bottomright", "bottom"="bottom", 
+                                                           "bottomleft"="bottomleft", "left"="left", "topleft"="topleft",
+                                                           "top"="top", "topright"="topright", "right"="right", "center"="center"), 
+                                                 selected="bottomright"),
+                                     
+                                     textInput(inputId='xlab', label='X-axis label:',
+                                               value='Latent Predictor'),
+                                     
+                                     textInput(inputId='ylab', label='Y-axis label:',
+                                               value='Latent Outcome'),
+                                     
+                                     numericInput('npoints', 'Number of points to evaluate', 50,
+                                                  min = 10, max = 1000),
+                                     
+                                     checkboxInput(inputId='class_info', 
+                                                   label='Show class specific distributions, regression lines, 
+                                                   and mixing probabilities (for contour and probability plots)?',
+                                                   value=TRUE),
+                                     
+                                     checkboxInput(inputId='save_data', 
+                                                   label='Save the data used to plot the graphics to the working 
+                                                   directory?',
+                                                   value=FALSE)
+                                     
+                    ),                    
+                    
+                    ###
+                    
                     conditionalPanel(condition = "input.plottype == 'ci'",
                                      selectInput(inputId='CI', label='Confidence interval',
                                                  choices=c("95%", "90%"), selected="95%")
                     ),
                     
                     conditionalPanel(condition = "input.plottype == 'ci'",
-                                     shiny::checkboxInput(inputId='plot_deltaci', 
+                                     checkboxInput(inputId='plot_deltaci', 
                                                           label='Plot the confidence intervals using
                                                           the Delta method?',
                                                           value=TRUE)
                     ),
                     
                     conditionalPanel(condition = "input.plottype == 'ci'",
-                                     shiny::checkboxInput(inputId='plot_bsci', 
+                                     checkboxInput(inputId='plot_bsci', 
                                                           label='Plot the confidence intervals using
                                                           the Bootstrap method?',
                                                           value=TRUE)
                     ),
                     
                     conditionalPanel(condition = "input.plottype == 'ci'",
-                                     shiny::checkboxInput(inputId='plot_deltace', 
+                                     checkboxInput(inputId='plot_deltace', 
                                                           label='Plot the confidence envelope using
                                                           the Delta method?',
                                                           value=TRUE)
@@ -83,7 +122,7 @@ plotSEMM_GUI.internal <- function(){
                     
                     
                     conditionalPanel(condition = "input.plottype == 'ci'",
-                                     shiny::checkboxInput(inputId='linesearch', 
+                                     checkboxInput(inputId='linesearch', 
                                                label='Run line search algorithm to test the null hypothesis that there
                                                is a linear trend? Will plot a thicker green (delta) or yellow (bootstrap) 
                                                line if found.',
@@ -91,7 +130,7 @@ plotSEMM_GUI.internal <- function(){
                     ),
                     
                     conditionalPanel(condition = "input.plottype == 'ci'",
-                                     shiny::checkboxInput(inputId='boot', 
+                                     checkboxInput(inputId='boot', 
                                                           label='Estimate bootstrapped confidence envelope? Can take a prolonged
                                                           amount of time to estimate (2-30+ minutes, depending on model complexity).',
                                                           value=FALSE)
