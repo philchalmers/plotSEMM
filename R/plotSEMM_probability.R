@@ -13,6 +13,7 @@
 #' @param title Titles the graph. 
 #' @param leg Logical variable.  If TRUE, a legend accompanies the graph.  If FALSE, 
 #'   no legend appears.  Defaults to TRUE. 
+#' @param ... addition inputs, mostly from plotSEMM_GUI()
 #' @author Bethany Kok and Phil Chalmers \email{rphilip.chalmers@@gmail.com}
 #' @keywords hplot color
 #' @export plotSEMM_probability
@@ -41,7 +42,14 @@
 #' plotSEMM_probability(plotobj , EtaName = "Latent Predictor", lnty = 2, title = "Probability")
 #' }
 plotSEMM_probability <- function(SEMLIdatapks, EtaName = "Eta1", lnty = 3, lncol = 1, 
-                                 title = "", leg = TRUE) {
+                                 title = "", leg = TRUE, ...) {
+    
+    dots <- list(...)
+    input <- dots$input
+    if(!is.null(input$xlab)) EtaName <- input$xlab
+    legend_location <- if(!is.null(input$legend_location)) input$legend_location else 'topright'
+    if(legend_location == 'default') legend_location <- 'topright'
+    if(legend_location == 'none') leg <- FALSE
     
     # plot 2 probabilities and exogenous variable
     def.par <- par(no.readonly = TRUE)  # save default, for resetting... 
@@ -87,7 +95,7 @@ plotSEMM_probability <- function(SEMLIdatapks, EtaName = "Eta1", lnty = 3, lncol
         }
         
         
-        legend(x = "topright", legend = text, horiz = FALSE, lwd = lwd1, lty = lty1, col = col1, , bty = "n")
+        legend(x = legend_location, legend = text, horiz = FALSE, lwd = lwd1, lty = lty1, col = col1, , bty = "n")
     }
     
     # plot2 Conditional Probabilities

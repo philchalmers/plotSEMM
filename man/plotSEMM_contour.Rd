@@ -4,7 +4,7 @@
 \title{Nonlinear regression function}
 \usage{
 plotSEMM_contour(SEMLIdatapks, EtaN2 = "Eta2", EtaN1 = "Eta1",
-  classinfo = TRUE, lnty = 3, lncol = 1, title = "", leg = TRUE)
+  classinfo = TRUE, lnty = 3, lncol = 1, title = "", leg = TRUE, ...)
 }
 \arguments{
 \item{SEMLIdatapks}{object returned from \code{\link{plotSEMM_setup}}}
@@ -26,6 +26,8 @@ See \code{\link{par}} for information about line type.}
 
 \item{leg}{Logical variable.  If TRUE, a legend accompanies the graph.  If FALSE, no legend appears.
 Defaults to TRUE.}
+
+\item{...}{addition inputs, mostly from plotSEMM_GUI()}
 }
 \description{
 Requires \code{plotSEMM_setup} be run first.  Generates (a) the potential nonlinear

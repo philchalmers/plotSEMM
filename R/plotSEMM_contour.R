@@ -18,6 +18,7 @@
 #' @param title Titles the graph. 
 #' @param leg Logical variable.  If TRUE, a legend accompanies the graph.  If FALSE, no legend appears. 
 #'   Defaults to TRUE.
+#' @param ... addition inputs, mostly from plotSEMM_GUI()
 #' @author Bethany Kok and Phil Chalmers \email{rphilip.chalmers@@gmail.com}
 #' @keywords hplot color
 #' @export plotSEMM_contour
@@ -47,7 +48,16 @@
 #' }
 plotSEMM_contour <- function(SEMLIdatapks, EtaN2 = "Eta2", EtaN1 = "Eta1", 
                              classinfo = TRUE, lnty = 3, lncol = 1, title = "", 
-                             leg = TRUE) {
+                             leg = TRUE, ...) {
+    
+    dots <- list(...)
+    input <- dots$input
+    if(!is.null(input$xlab)) EtaN1 <- input$xlab
+    if(!is.null(input$ylab)) EtaN2 <- input$ylab
+    legend_location <- if(!is.null(input$legend_location)) input$legend_location else 'topright'
+    if(legend_location == 'default') legend_location <- 'topright'
+    if(legend_location == 'none') leg <- FALSE
+    if(!is.null(input$class_info)) classinfo <- input$class_info
     
     # This is to make all 3 graphs on 1 panel for contour
     def.par <- par(no.readonly = TRUE)  # save default, for resetting... 
@@ -104,7 +114,8 @@ plotSEMM_contour <- function(SEMLIdatapks, EtaN2 = "Eta2", EtaN1 = "Eta1",
             lty1[i] <- (i + lnty - 1)
         }
         
-        legend(x = "topright", legend = text, horiz = FALSE, lwd = lwd1, lty = lty1, col = col1, , bty = "n")
+        legend(x = legend_location, legend = text, horiz = FALSE, lwd = lwd1, 
+                   lty = lty1, col = col1, , bty = "n")
     }
     
     # plot3 contour

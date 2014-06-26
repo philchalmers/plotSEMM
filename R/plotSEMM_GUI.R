@@ -66,10 +66,11 @@ plotSEMM_GUI.internal <- function(){
                     conditionalPanel(condition = "input.tech_extras == true",
                                      
                                      selectInput(inputId="legend_location", label="Legend location",
-                                                 choices=c("none"="none", "bottomright"="bottomright", "bottom"="bottom", 
+                                                 choices=c("default"="default", "bottomright"="bottomright", "bottom"="bottom", 
                                                            "bottomleft"="bottomleft", "left"="left", "topleft"="topleft",
-                                                           "top"="top", "topright"="topright", "right"="right", "center"="center"), 
-                                                 selected="bottomright"),
+                                                           "top"="top", "topright"="topright", "right"="right", "center"="center",
+                                                           "none"="none"), 
+                                                 selected="default"),
                                      
                                      textInput(inputId='xlab', label='X-axis label:',
                                                value='Latent Predictor'),
@@ -86,9 +87,12 @@ plotSEMM_GUI.internal <- function(){
                                                    value=TRUE),
                                      
                                      checkboxInput(inputId='save_data', 
-                                                   label='Save the data used to plot the graphics to the working 
+                                                   label='Save the data used to plot the graphics to the current working 
                                                    directory?',
-                                                   value=FALSE)
+                                                   value=FALSE),
+                                     
+                                     textInput(inputId='save_filename', label='Saved data file name:',
+                                               value='plotSEMM_saved_data.Rdata'),
                                      
                     ),                    
                     
@@ -267,7 +271,7 @@ plotSEMM_GUI.internal <- function(){
                         test <- c(pi, alpha1, alpha2, beta21, psi11, psi22)
                         if(any(is.na(test)))
                             stop('Must include all input values for each class')
-                        ret <- plotSEMM_setup(pi, alpha1, alpha2, beta21, psi11, psi22)
+                        ret <- plotSEMM_setup(pi, alpha1, alpha2, beta21, psi11, psi22, points=input$npoints)
                     } else if(input$method == 'Mplusfile'){
                         
                         if(!is.null(input$Mpath)){
@@ -297,12 +301,13 @@ plotSEMM_GUI.internal <- function(){
                             beta21 <- pars$est[pars$paramHeader == ON]
                             psi11 <- pars$est[pars$paramHeader == 'Variances']
                             psi22 <- pars$est[pars$paramHeader == 'Residual.Variances']
-                            ret <- plotSEMM_setup(pi, alpha1, alpha2, beta21, psi11, psi22)
+                            ret <- plotSEMM_setup(pi, alpha1, alpha2, beta21, psi11, psi22, points=input$npoints)
                         } else {
                             boot <- input$boot
                             setup <- read.plotSEMM_wACOV(read)
                             ret <- plotSEMM_setup2(setup, boot=read, boot.CE=boot, boot.CI=input$plot_bsci,
-                                                   alpha = ifelse(input$CI == "95%", .025, .05))
+                                                   alpha = ifelse(input$CI == "95%", .025, .05),
+                                                   points=input$npoints)
                             if(input$linesearch){
                                 lines <- .Call('linear', ret$slo_, ret$shi_, ret$x)
                                 line <- which(rowSums(t(ret$slo_<= t(lines)) &
@@ -330,15 +335,17 @@ plotSEMM_GUI.internal <- function(){
 
                 output$main_plot <- renderPlot({
                     ret <- GUI_setup(input)
+                    if(input$save_data) save(ret, file = input$save_filename)
                     if(!is.null(ret)){
                         plottype <- input$plottype
-                        if(plottype == 'contour') plotSEMM_contour(ret)
-                        if(plottype == 'probability') plotSEMM_probability(ret)
+                        if(plottype == 'contour') plotSEMM_contour(ret, input=input)
+                        if(plottype == 'probability') plotSEMM_probability(ret, input=input)
                         if(plottype == 'ci') plotSEMM_ci(ret, linesearch=input$linesearch,
                                                          deltaci=input$plot_deltaci,
                                                          bsci=input$plot_bsci,
                                                          deltace=input$plot_deltace,
-                                                         ninty_five=input$CI == "95%")
+                                                         ninty_five=input$CI == "95%",
+                                                         input=input)
                     } else examplePlot()
                 })                
                 

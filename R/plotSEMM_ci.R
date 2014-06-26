@@ -1,5 +1,12 @@
 plotSEMM_ci <- function(SEMLIdatapks, linesearch, lnty = 3, lncol = 1, deltaci=TRUE, 
-                        deltace=TRUE, bsci=TRUE, ninty_five = TRUE) {
+                        deltace=TRUE, bsci=TRUE, ninty_five = TRUE, ...) {
+    
+    dots <- list(...)
+    input <- dots$input
+    if(!is.null(input$xlab)) xlab <- input$xlab
+    if(!is.null(input$ylab)) ylab <- input$ylab
+    legend_location <- if(!is.null(input$legend_location)) input$legend_location else 'bottomleft'
+    if(legend_location == 'default') legend_location <- 'bottomleft'
     
     #requires setup from plotSEMM_setup2
     if(!SEMLIdatapks$setup2[1L]) 
@@ -9,7 +16,7 @@ plotSEMM_ci <- function(SEMLIdatapks, linesearch, lnty = 3, lncol = 1, deltaci=T
     SEMLIdatapks <- SEMLIdatapks[pick, ]
     
     # plot(SEMLIdatapks$x,SEMLIdatapks$y,type='n',xlab='Latent Predictor', ylab='Latent Outcome')
-    plot(SEMLIdatapks$Ksi, SEMLIdatapks$Eta, type = "n", xlab = "Latent Predictor", ylab = "Latent Outcome")
+    plot(SEMLIdatapks$Ksi, SEMLIdatapks$Eta, type = "n", xlab = xlab, ylab = ylab)
     lines(SEMLIdatapks$x, SEMLIdatapks$etah_, col = 1, lwd = 2)
     if(deltaci){
         points(SEMLIdatapks$x, SEMLIdatapks$lo_, col = 2, lwd = 1.5, lty = 2)
@@ -41,8 +48,9 @@ plotSEMM_ci <- function(SEMLIdatapks, linesearch, lnty = 3, lncol = 1, deltaci=T
         else legend <- c(legend, 'Bootstrap 90% Confidence Envelope')
         lwd <- c(lwd, 1); lty <- c(lty, 2); pch = c(pch, NA); col = c(col, 4)
     }
-    legend("bottomleft", legend = legend, lwd = lwd, lty = lty, 
-           pch = pch, col = col, bty = "n")
+    if(legend_location != 'none')
+        legend(legend_location, legend = legend, lwd = lwd, lty = lty, 
+               pch = pch, col = col, bty = "n")
     if(linesearch){
         found <- FALSE
         search <- attr(SEMLIdatapks, 'search')

@@ -4,7 +4,7 @@
 \title{Probability plot}
 \usage{
 plotSEMM_probability(SEMLIdatapks, EtaName = "Eta1", lnty = 3, lncol = 1,
-  title = "", leg = TRUE)
+  title = "", leg = TRUE, ...)
 }
 \arguments{
 \item{SEMLIdatapks}{object returned from \code{\link{plotSEMM_setup}}}
@@ -21,6 +21,8 @@ provided, defaults to 1.  See \code{\link{par}} for information about line type.
 
 \item{leg}{Logical variable.  If TRUE, a legend accompanies the graph.  If FALSE,
 no legend appears.  Defaults to TRUE.}
+
+\item{...}{addition inputs, mostly from plotSEMM_GUI()}
 }
 \description{
 Requires \code{plotSEMM_setup} be run first. Generates a plot which expresses
