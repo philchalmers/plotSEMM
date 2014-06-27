@@ -1,57 +1,117 @@
 examplePlot <- function(){
-    cex <- 2
-    plot(c(0,120), c(10,50), axes=FALSE, frame.plot=FALSE, type='n', xlab='', ylab='')
+    cex <- 1.5
+    plot(c(0,100), c(0,80), axes=FALSE, frame.plot=FALSE, type='n', xlab='', ylab='')
     
-    draw.circle(20, 35, 8)
-    text(20, 35, expression(eta[1]), cex=cex)
-    draw.circle(80, 35, 8)
-    text(80, 35, expression(eta[2]), cex=cex)
-    draw.circle(105, 35, 5)
-    text(105, 35, expression(zeta), cex=cex)
+    #latent variables
+    draw.ellipse(20, 55, 10,8)
+    text(20, 55, expression(eta[1]), cex=cex)
+    draw.ellipse(68, 55, 10,8)
+    text(68, 55, expression(eta[2]), cex=cex)
     
-    arrows(31,35,69,35, length=.2)
-    text(47, 38, expression(beta[21]), cex=cex)
-    arrows(99,35,91,35, length=.1)
-    draw.arc(5, 35, 3, deg1=320, deg2=20)
-    arrows(112.7, 35.98, 112.55, 35.92, length=.15)
-    arrows(112.7, 34, 112.55, 34.06, length=.15)
-    text(5, 38, expression(psi[11]), cex=cex)
-    draw.arc(115, 35, 3, deg1=0, deg2=140)
-    arrows(7.62,35.68, 7.635, 35.67, length=.15)
-    arrows(7.6,34.3, 7.615, 34.31, length=.15)
-    draw.arc(115, 35, 3, deg1=220, deg2=360)
-    text(115, 38, expression(psi[22]), cex=cex)
+    #beta[21] and arrow
+    arrows(30,55, 58,55, length=.1)
+    text(45, 58, expression(beta[21]["[k]"]), cex=cex)
     
-    polygon(c(15,25,20), c(45,45,50))
-    text(20,47, '1', cex=cex)
-    polygon(c(15,25,20)+60, c(45,45,50))
-    text(80,47, '1', cex=cex)
-    arrows(20,44,20,40, length=.1)
-    text(25,42, expression(alpha[1]), cex=cex)
-    arrows(80,44,80,40, length=.1)
-    text(85,42, expression(alpha[2]), cex=cex)
     
-    polygon(c(15,25,25,15), c(15,15,20,20))
-    text(20,17,expression(y[2]), cex=cex)
-    polygon(c(15,25,25,15)-15, c(15,15,20,20))
-    text(20-15,17,expression(y[1]), cex=cex)
-    polygon(c(15,25,25,15)+15, c(15,15,20,20))
-    text(20+15,17,expression(y[3]), cex=cex)
+    #psi[11] 
+    draw.arc(7, 55, 3, deg1=320, deg2=40)
+    arrows(8.5, 58.0, 9.4, 57.4,  length=.08)
+    arrows(8.7, 52.0, 9.4, 53.0, length=.08)
+    text(5, 62, expression(psi[11]["[k]"]), cex=cex)
     
-    polygon(c(75,85,85,75), c(15,15,20,20))
-    text(80,17,expression(y[5]), cex=cex)
-    polygon(c(75,85,85,75)-15, c(15,15,20,20))
-    text(80-15,17,expression(y[4]), cex=cex)
-    polygon(c(75,85,85,75)+15, c(15,15,20,20))
-    text(80+15,17,expression(y[6]), cex=cex)
+    #psi[22]
+    draw.circle(89, 55, 5)
+    text(89, 55, expression(zeta), cex=cex)
+    draw.arc(97, 55, 3, deg1=220, deg2=500)
+    text(96, 62, expression(psi[22]["[k]"]), cex=cex)
+    arrows(95.2,58.0, 94.5, 57.4, length=.08)
+    arrows(95.1,52.2, 94.5, 52.8, length=.08)
+    arrows(84,55, 78,55, length=.1)
     
-    arrows(20,30,20,21, length=.2)
-    arrows(20,30,20-15,21, length=.2)
-    arrows(20,30,20+15,21, length=.2)
     
-    arrows(80,30,80,21, length=.2)
-    arrows(80,30,80-15,21, length=.2)
-    arrows(80,30,80+15,21, length=.2)
+    #latent means
+    polygon(c(15,25,20), c(70,70,80))
+    text(20,74, '1', cex=cex)
+    polygon(c(15,25,20)+48, c(70,70,80))
+    text(68,74, '1', cex=cex)
+    arrows(20,70,20,63, length=.1)
+    text(15,66, expression(alpha[1]["[k]"]), cex=cex)
+    arrows(68,70,68,63, length=.1)
+    text(73,66, expression(alpha[2]["[k]"]), cex=cex)
+    
+    #measured variables
+    polygon(c(9,19,19,9), c(34,34,24,24))
+    polygon(c(5,15,15,5)-9, c(34,34,24,24))
+    polygon(c(5,15,15,5)+25, c(34,34,24,24))
+    
+    polygon(c(9,19,19,9)+48, c(34,34,24,24))
+    polygon(c(5,15,15,5)-9+48, c(34,34,24,24))
+    polygon(c(5,15,15,5)+25+48, c(34,34,24,24))
+    
+    text(14,30-1,expression(italic(y)[2]), cex=cex)
+    text(2,30-1,expression(italic(y)[1]), cex=cex)
+    text(24.5,30-1, expression(...), cex=3)
+    text(35,30-1,expression(italic(y)[italic(i)]), cex=cex)
+    
+    text(14+48,30-1,expression(italic(y)[italic(i)+2]), cex=cex)
+    text(2+48,30-1,expression(italic(y)[italic(i)+1]), cex=cex)
+    text(24.5+48,30-1, expression(...), cex=3)
+    text(35+48,30-1,expression(italic(y)[italic(n)]), cex=cex)
+    
+    arrows(20,47, 1, 35.2-1, length=.1)
+    arrows(20,47, 14, 35-1, length=.1)
+    arrows(20,47, 35, 35.2-1, length=.1)
+    
+    arrows(20+48,47, 1+48, 35.2-1, length=.1)
+    arrows(20+48,47, 14+48, 35-1, length=.1)
+    arrows(20+48,47, 35+48, 35.2-1, length=.1)
+    
+    #residual of measured variables
+    draw.circle(1, 10, 5)
+    draw.circle(14, 10, 5)
+    draw.circle(35, 10, 5)
+    
+    draw.circle(1+48, 10, 5)
+    draw.circle(14+48, 10, 5)
+    draw.circle(35+48, 10, 5)
+    
+    text(1, 10, expression(epsilon[1]), cex=cex)
+    text(14, 10, expression(epsilon[2]), cex=cex)
+    text(35, 10, expression(epsilon[italic(i)]), cex=cex)
+    
+    text(1+48, 10, expression(epsilon[1+italic(i)]), cex=cex)
+    text(14+48, 10, expression(epsilon[2+italic(i)]), cex=cex)
+    text(35+48, 10, expression(epsilon[italic(n)]), cex=cex)
+    
+    arrows(1, 24, 1,16, length=.1)
+    arrows(14, 24, 14,16, length=.1)
+    arrows(35, 24, 35,16, length=.1)
+    
+    arrows(1+48, 24, 1+48,16, length=.1)
+    arrows(14+48, 24, 14+48,16, length=.1)
+    arrows(35+48, 24, 35+48,16, length=.1)
+    
+    draw.arc(1, 0.5, 3, deg1=135, deg2=405)
+    draw.arc(14, 0.5, 3, deg1=135, deg2=405)
+    draw.arc(35, 0.5, 3, deg1=135, deg2=405)
+    
+    draw.arc(1+48, 0.5, 3, deg1=135, deg2=405)
+    draw.arc(14+48, 0.5, 3, deg1=135, deg2=405)
+    draw.arc(35+48, 0.5, 3, deg1=135, deg2=405)
+    
+    arrows(32.2-34,2.0,32.9-34,3.2, length=.08)
+    arrows(37.6-34,2.4,36.9-34,3.2, length=.08)
+    arrows(32.2-21,2.0,32.9-21,3.2, length=.08)
+    arrows(37.6-21,2.4,36.9-21,3.2, length=.08)
+    arrows(32.2,2.0,32.9,3.2, length=.08)
+    arrows(37.6,2.4,36.9,3.2, length=.08)
+    
+    arrows(32.2+48-34,2.0,32.9+48-34,3.2, length=.08)
+    arrows(37.6+48-34,2.4,36.9+48-34,3.2, length=.08)
+    arrows(32.2+48-21,2.0,32.9+48-21,3.2, length=.08)
+    arrows(37.6+48-21,2.4,36.9+48-21,3.2, length=.08)
+    arrows(32.2+48,2.0,32.9+48,3.2, length=.08)
+    arrows(37.6+48,2.4,36.9+48,3.2, length=.08)
 }
 
 # Bootstrap ellipse function. Be very careful not to allocate huge objects to avoid memory issues
