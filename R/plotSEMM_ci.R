@@ -23,8 +23,8 @@ plotSEMM_ci <- function(SEMLIdatapks, linesearch, lnty = 3, lncol = 1, deltaci=T
         points(SEMLIdatapks$x, SEMLIdatapks$hi_, col = 2, lwd = 1.5, lty = 2)
     }
     if(deltace){
-        lines(SEMLIdatapks$x, SEMLIdatapks$slo_, col = 2, lwd = 1.5, lty = 2)
-        lines(SEMLIdatapks$x, SEMLIdatapks$shi_, col = 2, lwd = 1.5, lty = 2)
+        lines(SEMLIdatapks$x, SEMLIdatapks$slo_, col = 2, lwd = 2, lty = 2)
+        lines(SEMLIdatapks$x, SEMLIdatapks$shi_, col = 2, lwd = 2, lty = 2)
     }
     if(bsci){
         points(SEMLIdatapks$x, SEMLIdatapks$LCLall_, col = 4, lwd = 1.5, lty = 3, pch = 4)
@@ -42,11 +42,11 @@ plotSEMM_ci <- function(SEMLIdatapks, linesearch, lnty = 3, lncol = 1, deltaci=T
     pch = c(NA, 1, NA, 4)
     col = c(1, 2, 2, 4)
     if(SEMLIdatapks$boot[1]){
-        lines(SEMLIdatapks$x, SEMLIdatapks$bs_lo, col = 4, lwd = 1.5, lty = 3, pch = 4)
-        lines(SEMLIdatapks$x, SEMLIdatapks$bs_high, col = 4, lwd = 1.5, lty = 3, pch = 4)        
+        lines(SEMLIdatapks$x, SEMLIdatapks$bs_lo, col = 4, lwd = 2, lty = 4, pch = 4)
+        lines(SEMLIdatapks$x, SEMLIdatapks$bs_high, col = 4, lwd = 2, lty = 4, pch = 4)        
         if(ninty_five) legend <- c(legend, 'Bootstrap 95% Confidence Envelope')
         else legend <- c(legend, 'Bootstrap 90% Confidence Envelope')
-        lwd <- c(lwd, 1); lty <- c(lty, 2); pch = c(pch, NA); col = c(col, 4)
+        lwd <- c(lwd, 1); lty <- c(lty, 4); pch = c(pch, NA); col = c(col, 4)
     }
     if(legend_location != 'none')
         legend(legend_location, legend = legend, lwd = lwd, lty = lty, 

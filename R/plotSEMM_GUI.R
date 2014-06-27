@@ -59,7 +59,7 @@ plotSEMM_GUI.internal <- function(){
                     # tech extras for plotting features
                     conditionalPanel(condition = "input.method != ' '",
                                      checkboxInput(inputId='tech_extras', 
-                                                   label='Override various defaults of the generated plots?',
+                                                   label='Override various defaults of the generated plots.',
                                                    value=FALSE)
                     ),
                     
@@ -79,16 +79,16 @@ plotSEMM_GUI.internal <- function(){
                                                value='Latent Outcome'),
                                      
                                      numericInput('npoints', 'Number of points to evaluate', 50,
-                                                  min = 10, max = 1000),
+                                                  min = 25, max = 1000),
                                      
                                      checkboxInput(inputId='class_info', 
                                                    label='Show class specific distributions, regression lines, 
-                                                   and mixing probabilities (for contour and probability plots)?',
+                                                   and mixing probabilities (for contour and probability plots).',
                                                    value=TRUE),
                                      
                                      checkboxInput(inputId='save_data', 
                                                    label='Save the data used to plot the graphics to the current working 
-                                                   directory?',
+                                                   directory.',
                                                    value=FALSE),
                                      
                                      textInput(inputId='save_filename', label='Saved data file name:',
@@ -106,21 +106,21 @@ plotSEMM_GUI.internal <- function(){
                     conditionalPanel(condition = "input.plottype == 'ci'",
                                      checkboxInput(inputId='plot_deltaci', 
                                                           label='Plot the confidence intervals using
-                                                          the Delta method?',
+                                                          the Delta method.',
                                                           value=TRUE)
                     ),
                     
                     conditionalPanel(condition = "input.plottype == 'ci'",
                                      checkboxInput(inputId='plot_bsci', 
                                                           label='Plot the confidence intervals using
-                                                          the Bootstrap method?',
+                                                          the Bootstrap method.',
                                                           value=TRUE)
                     ),
                     
                     conditionalPanel(condition = "input.plottype == 'ci'",
                                      checkboxInput(inputId='plot_deltace', 
                                                           label='Plot the confidence envelope using
-                                                          the Delta method?',
+                                                          the Delta method.',
                                                           value=TRUE)
                     ),
                     
@@ -135,7 +135,7 @@ plotSEMM_GUI.internal <- function(){
                     
                     conditionalPanel(condition = "input.plottype == 'ci'",
                                      checkboxInput(inputId='boot', 
-                                                          label='Estimate bootstrapped confidence envelope? Can take a prolonged
+                                                          label='Estimate bootstrapped confidence envelope. Can take a prolonged
                                                           amount of time to estimate (2-30+ minutes, depending on model complexity).',
                                                           value=FALSE)
                     ),
