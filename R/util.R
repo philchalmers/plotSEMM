@@ -1,6 +1,6 @@
 examplePlot <- function(){
     cex <- 1.5
-    plot(c(0,100), c(0,80), axes=FALSE, frame.plot=FALSE, type='n', xlab='', ylab='')
+    plot(c(0,100), c(0,80), axes=FALSE, frame.plot=FALSE, type='n', xlab='', ylab='', asp=1)
     
     #latent variables
     draw.ellipse(20, 55, 10,8)
@@ -10,22 +10,28 @@ examplePlot <- function(){
     
     #beta[21] and arrow
     arrows(30,55, 58,55, length=.1)
-    text(45, 58, expression(beta[21]["[k]"]), cex=cex)
+    text(45, 59, expression(beta[21]["[k]"]), cex=cex)
     
     
     #psi[11] 
     draw.arc(7, 55, 3, deg1=320, deg2=40)
-    arrows(8.5, 58.0, 9.4, 57.4,  length=.08)
-    arrows(8.7, 52.0, 9.4, 53.0, length=.08)
+    arrows(8.34, 57.94, 9.25, 57.26,  length=.08)
+    arrows(7.66, 52.03, 9.25, 53.16, length=.08)
     text(5, 62, expression(psi[11]["[k]"]), cex=cex)
+    #curvedarrow(from=c(9.2,57.4), to=c(9.2,52.8), lwd=1, curve=.75, 
+    #arr.type="simple", arr.length=.2, arr.pos=1)
+    #curvedarrow(from=c(9.2,52.8), to=c(9.2,57.4), lwd=1, curve=-.75, 
+    #arr.type="simple", arr.length=.2, arr.pos=1)
+    
+    
     
     #psi[22]
     draw.circle(89, 55, 5)
     text(89, 55, expression(zeta), cex=cex)
     draw.arc(97, 55, 3, deg1=220, deg2=500)
     text(96, 62, expression(psi[22]["[k]"]), cex=cex)
-    arrows(95.2,58.0, 94.5, 57.4, length=.08)
-    arrows(95.1,52.2, 94.5, 52.8, length=.08)
+    arrows(95.43,57.71, 94.74, 57.03, length=.08)
+    arrows(95.43,52.26, 94.52, 53.17, length=.08)
     arrows(84,55, 78,55, length=.1)
     
     
@@ -35,83 +41,83 @@ examplePlot <- function(){
     polygon(c(15,25,20)+48, c(70,70,80))
     text(68,74, '1', cex=cex)
     arrows(20,70,20,63, length=.1)
-    text(15,66, expression(alpha[1]["[k]"]), cex=cex)
+    text(14,66, expression(alpha[1]["[k]"]), cex=cex)
     arrows(68,70,68,63, length=.1)
-    text(73,66, expression(alpha[2]["[k]"]), cex=cex)
+    text(74,66, expression(alpha[2]["[k]"]), cex=cex)
     
     #measured variables
-    polygon(c(9,19,19,9), c(34,34,24,24))
-    polygon(c(5,15,15,5)-9, c(34,34,24,24))
-    polygon(c(5,15,15,5)+25, c(34,34,24,24))
+    polygon(c(9,19,19,9)+3, c(34,34,24,24))
+    polygon(c(5,15,15,5)-9+3, c(34,34,24,24))
+    polygon(c(5,15,15,5)+25+3, c(34,34,24,24))
     
-    polygon(c(9,19,19,9)+48, c(34,34,24,24))
-    polygon(c(5,15,15,5)-9+48, c(34,34,24,24))
-    polygon(c(5,15,15,5)+25+48, c(34,34,24,24))
+    polygon(c(9,19,19,9)+48+3, c(34,34,24,24))
+    polygon(c(5,15,15,5)-9+48+3, c(34,34,24,24))
+    polygon(c(5,15,15,5)+25+48+3, c(34,34,24,24))
     
-    text(14,30-1,expression(italic(y)[2]), cex=cex)
-    text(2,30-1,expression(italic(y)[1]), cex=cex)
-    text(24.5,30-1, expression(...), cex=3)
-    text(35,30-1,expression(italic(y)[italic(i)]), cex=cex)
+    text(14+3,30-1,expression(italic(y)[2]), cex=cex)
+    text(2+3,30-1,expression(italic(y)[1]), cex=cex)
+    text(24.5+3,30-1, expression(...), cex=3)
+    text(35+3,30-1,expression(italic(y)[italic(i)]), cex=cex)
     
-    text(14+48,30-1,expression(italic(y)[italic(i)+2]), cex=cex)
-    text(2+48,30-1,expression(italic(y)[italic(i)+1]), cex=cex)
-    text(24.5+48,30-1, expression(...), cex=3)
-    text(35+48,30-1,expression(italic(y)[italic(n)]), cex=cex)
+    text(14+48+3,30-1,expression(italic(y)[italic(i)+3]), cex=cex)
+    text(2+48+3,30-1,expression(italic(y)[italic(i)+1]), cex=cex)
+    text(24.5+48+3,30-1, expression(...), cex=3)
+    text(35+48+3,30-1,expression(italic(y)[italic(n)]), cex=cex)
     
-    arrows(20,47, 1, 35.2-1, length=.1)
-    arrows(20,47, 14, 35-1, length=.1)
-    arrows(20,47, 35, 35.2-1, length=.1)
+    arrows(20,47, 1+3, 35.2-1, length=.1)
+    arrows(20,47, 14+3, 35-1, length=.1)
+    arrows(20,47, 35+3, 35.2-1, length=.1)
     
-    arrows(20+48,47, 1+48, 35.2-1, length=.1)
-    arrows(20+48,47, 14+48, 35-1, length=.1)
-    arrows(20+48,47, 35+48, 35.2-1, length=.1)
+    arrows(20+48,47, 1+48+3, 35.2-1, length=.1)
+    arrows(20+48,47, 14+48+3, 35-1, length=.1)
+    arrows(20+48,47, 35+48+3, 35.2-1, length=.1)
     
     #residual of measured variables
-    draw.circle(1, 10, 5)
-    draw.circle(14, 10, 5)
-    draw.circle(35, 10, 5)
+    draw.circle(1+3, 10+1, 5)
+    draw.circle(14+3, 10+1, 5)
+    draw.circle(35+3, 10+1, 5)
     
-    draw.circle(1+48, 10, 5)
-    draw.circle(14+48, 10, 5)
-    draw.circle(35+48, 10, 5)
+    draw.circle(1+48+3, 10+1, 5)
+    draw.circle(14+48+3, 10+1, 5)
+    draw.circle(35+48+3, 10+1, 5)
     
-    text(1, 10, expression(epsilon[1]), cex=cex)
-    text(14, 10, expression(epsilon[2]), cex=cex)
-    text(35, 10, expression(epsilon[italic(i)]), cex=cex)
+    text(1+3, 10+1, expression(epsilon[1]), cex=cex)
+    text(14+3, 10+1, expression(epsilon[2]), cex=cex)
+    text(35+3, 10+1, expression(epsilon[italic(i)]), cex=cex)
     
-    text(1+48, 10, expression(epsilon[1+italic(i)]), cex=cex)
-    text(14+48, 10, expression(epsilon[2+italic(i)]), cex=cex)
-    text(35+48, 10, expression(epsilon[italic(n)]), cex=cex)
+    text(1+48+3, 10+1, expression(epsilon[1+italic(i)]), cex=cex)
+    text(14+48+3, 10+1, expression(epsilon[2+italic(i)]), cex=cex)
+    text(35+48+3, 10+1, expression(epsilon[italic(n)]), cex=cex)
     
-    arrows(1, 24, 1,16, length=.1)
-    arrows(14, 24, 14,16, length=.1)
-    arrows(35, 24, 35,16, length=.1)
+    arrows(1+3, 24, 1+3,16, length=.1)
+    arrows(14+3, 24, 14+3,16, length=.1)
+    arrows(35+3, 24, 35+3,16, length=.1)
     
-    arrows(1+48, 24, 1+48,16, length=.1)
-    arrows(14+48, 24, 14+48,16, length=.1)
-    arrows(35+48, 24, 35+48,16, length=.1)
+    arrows(1+48+3, 24, 1+48+3,16, length=.1)
+    arrows(14+48+3, 24, 14+48+3,16, length=.1)
+    arrows(35+48+3, 24, 35+48+3,16, length=.1)
     
-    draw.arc(1, 0.5, 3, deg1=135, deg2=405)
-    draw.arc(14, 0.5, 3, deg1=135, deg2=405)
-    draw.arc(35, 0.5, 3, deg1=135, deg2=405)
+    draw.arc(1+3, 2+1, 3, deg1=135, deg2=405)
+    draw.arc(14+3, 2+1, 3, deg1=135, deg2=405)
+    draw.arc(35+3, 2+1, 3, deg1=135, deg2=405)
     
-    draw.arc(1+48, 0.5, 3, deg1=135, deg2=405)
-    draw.arc(14+48, 0.5, 3, deg1=135, deg2=405)
-    draw.arc(35+48, 0.5, 3, deg1=135, deg2=405)
+    draw.arc(1+48+3, 2+1, 3, deg1=135, deg2=405)
+    draw.arc(14+48+3, 2+1, 3, deg1=135, deg2=405)
+    draw.arc(35+48+3, 2+1, 3, deg1=135, deg2=405)
     
-    arrows(32.2-34,2.0,32.9-34,3.2, length=.08)
-    arrows(37.6-34,2.4,36.9-34,3.2, length=.08)
-    arrows(32.2-21,2.0,32.9-21,3.2, length=.08)
-    arrows(37.6-21,2.4,36.9-21,3.2, length=.08)
-    arrows(32.2,2.0,32.9,3.2, length=.08)
-    arrows(37.6,2.4,36.9,3.2, length=.08)
+    arrows(1.07, 3.14+1, 1.75, 4.05+1, length=.08)
+    arrows(6.75, 2.91+1, 6.07, 4.05+1, length=.08)
+    arrows(1.07+13, 3.14+1, 1.75+13, 4.05+1, length=.08)
+    arrows(6.75+13, 2.91+1, 6.07+13, 4.05+1, length=.08)
+    arrows(1.07+34, 3.14+1, 1.75+34, 4.05+1, length=.08)
+    arrows(6.75+34, 2.91+1, 6.07+34, 4.05+1, length=.08)
     
-    arrows(32.2+48-34,2.0,32.9+48-34,3.2, length=.08)
-    arrows(37.6+48-34,2.4,36.9+48-34,3.2, length=.08)
-    arrows(32.2+48-21,2.0,32.9+48-21,3.2, length=.08)
-    arrows(37.6+48-21,2.4,36.9+48-21,3.2, length=.08)
-    arrows(32.2+48,2.0,32.9+48,3.2, length=.08)
-    arrows(37.6+48,2.4,36.9+48,3.2, length=.08)
+    arrows(1.07+48, 3.14+1, 1.75+48, 4.05+1, length=.08)
+    arrows(6.75+48, 2.91+1, 6.07+48, 4.05+1, length=.08)
+    arrows(1.07+13+48, 3.14+1, 1.75+13+48, 4.05+1, length=.08)
+    arrows(6.75+13+48, 2.91+1, 6.07+13+48, 4.05+1, length=.08)
+    arrows(1.07+34+48, 3.14+1, 1.75+34+48, 4.05+1, length=.08)
+    arrows(6.75+34+48, 2.91+1, 6.07+34+48, 4.05+1, length=.08)
 }
 
 # Bootstrap ellipse function. Be very careful not to allocate huge objects to avoid memory issues
