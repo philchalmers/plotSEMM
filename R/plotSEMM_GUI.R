@@ -32,26 +32,25 @@ plotSEMM_GUI.internal <- function(){
                 
                 # Application title
                 headerPanel("PlotSEMM"),
-                
+                 
                 sidebarPanel(
+                    h5 ('The accompanying Online Appendix for this web application is located at xxx.'),  
+                    h4('User Input:'),
+                    #h5('Note: The \'Mplus Files\' option requires a single
+                       #Mplus output file (.out) is in the directory.'),
                     
-                    h4('Please specify your data either by importing an Mplus output 
-                       file or manually.'),
-                    h5('Note: The \'Mplus file\' option requires that only one
-                       Mplus output file (.out) is in the refered directory.'),
-                    
-                    selectInput(inputId="method", label="Select how you would like to input the parameters:",
-                                choices=c("Mplus File"="Mplusfile", "Manual Input"="Manually", " "=" "), selected=" "),
+                    selectInput(inputId="method", label="Type of Input:",
+                                choices=c("Mplus Files"="Mplusfile", "Manual Input"="Manually", " "=" "), selected=" "),
                     
                     conditionalPanel(condition = "input.method != ' '",
-                        selectInput(inputId="plottype",label="Type of plot to generate:",
-                                    choices=c("contour"="contour", 'probability'='probability',
-                                              "confidence interval (Mplus input only)"="ci"), 
+                        selectInput(inputId="plottype",label="Type of Plot:",
+                                    choices=c("Contour"="contour", 'Probability'='probability',
+                                              "Confidence Bands (Mplus Files input only)"="ci"), 
                                     selected="contour")
                     ),
                     
                     conditionalPanel(condition = "input.method == 'Mplusfile'",
-                                     textInput(inputId='Mpath', label='Directory containing Mplus file:',
+                                     textInput(inputId='Mpath', label='Directory containing Mplus files:',
                                                value=getwd())
                     ),
                     
@@ -83,12 +82,12 @@ plotSEMM_GUI.internal <- function(){
                                      
                                      checkboxInput(inputId='class_info', 
                                                    label='Show class specific distributions, regression lines, 
-                                                   and mixing probabilities (for contour and probability plots).',
+                                                   and mixing probabilities (for Contour and Probability plots).',
                                                    value=TRUE),
                                      
                                      checkboxInput(inputId='save_data', 
-                                                   label='Save the data used to plot the graphics to the current working 
-                                                   directory.',
+                                                   label='Save the data used to plot the graphics to working 
+                                                   directory in R.',
                                                    value=FALSE),
                                      
                                      textInput(inputId='save_filename', label='Saved data file name:',
@@ -99,45 +98,40 @@ plotSEMM_GUI.internal <- function(){
                     ###
                     
                     conditionalPanel(condition = "input.plottype == 'ci'",
-                                     selectInput(inputId='CI', label='Confidence interval',
+                                     selectInput(inputId='CI', label='Confidence Level:',
                                                  choices=c("95%", "90%"), selected="95%")
                     ),
                     
                     conditionalPanel(condition = "input.plottype == 'ci'",
                                      checkboxInput(inputId='plot_deltaci', 
-                                                          label='Plot the confidence intervals using
-                                                          the Delta method.',
+                                                          label='Delta method Confidence Intervals.',
                                                           value=TRUE)
                     ),
                     
                     conditionalPanel(condition = "input.plottype == 'ci'",
                                      checkboxInput(inputId='plot_bsci', 
-                                                          label='Plot the confidence intervals using
-                                                          the Bootstrap method.',
-                                                          value=TRUE)
+                                                          label='Parametric Bootstrap Confidence Intervals.',
+                                                          value=FALSE)
                     ),
                     
                     conditionalPanel(condition = "input.plottype == 'ci'",
                                      checkboxInput(inputId='plot_deltace', 
-                                                          label='Plot the confidence envelope using
-                                                          the Delta method.',
+                                                          label='Delta Method Confidence Envelope.',
                                                           value=TRUE)
                     ),
                     
                     
-                    conditionalPanel(condition = "input.plottype == 'ci'",
-                                     checkboxInput(inputId='linesearch', 
-                                               label='Run line search algorithm to test the null hypothesis that there
-                                               is a linear trend? Will plot a thicker green (delta) or yellow (bootstrap) 
-                                               line if found.',
-                                               value=FALSE)
-                    ),
-                    
+                                     
                     conditionalPanel(condition = "input.plottype == 'ci'",
                                      checkboxInput(inputId='boot', 
-                                                          label='Estimate bootstrapped confidence envelope. Can take a prolonged
-                                                          amount of time to estimate (2-30+ minutes, depending on model complexity).',
+                                                          label='Parametric Bootstrap Confidence Envelope.',
                                                           value=FALSE)
+                    ),
+
+		     conditionalPanel(condition = "input.plottype == 'ci'",
+                                     checkboxInput(inputId='linesearch', 
+                                               label='Run Line Finding Algorithm.',
+                                               value=TRUE)
                     ),
                     
                     #Manual input

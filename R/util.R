@@ -1,5 +1,5 @@
 examplePlot <- function(){
-    cex <- 1.5
+    cex <- 2.5
     plot(c(0,100), c(0,80), axes=FALSE, frame.plot=FALSE, type='n', xlab='', ylab='', asp=1)
     
     #latent variables
