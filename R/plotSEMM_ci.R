@@ -57,17 +57,17 @@ plotSEMM_ci <- function(SEMLIdatapks, linesearch, lnty = 3, lncol = 1, deltaci=T
         if(length(search) && deltace){
             found <- TRUE
             nc <- ncol(search)
-            lines(c(search[1,1], search[1,nc]), c(search[2,1], search[2,nc]), col = 'green', lwd=4)
+            lines(c(search[1,1], search[1,nc]), c(search[2,1], search[2,nc]), col = 'pink', lwd=2)
         }
         if(SEMLIdatapks$boot[1]){            
             search <- attr(SEMLIdatapks, 'search.bs')
             if(length(search)){
                 found <- TRUE
                 nc <- ncol(search)
-                lines(c(search[1,1], search[1,nc]), c(search[2,1], search[2,nc]), col = 'yellow', lwd=4)
+                lines(c(search[1,1], search[1,nc]), c(search[2,1], search[2,nc]), col = 'lightblue', lwd=2)
             }   
         }
         if(!found)
-            title('Linearity algorithm test did not find a suitable line within Confidence Envelope(s)')
+            title('No Line was Found within the Confidence Envelope(s)')
     }
 }
