@@ -291,9 +291,12 @@ plotSEMM_setup2 <- function(setup, alpha = .025, boot = NULL, boot.CE=FALSE, boo
         bs_high <- bs$ub
     }
     
-    SEMLIdatapks <- data.frame(Ksi, Eta, denKsi, denEta, etah_, I(etahmat), 
-                               I(z), classes, I(post), I(pKsi), I(pEta), LCLall_,
-                               UCLall_, lo_, hi_, slo_, shi_, x, alpha=alpha, setup2=TRUE,
+    SEMLIdatapks <- data.frame(Eta1=Ksi, Eta2=Eta, agg_denEta1=denKsi, agg_denEta2=denEta, 
+                               agg_pred=etah_, class_pred=I(etahmat), 
+                               contour=I(z), classes=classes, class_prob=I(post), class_denEta1=I(pKsi), 
+                               class_denEta2=I(pEta), bs_CIlo=LCLall_,
+                               bs_CIhi=UCLall_, delta_CIlo=lo_, delta_CIhi=hi_, delta_CElo=slo_, 
+                               delta_CEhi=shi_, x, alpha=alpha, setup2=TRUE,
                                boot=boot.CE, bs_lo, bs_high)
     SEMLIdatapks
 }

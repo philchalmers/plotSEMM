@@ -63,9 +63,9 @@ plotSEMM_probability <- function(SEMLIdatapks, EtaName = "Eta1", lnty = 3, lncol
     
     # plot1 Exogenous
     par(mar = c(0, 4, 1, 1))
-    plot(SEMLIdatapks$Ksi, SEMLIdatapks$denKsi, type = "l", xlab = "", ylab = "", main = maintitle, axes = FALSE, cex.lab=cex, cex.axis=cex)
+    plot(SEMLIdatapks$Eta1, SEMLIdatapks$agg_denEta1, type = "l", xlab = "", ylab = "", main = maintitle, axes = FALSE, cex.lab=cex, cex.axis=cex)
     for (i in 1:SEMLIdatapks$classes[1]) {
-        lines(SEMLIdatapks$Ksi, SEMLIdatapks$pKsi[, i], lwd = 1, lty = (i + lnty), col = (i + lncol))
+        lines(SEMLIdatapks$Eta1, SEMLIdatapks$class_denEta1[, i], lwd = 1, lty = (i + lnty), col = (i + lncol))
     }
     
     # legend
@@ -107,9 +107,9 @@ plotSEMM_probability <- function(SEMLIdatapks, EtaName = "Eta1", lnty = 3, lncol
     
     ylabel = paste(paste("Probability(Class|", xlabel, sep = ""), ")", sep = "")
     
-    plot(SEMLIdatapks$Ksi, SEMLIdatapks$post[, 1], type = "n", xlab = xlabel, ylab = ylabel, main = "", cex.lab=cex, cex.axis=cex)
+    plot(SEMLIdatapks$Eta1, SEMLIdatapks$class_prob[, 1], type = "n", xlab = xlabel, ylab = ylabel, main = "", cex.lab=cex, cex.axis=cex)
     for (i in 1:SEMLIdatapks$classes[1]) {
-        lines(SEMLIdatapks$Ksi, SEMLIdatapks$post[, i], lwd = 1, lty = (i + lnty), col = (i + lncol))
+        lines(SEMLIdatapks$Eta1, SEMLIdatapks$class_prob[, i], lwd = 1, lty = (i + lnty), col = (i + lncol))
     }
     
     

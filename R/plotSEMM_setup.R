@@ -209,10 +209,10 @@ plotSEMM_setup <- function(pi, alpha1, alpha2, beta21, psi11, psi22, points = 50
     }
     z <- outer(Ksi, Eta, denKE)
     
-    SEMLIdatapks <- data.frame(Ksi=Ksi, Eta=Eta, denKsi=denKsi, denEta=denEta, 
-                               etah_=etah_, etah=etah, etahmat=I(etahmat), z=I(z), 
-                               classes=classes, post=I(post), pKsi=I(pKsi), pEta=I(pEta),
-                               setup2=FALSE)
+    SEMLIdatapks <- data.frame(Eta1=Ksi, Eta2=Eta, agg_denEta1=denKsi, agg_denEta2=denEta, 
+                               agg_pred=etah_, etah=etah, class_pred=I(etahmat), contour=I(z), 
+                               classes=classes, class_prob=I(post), class_denEta1=I(pKsi), 
+                               class_denEta2=I(pEta), setup2=FALSE)
     
     return(SEMLIdatapks)
 }

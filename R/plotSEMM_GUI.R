@@ -303,20 +303,20 @@ plotSEMM_GUI.internal <- function(){
                                                    alpha = ifelse(input$CI == "95%", .025, .05),
                                                    points=input$npoints)
                             if(input$linesearch){
-                                lines <- .Call('linear', ret$slo_, ret$shi_, ret$x)
-                                line <- which(rowSums(t(ret$slo_<= t(lines)) &
-                                                              t(ret$shi_ >= t(lines))) == ncol(lines))
+                                lines <- .Call('linear', ret$delta_CElo, ret$delta_CEhi, ret$Eta1)
+                                line <- which(rowSums(t(ret$delta_CElo<= t(lines)) &
+                                                              t(ret$delta_CEhi >= t(lines))) == ncol(lines))
                                 if(length(line)){
                                     line <- min(line)
-                                    attr(ret, "search") <- rbind(ret$x, lines[line,])
+                                    attr(ret, "search") <- rbind(ret$Eta1, lines[line,])
                                 }
                                 if(boot){
-                                    lines <- .Call('linear', ret$bs_lo, ret$bs_high, ret$x)
+                                    lines <- .Call('linear', ret$bs_lo, ret$bs_high, ret$Eta1)
                                     line <- which(rowSums(t(ret$bs_lo <= t(lines)) &
                                                               t(ret$bs_high >= t(lines))) == ncol(lines))
                                     if(length(line)){
                                         line <- max(line)
-                                        attr(ret, "search.bs") <- rbind(ret$x, lines[line,])
+                                        attr(ret, "search.bs") <- rbind(ret$Eta1, lines[line,])
                                     }
                                 }
                             }

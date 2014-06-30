@@ -82,10 +82,10 @@ plotSEMM_contour <- function(SEMLIdatapks, EtaN2 = "Eta2", EtaN1 = "Eta1",
     
     # plot1 Exogenous
     par(mar = c(0, 5, 1, 1))
-    plot(SEMLIdatapks$Ksi, SEMLIdatapks$denKsi, type = "l", xlab = "", ylab = "", main = maintitle, axes = FALSE, cex.lab=cex, cex.axis=cex)
+    plot(SEMLIdatapks$Eta1, SEMLIdatapks$agg_denEta1, type = "l", xlab = "", ylab = "", main = maintitle, axes = FALSE, cex.lab=cex, cex.axis=cex)
     if (classinfo == TRUE) {
         for (i in 1:SEMLIdatapks$classes[1]) {
-            lines(SEMLIdatapks$Ksi, SEMLIdatapks$pKsi[, i], lwd = 1, lty = (i + lnty), col = (i + lncol))
+            lines(SEMLIdatapks$Eta1, SEMLIdatapks$class_denEta1[, i], lwd = 1, lty = (i + lnty), col = (i + lncol))
         }
     }
     
@@ -121,21 +121,21 @@ plotSEMM_contour <- function(SEMLIdatapks, EtaN2 = "Eta2", EtaN1 = "Eta1",
     
     # plot3 contour
     par(mar = c(4, 5, 0, 0))
-    plot(SEMLIdatapks$Ksi, SEMLIdatapks$Eta, type = "n", xlab = xlabel, ylab = ylabel, main = "", cex.lab=cex, cex.axis=cex)
-    contour(SEMLIdatapks$Ksi, SEMLIdatapks$Eta, SEMLIdatapks$z, drawlabels = TRUE, add = TRUE, nlevels = 20)
-    lines(SEMLIdatapks$Ksi, SEMLIdatapks$etah_, lwd = 2, lty = 1)
+    plot(SEMLIdatapks$Eta1, SEMLIdatapks$Eta2, type = "n", xlab = xlabel, ylab = ylabel, main = "", cex.lab=cex, cex.axis=cex)
+    contour(SEMLIdatapks$Eta1, SEMLIdatapks$Eta2, SEMLIdatapks$contour, drawlabels = TRUE, add = TRUE, nlevels = 20)
+    lines(SEMLIdatapks$Eta1, SEMLIdatapks$agg_pred, lwd = 2, lty = 1)
     if (classinfo == TRUE) {
         for (i in 1:SEMLIdatapks$classes[1]) {
-            lines(SEMLIdatapks$Ksi, SEMLIdatapks$etahmat[, i], lwd = 1, lty = (i + lnty), col = (i + lncol))
+            lines(SEMLIdatapks$Eta1, SEMLIdatapks$class_pred[, i], lwd = 1, lty = (i + lnty), col = (i + lncol))
         }
     }
     
     # plot Endogenous
     par(mar = c(4, 0, 1, 1))
-    plot(SEMLIdatapks$denEta, SEMLIdatapks$Eta, type = "l", xlab = "", ylab = "", main = "", axes = FALSE, cex.lab=cex, cex.axis=cex)
+    plot(SEMLIdatapks$agg_denEta2, SEMLIdatapks$Eta2, type = "l", xlab = "", ylab = "", main = "", axes = FALSE, cex.lab=cex, cex.axis=cex)
     if (classinfo == TRUE) {
         for (i in 1:SEMLIdatapks$classes[1]) {
-            lines(SEMLIdatapks$pEta[, i], SEMLIdatapks$Eta, lwd = 1, lty = (i + lnty), col = (i + lncol))
+            lines(SEMLIdatapks$class_denEta2[, i], SEMLIdatapks$Eta2, lwd = 1, lty = (i + lnty), col = (i + lncol))
         }
     }
     

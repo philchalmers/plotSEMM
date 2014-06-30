@@ -14,23 +14,23 @@ plotSEMM_ci <- function(SEMLIdatapks, linesearch, lnty = 3, lncol = 1, deltaci=T
     if(!SEMLIdatapks$setup2[1L]) 
         stop('plotSEMM_ci requires a setup model that included the parameter ACOV matrix')
     def.par <- par(no.readonly = TRUE)
-    pick <- SEMLIdatapks$denKsi > 0.02
+    pick <- SEMLIdatapks$agg_denEta1 > 0.02
     SEMLIdatapks <- SEMLIdatapks[pick, ]
     
-    # plot(SEMLIdatapks$x,SEMLIdatapks$y,type='n',xlab='Latent Predictor', ylab='Latent Outcome')
-    plot(SEMLIdatapks$Ksi, SEMLIdatapks$Eta, type = "n", xlab = xlab, ylab = ylab, cex.lab=cex, cex.axis=cex)
-    lines(SEMLIdatapks$x, SEMLIdatapks$etah_, col = 1, lwd = 2)
+    # plot(SEMLIdatapks$Eta1,SEMLIdatapks$y,type='n',xlab='Latent Predictor', ylab='Latent Outcome')
+    plot(SEMLIdatapks$Eta1, SEMLIdatapks$Eta2, type = "n", xlab = xlab, ylab = ylab, cex.lab=cex, cex.axis=cex)
+    lines(SEMLIdatapks$Eta1, SEMLIdatapks$agg_pred, col = 1, lwd = 2)
     if(deltaci){
-        points(SEMLIdatapks$x, SEMLIdatapks$lo_, col = 2, lwd = 1.5, lty = 2)
-        points(SEMLIdatapks$x, SEMLIdatapks$hi_, col = 2, lwd = 1.5, lty = 2)
+        points(SEMLIdatapks$Eta1, SEMLIdatapks$delta_CIlo, col = 2, lwd = 1.5, lty = 2)
+        points(SEMLIdatapks$Eta1, SEMLIdatapks$delta_CIhi, col = 2, lwd = 1.5, lty = 2)
     }
     if(deltace){
-        lines(SEMLIdatapks$x, SEMLIdatapks$slo_, col = 2, lwd = 2, lty = 2)
-        lines(SEMLIdatapks$x, SEMLIdatapks$shi_, col = 2, lwd = 2, lty = 2)
+        lines(SEMLIdatapks$Eta1, SEMLIdatapks$delta_CElo, col = 2, lwd = 2, lty = 2)
+        lines(SEMLIdatapks$Eta1, SEMLIdatapks$delta_CEhi, col = 2, lwd = 2, lty = 2)
     }
     if(bsci){
-        points(SEMLIdatapks$x, SEMLIdatapks$LCLall_, col = 4, lwd = 1.5, lty = 3, pch = 4)
-        points(SEMLIdatapks$x, SEMLIdatapks$UCLall_, col = 4, lwd = 1.5, lty = 3, pch = 4)
+        points(SEMLIdatapks$Eta1, SEMLIdatapks$bs_CIlo, col = 4, lwd = 1.5, lty = 3, pch = 4)
+        points(SEMLIdatapks$Eta1, SEMLIdatapks$bs_CIhi, col = 4, lwd = 1.5, lty = 3, pch = 4)
     }
     if(ninty_five){
         legend = c("Aggregate Function", "Delta Method 95% Confidence Interval", "Delta Method 95% Confidence Envelope", 
@@ -46,8 +46,8 @@ plotSEMM_ci <- function(SEMLIdatapks, linesearch, lnty = 3, lncol = 1, deltaci=T
     col = c(1, 2, 2, 4)
    
     if(SEMLIdatapks$boot[1]){
-        lines(SEMLIdatapks$x, SEMLIdatapks$bs_lo, col = 4, lwd = 2, lty = 4, pch = 4)
-        lines(SEMLIdatapks$x, SEMLIdatapks$bs_high, col = 4, lwd = 2, lty = 4, pch = 4)        
+        lines(SEMLIdatapks$Eta1, SEMLIdatapks$bs_lo, col = 4, lwd = 2, lty = 4, pch = 4)
+        lines(SEMLIdatapks$Eta1, SEMLIdatapks$bs_high, col = 4, lwd = 2, lty = 4, pch = 4)        
         if(ninty_five) legend <- c(legend, 'Bootstrap 95% Confidence Envelope')
         else legend <- c(legend, 'Bootstrap 90% Confidence Envelope')
         lwd <- c(lwd, 1); lty <- c(lty, 4); pch = c(pch, NA); col = c(col, 4)
