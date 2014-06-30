@@ -1,7 +1,9 @@
 plotSEMM_ci <- function(SEMLIdatapks, linesearch, lnty = 3, lncol = 1, deltaci=TRUE, 
-                        deltace=TRUE, bsci=TRUE, ninty_five = TRUE, ...) {
+                        deltace=TRUE, bsci=TRUE, ninty_five = TRUE, use_fixed_value, ...) {
     cex <- 1.5
     par(mar=c(5,5,5,2))
+    if(use_fixed_value)
+        fixed_values <- SEMLIdatapks[nrow(SEMLIdatapks), ]
     
     dots <- list(...)
     input <- dots$input
@@ -73,5 +75,16 @@ plotSEMM_ci <- function(SEMLIdatapks, linesearch, lnty = 3, lncol = 1, deltaci=T
         }
         if(!found)
             title('No Line was Found within the Confidence Envelope(s)')
+    }
+    if(use_fixed_value){
+        #plot some text
+        txt <- c()
+        if(deltaci)
+            txt <- c(txt, c(paste0('Delta CI lower: ', round(fixed_values$delta_CIlo, 4)), 
+                     paste0('Delta CI upper: ', round(fixed_values$delta_CIhi, 4))))
+        if(bsci)
+            txt <- c(txt, c(paste0('Bootstrap CI lower: ', round(fixed_values$bs_lo, 4)), 
+                            paste0('Bootstrap CI upper: ', round(fixed_values$bs_hi, 4))))
+        legend('topleft', legend=txt)
     }
 }

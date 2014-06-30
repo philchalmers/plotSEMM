@@ -1,8 +1,9 @@
 plotSEMM_setup2 <- function(setup, alpha = .025, boot = NULL, boot.CE=FALSE, boot.CI=TRUE,
-                            points = 50){
+                            points = 50, fixed_value=NA){
     
     #only supports 2 or more classes 
     #requires Mplus read in file as input; setup <- read.plotSEMM_wACOV(read)
+    if(!is.na(fixed_value)) points <- points + 1
 
     nclass <- classes <- setup$nclass
     nparam <- setup$nparm; acov <- setup$acov; loc <- setup$loc
@@ -98,6 +99,9 @@ plotSEMM_setup2 <- function(setup, alpha = .025, boot = NULL, boot.CE=FALSE, boo
     
     Eta1 <- seq(LEta1, UEta1, length = points)
     Eta2 <- seq(LEta2, UEta2, length = points)
+    if(!is.na(fixed_value)){
+        Eta1[points] <- fixed_value #FIXME!! This is not how to set this up right...
+    }
     
     
     r <- vector(mode = "numeric", length = classes)
@@ -130,8 +134,8 @@ plotSEMM_setup2 <- function(setup, alpha = .025, boot = NULL, boot.CE=FALSE, boo
     # of code for computing I(z)
     # ----------------------------------------------------------------------------------------------------------------------
     
-    x <- seq(LEta1, UEta1, length = points)
-    x2 <- seq(LEta2, UEta2, length = points)
+    x <- Eta1
+    x2 <- Eta2
     
     phi <- array(data = 0, c(points, classes))
     for (i in 1:classes) {

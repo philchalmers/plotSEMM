@@ -43,16 +43,20 @@ plotSEMM_GUI.internal <- function(){
                                 choices=c("Mplus Files"="Mplusfile", "Manual Input"="Manually", " "=" "), selected=" "),
                     
                     conditionalPanel(condition = "input.method != ' '",
-                        selectInput(inputId="plottype",label="Type of Plot:",
-                                    choices=c("Contour"="contour", 'Probability'='probability',
-                                              "Confidence Bands (Mplus Files input only)"="ci",
-                                              " "=" "), 
-                                    selected=" ")
+                                     selectInput(inputId="plottype",label="Type of Output:",
+                                                 choices=c("Contour"="contour", 'Probability'='probability',
+                                                           "Confidence Bands (Mplus Input Only)"="ci",
+                                                           " "=" "), 
+                                                 selected=" ")
                     ),
                     
                     conditionalPanel(condition = "input.method == 'Mplusfile'",
                                      textInput(inputId='Mpath', label='Directory containing Mplus files:',
                                                value=getwd())
+                    ),
+                    
+                    conditionalPanel(condition = "input.plottype == 'ci'",
+                                     numberInputRow(inputId="citable_value", label=HTML("&eta;<sub>1</sub> value"))
                     ),
                     
                     ###
@@ -302,7 +306,7 @@ plotSEMM_GUI.internal <- function(){
                             setup <- read.plotSEMM_wACOV(read)
                             ret <- plotSEMM_setup2(setup, boot=read, boot.CE=boot, boot.CI=input$plot_bsci,
                                                    alpha = ifelse(input$CI == "95%", .025, .05),
-                                                   points=input$npoints)
+                                                   points=input$npoints, fixed_value=input$citable_value)
                             if(input$linesearch){
                                 lines <- .Call('linear', ret$delta_CElo, ret$delta_CEhi, ret$Eta1)
                                 line <- which(rowSums(t(ret$delta_CElo<= t(lines)) &
@@ -335,12 +339,14 @@ plotSEMM_GUI.internal <- function(){
                         plottype <- input$plottype
                         if(plottype == 'contour') plotSEMM_contour(ret, input=input)
                         if(plottype == 'probability') plotSEMM_probability(ret, input=input)
-                        if(plottype == 'ci') plotSEMM_ci(ret, linesearch=input$linesearch,
+                        if(plottype == 'ci') 
+                            plotSEMM_ci(ret, linesearch=input$linesearch,
                                                          deltaci=input$plot_deltaci,
                                                          bsci=input$plot_bsci,
                                                          deltace=input$plot_deltace,
                                                          ninty_five=input$CI == "95%",
-                                                         input=input)
+                                                         input=input, 
+                                        use_fixed_value=!is.na(input$citable_value))
                     } else examplePlot()
                 })                
                 
