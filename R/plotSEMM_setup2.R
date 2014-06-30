@@ -100,7 +100,7 @@ plotSEMM_setup2 <- function(setup, alpha = .025, boot = NULL, boot.CE=FALSE, boo
     Eta1 <- seq(LEta1, UEta1, length = points)
     Eta2 <- seq(LEta2, UEta2, length = points)
     if(!is.na(fixed_value)){
-        Eta1[points] <- fixed_value #FIXME!! This is not how to set this up right...
+        Eta1[points] <- fixed_value
     }
     
     
