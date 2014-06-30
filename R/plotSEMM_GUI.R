@@ -40,13 +40,14 @@ plotSEMM_GUI.internal <- function(){
                        #Mplus output file (.out) is in the directory.'),
                     
                     selectInput(inputId="method", label="Type of Input:",
-                                choices=c("Mplus Files"="Mplusfile", "Manual Input"="Manually", " "=" "), selected=""),
+                                choices=c("Mplus Files"="Mplusfile", "Manual Input"="Manually", " "=" "), selected=" "),
                     
                     conditionalPanel(condition = "input.method != ' '",
                         selectInput(inputId="plottype",label="Type of Plot:",
                                     choices=c("Contour"="contour", 'Probability'='probability',
-                                              "Confidence Bands (Mplus Files input only)"="ci"), 
-                                    selected="")
+                                              "Confidence Bands (Mplus Files input only)"="ci",
+                                              " "=" "), 
+                                    selected=" ")
                     ),
                     
                     conditionalPanel(condition = "input.method == 'Mplusfile'",
