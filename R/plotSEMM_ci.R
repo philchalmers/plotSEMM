@@ -18,6 +18,7 @@ plotSEMM_ci <- function(SEMLIdatapks, linesearch, lnty = 3, lncol = 1, deltaci=T
     def.par <- par(no.readonly = TRUE)
     pick <- SEMLIdatapks$agg_denEta1 > 0.02
     SEMLIdatapks <- SEMLIdatapks[pick, ]
+    legendkeep <- c(TRUE, deltaci, deltace, bsci)
     
     # plot(SEMLIdatapks$Eta1,SEMLIdatapks$y,type='n',xlab='Latent Predictor', ylab='Latent Outcome')
     plot(SEMLIdatapks$Eta1, SEMLIdatapks$Eta2, type = "n", xlab = xlab, ylab = ylab, cex.lab=cex, cex.axis=cex)
@@ -36,16 +37,16 @@ plotSEMM_ci <- function(SEMLIdatapks, linesearch, lnty = 3, lncol = 1, deltaci=T
     }
     if(ninty_five){
         legend = c("Aggregate Function", "Delta Method 95% Confidence Interval", "Delta Method 95% Confidence Envelope", 
-                   "Bootstrap 95% Confidence Interval")
+                   "Bootstrap 95% Confidence Interval")[legendkeep]
     } else {
         legend = c("Aggregate Function", "Delta Method 90% Confidence Interval", "Delta Method 90% Confidence Envelope", 
-                   "Bootstrap 90% Confidence Interval")
+                   "Bootstrap 90% Confidence Interval")[legendkeep]
     }
     
-    lwd = c(2, 1, 1, 1)
-    lty = c(1, 0, 2, 0) 
-    pch = c(NA, 1, NA, 4)
-    col = c(1, 2, 2, 4)
+    lwd = c(2, 1, 1, 1)[legendkeep]
+    lty = c(1, 0, 2, 0) [legendkeep]
+    pch = c(NA, 1, NA, 4)[legendkeep]
+    col = c(1, 2, 2, 4)[legendkeep]
    
     if(SEMLIdatapks$boot[1]){
         lines(SEMLIdatapks$Eta1, SEMLIdatapks$bs_lo, col = 4, lwd = 2, lty = 4, pch = 4)

@@ -6,11 +6,3 @@ Optimally, we can place mplus files in a directory on the server.
 - I know it's a bare bones webpage now. But, think about how to make it look affiliated to York, and also include references, and the appendix. Seems unnecessary at this point.
 
 	COMMENT: We can always add references and other information into the plotSEMM_GUI() help file, would that suffice? YES
-
-- Legend should reflect what is plotted.
-
-	COMMENT: They mostly do already. Are there specific instances where they really don't? I know it values that don't actually show up, but that shouldn't really be an issue
-
-- Other options for legend of contour plot should be within the contour plot. Right now, the options besides the default does not make sense. Ditto for probability plot.
-
-	COMMENT: I don't understand what you mean here. Could you clarrify?
