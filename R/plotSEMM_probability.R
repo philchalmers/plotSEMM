@@ -43,7 +43,7 @@
 #' }
 plotSEMM_probability <- function(SEMLIdatapks, EtaName = "Eta1", lnty = 3, lncol = 1, 
                                  title = "", leg = TRUE, ...) {
-    
+    cex <- 1.5
     dots <- list(...)
     input <- dots$input
     if(!is.null(input$xlab)) EtaName <- input$xlab
@@ -63,7 +63,7 @@ plotSEMM_probability <- function(SEMLIdatapks, EtaName = "Eta1", lnty = 3, lncol
     
     # plot1 Exogenous
     par(mar = c(0, 4, 1, 1))
-    plot(SEMLIdatapks$Ksi, SEMLIdatapks$denKsi, type = "l", xlab = "", ylab = "", main = maintitle, axes = FALSE)
+    plot(SEMLIdatapks$Ksi, SEMLIdatapks$denKsi, type = "l", xlab = "", ylab = "", main = maintitle, axes = FALSE, cex.lab=cex, cex.axis=cex)
     for (i in 1:SEMLIdatapks$classes[1]) {
         lines(SEMLIdatapks$Ksi, SEMLIdatapks$pKsi[, i], lwd = 1, lty = (i + lnty), col = (i + lncol))
     }
@@ -95,11 +95,11 @@ plotSEMM_probability <- function(SEMLIdatapks, EtaName = "Eta1", lnty = 3, lncol
         }
         
         
-        legend(x = legend_location, legend = text, horiz = FALSE, lwd = lwd1, lty = lty1, col = col1, , bty = "n")
+        legend(x = legend_location, legend = text, horiz = FALSE, lwd = lwd1, lty = lty1, col = col1, , bty = "n", cex=cex)
     }
     
     # plot2 Conditional Probabilities
-    par(mar = c(5, 4, 0, 0))
+    par(mar = c(5, 5, 0, 0))
     xlabel = deparse(substitute(EtaName))
     if (substring(xlabel, 1, 1) == "\"") {
         xlabel = substring(xlabel, 2, nchar(xlabel) - 1)
@@ -107,7 +107,7 @@ plotSEMM_probability <- function(SEMLIdatapks, EtaName = "Eta1", lnty = 3, lncol
     
     ylabel = paste(paste("Probability(Class|", xlabel, sep = ""), ")", sep = "")
     
-    plot(SEMLIdatapks$Ksi, SEMLIdatapks$post[, 1], type = "n", xlab = xlabel, ylab = ylabel, main = "")
+    plot(SEMLIdatapks$Ksi, SEMLIdatapks$post[, 1], type = "n", xlab = xlabel, ylab = ylabel, main = "", cex.lab=cex, cex.axis=cex)
     for (i in 1:SEMLIdatapks$classes[1]) {
         lines(SEMLIdatapks$Ksi, SEMLIdatapks$post[, i], lwd = 1, lty = (i + lnty), col = (i + lncol))
     }

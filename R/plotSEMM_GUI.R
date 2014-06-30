@@ -40,13 +40,13 @@ plotSEMM_GUI.internal <- function(){
                        #Mplus output file (.out) is in the directory.'),
                     
                     selectInput(inputId="method", label="Type of Input:",
-                                choices=c("Mplus Files"="Mplusfile", "Manual Input"="Manually", " "=" "), selected=" "),
+                                choices=c("Mplus Files"="Mplusfile", "Manual Input"="Manually", " "=" "), selected=""),
                     
                     conditionalPanel(condition = "input.method != ' '",
                         selectInput(inputId="plottype",label="Type of Plot:",
                                     choices=c("Contour"="contour", 'Probability'='probability',
                                               "Confidence Bands (Mplus Files input only)"="ci"), 
-                                    selected="contour")
+                                    selected="")
                     ),
                     
                     conditionalPanel(condition = "input.method == 'Mplusfile'",
@@ -58,7 +58,7 @@ plotSEMM_GUI.internal <- function(){
                     # tech extras for plotting features
                     conditionalPanel(condition = "input.method != ' '",
                                      checkboxInput(inputId='tech_extras', 
-                                                   label='Override various defaults of the generated plots.',
+                                                   label='Override various plotting defaults.',
                                                    value=FALSE)
                     ),
                     
@@ -82,7 +82,7 @@ plotSEMM_GUI.internal <- function(){
                                      
                                      checkboxInput(inputId='class_info', 
                                                    label='Show class specific distributions, regression lines, 
-                                                   and mixing probabilities (for Contour and Probability plots).',
+                                                   and mixing probabilities for Contour plot.',
                                                    value=TRUE),
                                      
                                      checkboxInput(inputId='save_data', 
@@ -104,7 +104,7 @@ plotSEMM_GUI.internal <- function(){
                     
                     conditionalPanel(condition = "input.plottype == 'ci'",
                                      checkboxInput(inputId='plot_deltaci', 
-                                                          label='Delta method Confidence Intervals.',
+                                                          label='Delta Method Wald-type Confidence Intervals.',
                                                           value=TRUE)
                     ),
                     
@@ -116,7 +116,7 @@ plotSEMM_GUI.internal <- function(){
                     
                     conditionalPanel(condition = "input.plottype == 'ci'",
                                      checkboxInput(inputId='plot_deltace', 
-                                                          label='Delta Method Confidence Envelope.',
+                                                          label='Delta Method Wald-type Confidence Envelope.',
                                                           value=TRUE)
                     ),
                     

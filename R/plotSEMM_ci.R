@@ -1,5 +1,7 @@
 plotSEMM_ci <- function(SEMLIdatapks, linesearch, lnty = 3, lncol = 1, deltaci=TRUE, 
                         deltace=TRUE, bsci=TRUE, ninty_five = TRUE, ...) {
+    cex <- 1.5
+    par(mar=c(5,5,5,2))
     
     dots <- list(...)
     input <- dots$input
@@ -16,7 +18,7 @@ plotSEMM_ci <- function(SEMLIdatapks, linesearch, lnty = 3, lncol = 1, deltaci=T
     SEMLIdatapks <- SEMLIdatapks[pick, ]
     
     # plot(SEMLIdatapks$x,SEMLIdatapks$y,type='n',xlab='Latent Predictor', ylab='Latent Outcome')
-    plot(SEMLIdatapks$Ksi, SEMLIdatapks$Eta, type = "n", xlab = xlab, ylab = ylab)
+    plot(SEMLIdatapks$Ksi, SEMLIdatapks$Eta, type = "n", xlab = xlab, ylab = ylab, cex.lab=cex, cex.axis=cex)
     lines(SEMLIdatapks$x, SEMLIdatapks$etah_, col = 1, lwd = 2)
     if(deltaci){
         points(SEMLIdatapks$x, SEMLIdatapks$lo_, col = 2, lwd = 1.5, lty = 2)
@@ -37,10 +39,12 @@ plotSEMM_ci <- function(SEMLIdatapks, linesearch, lnty = 3, lncol = 1, deltaci=T
         legend = c("Aggregate Function", "Delta Method 90% Confidence Interval", "Delta Method 90% Confidence Envelope", 
                    "Bootstrap 90% Confidence Interval")
     }
+    
     lwd = c(2, 1, 1, 1)
     lty = c(1, 0, 2, 0) 
     pch = c(NA, 1, NA, 4)
     col = c(1, 2, 2, 4)
+   
     if(SEMLIdatapks$boot[1]){
         lines(SEMLIdatapks$x, SEMLIdatapks$bs_lo, col = 4, lwd = 2, lty = 4, pch = 4)
         lines(SEMLIdatapks$x, SEMLIdatapks$bs_high, col = 4, lwd = 2, lty = 4, pch = 4)        
@@ -50,7 +54,7 @@ plotSEMM_ci <- function(SEMLIdatapks, linesearch, lnty = 3, lncol = 1, deltaci=T
     }
     if(legend_location != 'none')
         legend(legend_location, legend = legend, lwd = lwd, lty = lty, 
-               pch = pch, col = col, bty = "n")
+               pch = pch, col = col, bty = "n", cex=cex)
     if(linesearch){
         found <- FALSE
         search <- attr(SEMLIdatapks, 'search')

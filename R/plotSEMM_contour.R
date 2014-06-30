@@ -50,6 +50,7 @@ plotSEMM_contour <- function(SEMLIdatapks, EtaN2 = "Eta2", EtaN1 = "Eta1",
                              classinfo = TRUE, lnty = 3, lncol = 1, title = "", 
                              leg = TRUE, ...) {
     
+    cex <- 1.5
     dots <- list(...)
     input <- dots$input
     if(!is.null(input$xlab)) EtaN1 <- input$xlab
@@ -80,8 +81,8 @@ plotSEMM_contour <- function(SEMLIdatapks, EtaN2 = "Eta2", EtaN1 = "Eta1",
     
     
     # plot1 Exogenous
-    par(mar = c(0, 4, 1, 1))
-    plot(SEMLIdatapks$Ksi, SEMLIdatapks$denKsi, type = "l", xlab = "", ylab = "", main = maintitle, axes = FALSE)
+    par(mar = c(0, 5, 1, 1))
+    plot(SEMLIdatapks$Ksi, SEMLIdatapks$denKsi, type = "l", xlab = "", ylab = "", main = maintitle, axes = FALSE, cex.lab=cex, cex.axis=cex)
     if (classinfo == TRUE) {
         for (i in 1:SEMLIdatapks$classes[1]) {
             lines(SEMLIdatapks$Ksi, SEMLIdatapks$pKsi[, i], lwd = 1, lty = (i + lnty), col = (i + lncol))
@@ -115,12 +116,12 @@ plotSEMM_contour <- function(SEMLIdatapks, EtaN2 = "Eta2", EtaN1 = "Eta1",
         }
         
         legend(x = legend_location, legend = text, horiz = FALSE, lwd = lwd1, 
-                   lty = lty1, col = col1, , bty = "n")
+                   lty = lty1, col = col1, , bty = "n", cex=cex)
     }
     
     # plot3 contour
-    par(mar = c(4, 4, 0, 0))
-    plot(SEMLIdatapks$Ksi, SEMLIdatapks$Eta, type = "n", xlab = xlabel, ylab = ylabel, main = "")
+    par(mar = c(4, 5, 0, 0))
+    plot(SEMLIdatapks$Ksi, SEMLIdatapks$Eta, type = "n", xlab = xlabel, ylab = ylabel, main = "", cex.lab=cex, cex.axis=cex)
     contour(SEMLIdatapks$Ksi, SEMLIdatapks$Eta, SEMLIdatapks$z, drawlabels = TRUE, add = TRUE, nlevels = 20)
     lines(SEMLIdatapks$Ksi, SEMLIdatapks$etah_, lwd = 2, lty = 1)
     if (classinfo == TRUE) {
@@ -131,7 +132,7 @@ plotSEMM_contour <- function(SEMLIdatapks, EtaN2 = "Eta2", EtaN1 = "Eta1",
     
     # plot Endogenous
     par(mar = c(4, 0, 1, 1))
-    plot(SEMLIdatapks$denEta, SEMLIdatapks$Eta, type = "l", xlab = "", ylab = "", main = "", axes = FALSE)
+    plot(SEMLIdatapks$denEta, SEMLIdatapks$Eta, type = "l", xlab = "", ylab = "", main = "", axes = FALSE, cex.lab=cex, cex.axis=cex)
     if (classinfo == TRUE) {
         for (i in 1:SEMLIdatapks$classes[1]) {
             lines(SEMLIdatapks$pEta[, i], SEMLIdatapks$Eta, lwd = 1, lty = (i + lnty), col = (i + lncol))
