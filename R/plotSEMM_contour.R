@@ -59,6 +59,7 @@ plotSEMM_contour <- function(SEMLIdatapks, EtaN2 = "Eta2", EtaN1 = "Eta1",
     if(legend_location == 'default') legend_location <- 'topright'
     if(legend_location == 'none') leg <- FALSE
     if(!is.null(input$class_info)) classinfo <- input$class_info
+    if(!classinfo) leg <- FALSE
     
     # This is to make all 3 graphs on 1 panel for contour
     def.par <- par(no.readonly = TRUE)  # save default, for resetting... 
