@@ -1,5 +1,3 @@
-- Computation of CIs - is there an easy way to allow users to specify a latent predictor value (eta_1), and have the CI returned? CIs are not very useful as a band, and are most useful when they provide estimate precision for a substantively meaningful eta_1 value.
-
 - Think about the best way to provide examples for users.
 Optimally, we can place mplus files in a directory on the server.
 

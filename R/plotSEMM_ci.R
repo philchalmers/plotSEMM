@@ -2,8 +2,10 @@ plotSEMM_ci <- function(SEMLIdatapks, linesearch, lnty = 3, lncol = 1, deltaci=T
                         deltace=TRUE, bsci=TRUE, ninty_five = TRUE, use_fixed_value, ...) {
     cex <- 1.5
     par(mar=c(5,5,5,2))
-    if(use_fixed_value)
+    if(use_fixed_value){
         fixed_values <- SEMLIdatapks[nrow(SEMLIdatapks), ]
+        SEMLIdatapks <- SEMLIdatapks[-nrow(SEMLIdatapks), ]
+    }
     
     dots <- list(...)
     input <- dots$input
@@ -21,7 +23,8 @@ plotSEMM_ci <- function(SEMLIdatapks, linesearch, lnty = 3, lncol = 1, deltaci=T
     legendkeep <- c(TRUE, deltaci, deltace, bsci)
     
     # plot(SEMLIdatapks$Eta1,SEMLIdatapks$y,type='n',xlab='Latent Predictor', ylab='Latent Outcome')
-    plot(SEMLIdatapks$Eta1, SEMLIdatapks$Eta2, type = "n", xlab = xlab, ylab = ylab, cex.lab=cex, cex.axis=cex)
+    plot(SEMLIdatapks$Eta1, SEMLIdatapks$Eta2, type = "n", xlab = xlab, ylab = ylab, 
+         cex.lab=cex, cex.axis=cex)
     lines(SEMLIdatapks$Eta1, SEMLIdatapks$agg_pred, col = 1, lwd = 2)
     if(deltaci){
         points(SEMLIdatapks$Eta1, SEMLIdatapks$delta_CIlo, col = 2, lwd = 1.5, lty = 2)
@@ -36,10 +39,12 @@ plotSEMM_ci <- function(SEMLIdatapks, linesearch, lnty = 3, lncol = 1, deltaci=T
         points(SEMLIdatapks$Eta1, SEMLIdatapks$bs_CIhi, col = 4, lwd = 1.5, lty = 3, pch = 4)
     }
     if(ninty_five){
-        legend = c("Aggregate Function", "Delta Method 95% Confidence Interval", "Delta Method 95% Confidence Envelope", 
+        legend = c("Aggregate Function", "Delta Method 95% Confidence Interval", 
+                   "Delta Method 95% Confidence Envelope", 
                    "Bootstrap 95% Confidence Interval")[legendkeep]
     } else {
-        legend = c("Aggregate Function", "Delta Method 90% Confidence Interval", "Delta Method 90% Confidence Envelope", 
+        legend = c("Aggregate Function", "Delta Method 90% Confidence Interval", 
+                   "Delta Method 90% Confidence Envelope", 
                    "Bootstrap 90% Confidence Interval")[legendkeep]
     }
     
@@ -64,14 +69,16 @@ plotSEMM_ci <- function(SEMLIdatapks, linesearch, lnty = 3, lncol = 1, deltaci=T
         if(length(search) && deltace){
             found <- TRUE
             nc <- ncol(search)
-            lines(c(search[1,1], search[1,nc]), c(search[2,1], search[2,nc]), col = 'pink', lwd=3, lty=1)
+            lines(c(search[1,1], search[1,nc]), c(search[2,1], search[2,nc]), 
+                  col = 'pink', lwd=3, lty=1)
         }
         if(SEMLIdatapks$boot[1]){            
             search <- attr(SEMLIdatapks, 'search.bs')
             if(length(search)){
                 found <- TRUE
                 nc <- ncol(search)
-                lines(c(search[1,1], search[1,nc]), c(search[2,1], search[2,nc]), col = 'lightblue', lwd=3, lty=1)
+                lines(c(search[1,1], search[1,nc]), c(search[2,1], search[2,nc]), 
+                      col = 'lightblue', lwd=3, lty=1)
             }   
         }
         if(!found)
@@ -79,13 +86,13 @@ plotSEMM_ci <- function(SEMLIdatapks, linesearch, lnty = 3, lncol = 1, deltaci=T
     }
     if(use_fixed_value){
         #plot some text
-        txt <- c()
+        txt <- paste0('Latent Predictor Value: ', fixed_values$Eta1)
         if(deltaci)
-            txt <- c(txt, c(paste0('Delta CI lower: ', round(fixed_values$delta_CIlo, 4)), 
-                     paste0('Delta CI upper: ', round(fixed_values$delta_CIhi, 4))))
+            txt <- c(txt, c(paste0('Delta CI Upper: ', round(fixed_values$delta_CIhi, 4)),                     
+                     paste0('Delta CI Lower: ', round(fixed_values$delta_CIlo, 4))))
         if(bsci)
-            txt <- c(txt, c(paste0('Bootstrap CI lower: ', round(fixed_values$bs_lo, 4)), 
-                            paste0('Bootstrap CI upper: ', round(fixed_values$bs_hi, 4))))
+            txt <- c(txt, c(paste0('Bootstrap CI Upper: ', round(fixed_values$bs_CIhi, 4)), 
+                            paste0('Bootstrap CI Lower: ', round(fixed_values$bs_CIlo, 4))))
         legend('topleft', legend=txt)
     }
 }

@@ -56,7 +56,8 @@ plotSEMM_GUI.internal <- function(){
                     ),
                     
                     conditionalPanel(condition = "input.plottype == 'ci'",
-                                     numberInputRow(inputId="citable_value", label=HTML("&eta;<sub>1</sub> value"))
+                                     numberInputRow(inputId="citable_value", 
+                                                    label=HTML("Specific Latent Predictor Value (&eta;<sub>1</sub>)"))
                     ),
                     
                     ###
@@ -307,6 +308,10 @@ plotSEMM_GUI.internal <- function(){
                             ret <- plotSEMM_setup2(setup, boot=read, boot.CE=boot, boot.CI=input$plot_bsci,
                                                    alpha = ifelse(input$CI == "95%", .025, .05),
                                                    points=input$npoints, fixed_value=input$citable_value)
+                            if(!is.na(input$citable_value)){
+                                customtmp <- ret[nrow(ret), ]
+                                ret <- ret[-nrow(ret), ]
+                            }
                             if(input$linesearch){
                                 lines <- .Call('linear', ret$delta_CElo, ret$delta_CEhi, ret$Eta1)
                                 line <- which(rowSums(t(ret$delta_CElo<= t(lines)) &
@@ -324,6 +329,9 @@ plotSEMM_GUI.internal <- function(){
                                         attr(ret, "search.bs") <- rbind(ret$Eta1, lines[line,])
                                     }
                                 }
+                            }
+                            if(!is.na(input$citable_value)){
+                                ret <- rbind(ret, customtmp)
                             }
                         }
                     }
