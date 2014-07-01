@@ -121,7 +121,7 @@ plotSEMM_GUI.internal <- function(){
                     
                     conditionalPanel(condition = "input.plottype == 'ci'",
                                      numberInputRow(inputId="citable_value", 
-                                                    label=HTML("Conditional Value of Latent Predictor (&eta;<sub>1</sub>) for Confidence Interval about E[&eta;<sub>2</sub>|&eta;<sub>1</sub>]:"))
+                                                    label=HTML("Conditional Value of Latent Predictor (&eta;<sub>1</sub>) for Confidence Interval(s) about E[&eta;<sub>2</sub>|&eta;<sub>1</sub>]:"))
                     ),
                     
                     conditionalPanel(condition = "input.plottype == 'ci'",
