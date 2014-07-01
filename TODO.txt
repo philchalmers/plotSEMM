@@ -1,0 +1,7 @@
+DONE --- CIs to reflect lower bound values first, and then upper bound values.
+
+DONE--- legend for delta method CE, lwd=1 should be changed to lwd=2.
+
+Report the point estimate or predicted value of the CI(s) as well, i.e. E[\eta_2|\eta_1]. Call it "Predicted Latent Outcome Value". 
+COMMENT: I've set it up, but fixed_value$Eta2 is also the same as fixed_value$Eta1?
+

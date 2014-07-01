@@ -49,7 +49,7 @@ plotSEMM_ci <- function(SEMLIdatapks, linesearch, lnty = 3, lncol = 1, deltaci=T
                    "Bootstrap 90% Confidence Interval")[legendkeep]
     }
     
-    lwd = c(2, 1, 1, 1)[legendkeep]
+    lwd = c(2, 1, 2, 2)[legendkeep]
     lty = c(1, 0, 2, 0) [legendkeep]
     pch = c(NA, 1, NA, 4)[legendkeep]
     col = c(1, 2, 2, 4)[legendkeep]
@@ -91,15 +91,16 @@ plotSEMM_ci <- function(SEMLIdatapks, linesearch, lnty = 3, lncol = 1, deltaci=T
         if(ninty_five) percent <- '95%'
 	    par(mar = c(0, 0, 0, 0))	
         plot(c(0,5), c(0,5), axes=FALSE, frame.plot=FALSE, type='n', xlab='', ylab='')
+        txt0 <- paste0('Predicted Latent Outcome Value: ', fixed_values$Eta2) 
         txt <- paste0('Conditional Latent Predictor Value: ', fixed_values$Eta1)
         if(deltaci)
-            txt <- c(txt, paste0(percent, ' Delta Method Wald-type Confidence Interval: (', 
-                                 round(fixed_values$delta_CIhi, 3), ', ',
-                     round(fixed_values$delta_CIlo, 3), ')'))
+            txt <- c(txt0, txt, paste0(percent, ' Delta Method Wald-type Confidence Interval: (', 
+                                 round(fixed_values$delta_CIlo, 3), ', ',
+                     round(fixed_values$delta_CIhi, 3), ')'))
         if(bsci)
             txt <- c(txt, paste0(percent, ' Parametric Bootstrap Confidence Interval: (', 
-                                   round(fixed_values$bs_CIhi, 3), ', ', 
-                            round(fixed_values$bs_CIlo, 3), ')'))
+                                   round(fixed_values$bs_CIlo, 3), ', ', 
+                            round(fixed_values$bs_CIhi, 3), ')'))
         legend('topleft', legend=txt, cex=cex, bty='n')
     }
 }
