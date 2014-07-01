@@ -1,6 +1,7 @@
 plotSEMM_ci <- function(SEMLIdatapks, linesearch, lnty = 3, lncol = 1, deltaci=TRUE, 
                         deltace=TRUE, bsci=TRUE, ninty_five = TRUE, use_fixed_value, ...) {
     cex <- 1.5
+    nf <- layout(matrix(c(1, 2), 2, 1, byrow = TRUE), c(4, 4), c(4, 1), TRUE)
     par(mar=c(5,5,5,2))
     if(use_fixed_value){
         fixed_values <- SEMLIdatapks[nrow(SEMLIdatapks), ]
@@ -86,13 +87,15 @@ plotSEMM_ci <- function(SEMLIdatapks, linesearch, lnty = 3, lncol = 1, deltaci=T
     }
     if(use_fixed_value){
         #plot some text
-        txt <- paste0('Latent Predictor Value: ', fixed_values$Eta1)
+	par(mar = c(0, 0, 0, 0))	
+        plot(c(0,5), c(0,5), axes=FALSE, frame.plot=FALSE, type='n', xlab='', ylab='')
+        txt <- paste0('Conditional Latent Predictor Value: ', fixed_values$Eta1)
         if(deltaci)
-            txt <- c(txt, c(paste0('Delta CI Upper: ', round(fixed_values$delta_CIhi, 4)),                     
-                     paste0('Delta CI Lower: ', round(fixed_values$delta_CIlo, 4))))
+            txt <- c(txt, c(paste0('Delta Method Wald-type Confidence Interval Upper Bound: ', round(fixed_values$delta_CIhi, 4)),                     
+                     paste0('Delta Method Wald-type Confidence Interval Lower Bound: ', round(fixed_values$delta_CIlo, 4))))
         if(bsci)
-            txt <- c(txt, c(paste0('Bootstrap CI Upper: ', round(fixed_values$bs_CIhi, 4)), 
-                            paste0('Bootstrap CI Lower: ', round(fixed_values$bs_CIlo, 4))))
-        legend('topleft', legend=txt)
+            txt <- c(txt, c(paste0('Parametric Bootstrap Confidence Interval Upper Bound: ', round(fixed_values$bs_CIhi, 4)), 
+                            paste0('Parametric Bootstrap Confidence Interval Lower Bound: ', round(fixed_values$bs_CIlo, 4))))
+        legend('topleft', legend=txt, cex=cex, bty='n')
     }
 }
