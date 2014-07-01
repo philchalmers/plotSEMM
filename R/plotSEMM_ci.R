@@ -87,15 +87,19 @@ plotSEMM_ci <- function(SEMLIdatapks, linesearch, lnty = 3, lncol = 1, deltaci=T
     }
     if(use_fixed_value){
         #plot some text
-	par(mar = c(0, 0, 0, 0))	
+        percent <- '90%'
+        if(ninty_five) percent <- '95%'
+	    par(mar = c(0, 0, 0, 0))	
         plot(c(0,5), c(0,5), axes=FALSE, frame.plot=FALSE, type='n', xlab='', ylab='')
         txt <- paste0('Conditional Latent Predictor Value: ', fixed_values$Eta1)
         if(deltaci)
-            txt <- c(txt, c(paste0('Delta Method Wald-type Confidence Interval Upper Bound: ', round(fixed_values$delta_CIhi, 4)),                     
-                     paste0('Delta Method Wald-type Confidence Interval Lower Bound: ', round(fixed_values$delta_CIlo, 4))))
+            txt <- c(txt, paste0(percent, ' Delta Method Wald-type Confidence Interval: (', 
+                                 round(fixed_values$delta_CIhi, 3), ', ',
+                     round(fixed_values$delta_CIlo, 3), ')'))
         if(bsci)
-            txt <- c(txt, c(paste0('Parametric Bootstrap Confidence Interval Upper Bound: ', round(fixed_values$bs_CIhi, 4)), 
-                            paste0('Parametric Bootstrap Confidence Interval Lower Bound: ', round(fixed_values$bs_CIlo, 4))))
+            txt <- c(txt, paste0(percent, ' Parametric Bootstrap Confidence Interval: (', 
+                                   round(fixed_values$bs_CIhi, 3), ', ', 
+                            round(fixed_values$bs_CIlo, 3), ')'))
         legend('topleft', legend=txt, cex=cex, bty='n')
     }
 }
