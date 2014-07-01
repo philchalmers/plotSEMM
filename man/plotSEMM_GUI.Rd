@@ -7,7 +7,8 @@ plotSEMM_GUI()
 }
 \description{
 Graphical user interface with the shiny package. Supports manual input as well as importing
-from precomputed Mplus files.
+from precomputed Mplus files. An online tutorial and additional materials can be found at
+\url{http://www.yorku.ca/pek/index_files/appendices.htm}
 }
 \examples{
 \dontrun{
@@ -15,7 +16,23 @@ plotSEMM_GUI()
 }
 }
 \author{
-Phil Chalmers \email{rphilip.chalmers@gmail.com}
+Phil Chalmers \email{rphilip.chalmers@gmail.com} and Jolynn Pek
+}
+\references{
+Bauer, D.J. (2005). A semiparametric approach to modeling nonlinear relations among latent variables.
+Structural Equation Modeling: A Multidisciplinary Journal, 12(4), 513-535.
+
+Pek, J. & Chalmers, R. P. (in press). Confidence Envelopes for a Semiparametric
+Approach to Modeling Bivariate Nonlinear Relations among Latent Variables.
+
+Pek, J., Losardo, D., & Bauer, D. J. (2011). Confidence intervals for a semiparametric
+approach to modeling nonlinear relations among latent variables. Structural Equation
+Modeling, 18 , 537–553.
+
+Pek, J., Sterba, S. K., Kok, B. E., & Bauer, D. J. (2009). Estimating and visualizing non-linear
+relations among latent variables: A semiparametric approach. Multivariate
+Behavioral Research, 44 , 407–436.
+\emph{Structural Equation Modeling}.
 }
 \keyword{GUI}
 \keyword{shiny}

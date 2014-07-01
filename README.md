@@ -14,3 +14,5 @@ To install the development version from Github use the following:
 library('devtools')
 install_github('philchalmers/plotSEMM')
 ```
+
+The online appendix for this package is located [here](http://www.yorku.ca/pek/index_files/appendices.htm)
