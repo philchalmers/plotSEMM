@@ -97,10 +97,11 @@ plotSEMM_setup2 <- function(setup, alpha = .025, boot = NULL, boot.CE=FALSE, boo
     
     # computations for contour plot
     
-    Eta1 <- seq(LEta1, UEta1, length = points)
-    Eta2 <- seq(LEta2, UEta2, length = points)
+    Eta1 <- seq(LEta1, UEta1, length = points - !is.na(fixed_value))
+    Eta2 <- seq(LEta2, UEta2, length = points - !is.na(fixed_value))
     if(!is.na(fixed_value)){
-        Eta1[points] <- fixed_value
+        Eta1 <- c(Eta1, fixed_value)
+        Eta2 <- c(Eta2, fixed_value)
     }
     
     
