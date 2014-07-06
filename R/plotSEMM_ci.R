@@ -28,16 +28,16 @@ plotSEMM_ci <- function(SEMLIdatapks, linesearch, lnty = 3, lncol = 1, deltaci=T
          cex.lab=cex, cex.axis=cex)
     lines(SEMLIdatapks$Eta1, SEMLIdatapks$agg_pred, col = 1, lwd = 2)
     if(deltaci){
-        points(SEMLIdatapks$Eta1, SEMLIdatapks$delta_CIlo, col = 2, lwd = 1.5, lty = 2)
-        points(SEMLIdatapks$Eta1, SEMLIdatapks$delta_CIhi, col = 2, lwd = 1.5, lty = 2)
+        points(SEMLIdatapks$Eta1, SEMLIdatapks$delta_CIlo, col = 2, lwd = 1, lty = 2)
+        points(SEMLIdatapks$Eta1, SEMLIdatapks$delta_CIhi, col = 2, lwd = 1, lty = 2)
     }
     if(deltace){
         lines(SEMLIdatapks$Eta1, SEMLIdatapks$delta_CElo, col = 2, lwd = 2, lty = 2)
         lines(SEMLIdatapks$Eta1, SEMLIdatapks$delta_CEhi, col = 2, lwd = 2, lty = 2)
     }
     if(bsci){
-        points(SEMLIdatapks$Eta1, SEMLIdatapks$bs_CIlo, col = 4, lwd = 2, lty = 3, pch = 4)
-        points(SEMLIdatapks$Eta1, SEMLIdatapks$bs_CIhi, col = 4, lwd = 2, lty = 3, pch = 4)
+        points(SEMLIdatapks$Eta1, SEMLIdatapks$bs_CIlo, col = 4, lwd = 1, lty = 3, pch = 4)
+        points(SEMLIdatapks$Eta1, SEMLIdatapks$bs_CIhi, col = 4, lwd = 1, lty = 3, pch = 4)
     }
     if(ninty_five){
         legend = c("Aggregate Function", "Delta Method 95% Confidence Interval", 
