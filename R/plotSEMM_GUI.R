@@ -17,11 +17,11 @@
 #' 
 #' Pek, J., Losardo, D., & Bauer, D. J. (2011). Confidence intervals for a semiparametric
 #' approach to modeling nonlinear relations among latent variables. Structural Equation
-#' Modeling, 18 , 537–553.
+#' Modeling, 18 , 537-553.
 #'
 #' Pek, J., Sterba, S. K., Kok, B. E., & Bauer, D. J. (2009). Estimating and visualizing non-linear 
 #' relations among latent variables: A semiparametric approach. Multivariate 
-#' Behavioral Research, 44 , 407–436.
+#' Behavioral Research, 44 , 407-436.
 #' \emph{Structural Equation Modeling}.
 #' @examples 
 #' \dontrun{ 
