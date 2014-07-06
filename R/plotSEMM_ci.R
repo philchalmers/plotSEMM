@@ -89,8 +89,8 @@ plotSEMM_ci <- function(SEMLIdatapks, linesearch, lnty = 3, lncol = 1, deltaci=T
         #plot some text
         percent <- '90%'
         if(ninty_five) percent <- '95%'
-        points(fixed_values$Eta1, (fixed_values$delta_CIlo + fixed_values$delta_CIhi)/2,
-               col='purple', cex=1.5, pch=17)
+#         points(fixed_values$Eta1, (fixed_values$delta_CIlo + fixed_values$delta_CIhi)/2,
+#                col='purple', cex=1.5, pch=17)
 	    par(mar = c(0, 0, 0, 0))	
         plot(c(0,5), c(0,5), axes=FALSE, frame.plot=FALSE, type='n', xlab='', ylab='')
         txt <- paste0('Latent Predictor Value: ', fixed_values$Eta1)
