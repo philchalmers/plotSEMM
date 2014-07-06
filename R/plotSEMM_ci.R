@@ -49,7 +49,7 @@ plotSEMM_ci <- function(SEMLIdatapks, linesearch, lnty = 3, lncol = 1, deltaci=T
                    "Bootstrap 90% Confidence Interval")[legendkeep]
     }
     
-    lwd = c(2, 1, 2, 2)[legendkeep]
+    lwd = c(2, 1, 2, 1)[legendkeep]
     lty = c(1, 0, 2, 0) [legendkeep]
     pch = c(NA, 1, NA, 4)[legendkeep]
     col = c(1, 2, 2, 4)[legendkeep]
