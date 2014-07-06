@@ -284,6 +284,8 @@ plotSEMM_GUI.internal <- function(){
                             psi11[i] <- input[[Names[which(Names %in% psi11.names)[i]]]]
                             psi22[i] <- input[[Names[which(Names %in% psi22.names)[i]]]]                            
                         }
+                        if(abs(sum(pi) - 1) > 1e-7)
+                            stop('Class probabilities (pi) should sum to 1')
                         test <- c(pi, alpha1, alpha2, beta21, psi11, psi22)
                         if(any(is.na(test)))
                             stop('Must include all input values for each class')
