@@ -55,8 +55,8 @@ plotSEMM_ci <- function(SEMLIdatapks, linesearch, lnty = 3, lncol = 1, deltaci=T
     col = c(1, 2, 2, 4)[legendkeep]
    
     if(SEMLIdatapks$boot[1]){
-        lines(SEMLIdatapks$Eta1, SEMLIdatapks$bs_lo, col = 4, lwd = 2, lty = 4, pch = 4)
-        lines(SEMLIdatapks$Eta1, SEMLIdatapks$bs_high, col = 4, lwd = 2, lty = 4, pch = 4)        
+        lines(SEMLIdatapks$Eta1, SEMLIdatapks$bs_CElo, col = 4, lwd = 2, lty = 4, pch = 4)
+        lines(SEMLIdatapks$Eta1, SEMLIdatapks$bs_CEhi, col = 4, lwd = 2, lty = 4, pch = 4)        
         if(ninty_five) legend <- c(legend, 'Bootstrap 95% Confidence Envelope')
         else legend <- c(legend, 'Bootstrap 90% Confidence Envelope')
         lwd <- c(lwd, 2); lty <- c(lty, 4); pch = c(pch, NA); col = c(col, 4)

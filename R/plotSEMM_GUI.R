@@ -339,9 +339,9 @@ plotSEMM_GUI.internal <- function(){
                                     attr(ret, "search") <- rbind(ret$Eta1, lines[line,])
                                 }
                                 if(boot){
-                                    lines <- .Call('linear', ret$bs_lo, ret$bs_high, ret$Eta1)
-                                    line <- which(rowSums(t(ret$bs_lo <= t(lines)) &
-                                                              t(ret$bs_high >= t(lines))) == ncol(lines))
+                                    lines <- .Call('linear', ret$bs_CElo, ret$bs_CEhi, ret$Eta1)
+                                    line <- which(rowSums(t(ret$bs_CElo <= t(lines)) &
+                                                              t(ret$bs_CEhi >= t(lines))) == ncol(lines))
                                     if(length(line)){
                                         line <- max(line)
                                         attr(ret, "search.bs") <- rbind(ret$Eta1, lines[line,])
