@@ -4,6 +4,9 @@
 #' from precomputed Mplus files. An online tutorial and additional materials can be found at 
 #' \url{http://www.yorku.ca/pek/index_files/appendices.htm}
 #' 
+#' @param ... additional arguments passed to \code{shiny::runApp}, such as 
+#'   \code{launch.browser = TRUE}
+#' 
 #' @aliases plotSEMM_GUI
 #' @author Phil Chalmers \email{rphilip.chalmers@@gmail.com} and Jolynn Pek 
 #' @keywords shiny GUI
@@ -26,9 +29,10 @@
 #' @examples 
 #' \dontrun{ 
 #' plotSEMM_GUI()
+#' plotSEMM_GUI(launch.browser=TRUE) #if using RStudio, will launch system browser default
 #' }
-plotSEMM_GUI <- function(){
-    runApp(plotSEMM_GUI.internal())
+plotSEMM_GUI <- function(...){
+    runApp(plotSEMM_GUI.internal(), ...)
 }
 
 plotSEMM_GUI.internal <- function(){

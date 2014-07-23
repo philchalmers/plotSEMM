@@ -3,7 +3,11 @@
 \alias{plotSEMM_GUI}
 \title{PlotSEMM GUI}
 \usage{
-plotSEMM_GUI()
+plotSEMM_GUI(...)
+}
+\arguments{
+\item{...}{additional arguments passed to \code{shiny::runApp}, such as
+  \code{launch.browser = TRUE}}
 }
 \description{
 Graphical user interface with the shiny package. Supports manual input as well as importing
@@ -13,6 +17,7 @@ from precomputed Mplus files. An online tutorial and additional materials can be
 \examples{
 \dontrun{
 plotSEMM_GUI()
+plotSEMM_GUI(launch.browser=TRUE) #if using RStudio, will launch system browser default
 }
 }
 \author{
