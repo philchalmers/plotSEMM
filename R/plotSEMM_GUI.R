@@ -309,7 +309,7 @@ plotSEMM_GUI.internal <- function(){
                             return(NULL)
                         }
                         if(input$plottype != 'ci'){
-                            ovars <- strsplit(toupper(read$input$variable$names), split = ' ')[[1L]]
+                            ovars <- strsplit(toupper(read$input$variable$usevariables), split = ' ')[[1L]]
                             pi <- read$class_counts$modelEstimated$proportion
                             pars <- read$parameters[[1L]]
                             pars <- pars[!(pars$param %in% ovars), ] #latents only
