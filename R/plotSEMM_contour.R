@@ -18,6 +18,7 @@
 #' @param title Titles the graph. 
 #' @param leg Logical variable.  If TRUE, a legend accompanies the graph.  If FALSE, no legend appears. 
 #'   Defaults to TRUE.
+#' @param cex par(cex) value. Default is 1.5
 #' @param ... addition inputs, mostly from plotSEMM_GUI()
 #' @author Bethany Kok and Phil Chalmers \email{rphilip.chalmers@@gmail.com}
 #' @keywords hplot color
@@ -48,9 +49,7 @@
 #' }
 plotSEMM_contour <- function(SEMLIdatapks, EtaN2 = "Eta2", EtaN1 = "Eta1", 
                              classinfo = TRUE, lnty = 3, lncol = 1, title = "", 
-                             leg = TRUE, ...) {
-    
-    cex <- 1.5
+                             leg = TRUE, cex = 1.5, ...) {
     dots <- list(...)
     input <- dots$input
     if(!is.null(input$xlab)) EtaN1 <- input$xlab

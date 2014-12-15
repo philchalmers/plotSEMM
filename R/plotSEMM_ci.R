@@ -1,6 +1,6 @@
 plotSEMM_ci <- function(SEMLIdatapks, linesearch, lnty = 3, lncol = 1, deltaci=TRUE, 
-                        deltace=TRUE, bsci=TRUE, ninty_five = TRUE, use_fixed_value, ...) {
-    cex <- 1.5
+                        deltace=TRUE, bsci=TRUE, ninty_five = TRUE, include_title = TRUE,
+                        use_fixed_value, cex = 1.5, ...) {
     nf <- layout(matrix(c(1, 2), 2, 1, byrow = TRUE), c(4, 4), c(4, 1), TRUE)
     par(mar=c(5,5,5,2))
     if(use_fixed_value){
@@ -82,8 +82,8 @@ plotSEMM_ci <- function(SEMLIdatapks, linesearch, lnty = 3, lncol = 1, deltaci=T
                       col = 'lightblue', lwd=3, lty=1)
             }   
         }
-        if(!found)
-            title('No Line was Found within the Confidence Envelope(s)', cex.main=2)
+        if(!found && include_title)
+            title('No Line was Found within the Confidence Envelope(s)', cex.main=cex*(4/3))
     }
     if(use_fixed_value){
         #plot some text

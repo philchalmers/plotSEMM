@@ -106,6 +106,14 @@ plotSEMM_GUI.internal <- function(){
                                                    and mixing probabilities for Contour plot.',
                                                    value=TRUE),
                                      
+                                     checkboxInput(inputId='include_title', 
+                                                   label='Include a text header line when the Line Finding Algorithms
+                                                   fail to locate a possible line.',
+                                                   value=TRUE),
+                                     
+                                     numericInput('cex', 'The par(cex) value, used to control font sizes', 1.5,
+                                                  min = 1e-2, max = 20),
+                                     
                                      checkboxInput(inputId='save_data', 
                                                    label='Save the data used to plot the graphics to working 
                                                    directory in R.',
@@ -165,6 +173,10 @@ plotSEMM_GUI.internal <- function(){
                                      sliderInput(inputId = "nclass",
                                                  label = "Number of latent classes:",
                                                  min = 1, max = 7, value = 2, step = 1),
+                                     
+                                     hr(),
+                                     h5 ('\nNote: Numbers must contain values on both sides of the decimal.
+                                         E.g., .520 must be input as 0.520'),
                                      
                                      hr(),    
                                      h6('Class 1:'),
@@ -288,11 +300,13 @@ plotSEMM_GUI.internal <- function(){
                             psi11[i] <- input[[Names[which(Names %in% psi11.names)[i]]]]
                             psi22[i] <- input[[Names[which(Names %in% psi22.names)[i]]]]                            
                         }
-                        if(abs(sum(pi) - 1) > 1e-7)
-                            stop('Class probabilities (pi) should sum to 1')
                         test <- c(pi, alpha1, alpha2, beta21, psi11, psi22)
                         if(any(is.na(test)))
-                            stop('Must include all input values for each class')
+                            stop('Must include all input values for each class.')
+                        if(abs(sum(pi) - 1) > 1e-7)
+                            stop('Class probabilities (pi) should sum to 1.')
+                        if(any(c(psi11, psi22) < 0))
+                            stop('Negative variances supplied. Please fix.')
                         ret <- plotSEMM_setup(pi, alpha1, alpha2, beta21, psi11, psi22, points=input$npoints)
                     } else if(input$method == 'Mplusfile'){
                         
@@ -323,6 +337,8 @@ plotSEMM_GUI.internal <- function(){
                             beta21 <- pars$est[pars$paramHeader == ON]
                             psi11 <- pars$est[pars$paramHeader == 'Variances']
                             psi22 <- pars$est[pars$paramHeader == 'Residual.Variances']
+                            if(any(c(psi11, psi22) < 0))
+                                stop('Negative variances supplied. Please fix.')
                             ret <- plotSEMM_setup(pi, alpha1, alpha2, beta21, psi11, psi22, points=input$npoints)
                         } else {
                             boot <- input$boot
@@ -367,16 +383,20 @@ plotSEMM_GUI.internal <- function(){
                     if(input$save_data) save(ret, file = input$save_filename)
                     if(!is.null(ret)){
                         plottype <- input$plottype
-                        if(plottype == 'contour') plotSEMM_contour(ret, input=input)
-                        if(plottype == 'probability') plotSEMM_probability(ret, input=input)
+                        if(plottype == 'contour') plotSEMM_contour(ret, input=input,
+                                                                   cex=input$cex)
+                        if(plottype == 'probability') plotSEMM_probability(ret, input=input,
+                                                                           cex=input$cex)
                         if(plottype == 'ci') 
                             plotSEMM_ci(ret, linesearch=input$linesearch,
-                                                         deltaci=input$plot_deltaci,
-                                                         bsci=input$plot_bsci,
-                                                         deltace=input$plot_deltace,
-                                                         ninty_five=input$CI == "95%",
-                                                         input=input, 
-                                        use_fixed_value=!is.na(input$citable_value))
+                                        deltaci=input$plot_deltaci,
+                                        bsci=input$plot_bsci,
+                                        deltace=input$plot_deltace,
+                                        ninty_five=input$CI == "95%",
+                                        input=input,
+                                        include_title=input$include_title,
+                                        use_fixed_value=!is.na(input$citable_value),
+                                        cex=input$cex)
                     } else examplePlot()
                 })                
                 

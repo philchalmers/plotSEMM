@@ -1,0 +1,35 @@
+title: quadratic example - 3 class
+data: file is quad_10.dat;
+variable: names are id x1 x2 x3 y1 y2 y3 k e;
+          usevariables x1-x3 y1-y3;
+          classes = class(3);
+analysis: type=mixture;
+          estimator=ml;
+          starts = 500 10;
+model:
+    %overall%
+    eta1 by x1@1 x2* x3*;
+    [x1@0];
+    eta2 by y1@1 y2* y3*;
+    [y1@0];
+    eta1*;
+    eta2*;
+    
+    %class#1%
+    [eta1*];
+    [eta2*];
+    eta2 on eta1;
+
+    %class#2%
+    [eta1*];
+    [eta2*];
+    eta2 on eta1;
+
+    %class#3%
+    [eta1*];
+    [eta2*];
+    eta2 on eta1;
+
+  output: tech1 tech3;
+  savedata: tech3 is acov.dat; 
+  savedata: results is result.dat;

@@ -16,6 +16,9 @@ plotSEMM_setup2 <- function(setup, alpha = .025, boot = NULL, boot.CE=FALSE, boo
     alphaarray <- pars$alphaarray; psiarray <- pars$psiarray; 
     gamma <- betavec <- pars$betavec; ci_v <- pars$ci_v
     means <- setup$means
+    
+    if(any(psiarray < 0))
+        stop('Negative variances supplied. Please fix.')
         
     sum_expi <- sum(exp(ci_v))
     pi_v <- exp(ci_v) / sum_expi

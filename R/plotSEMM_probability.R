@@ -13,6 +13,7 @@
 #' @param title Titles the graph. 
 #' @param leg Logical variable.  If TRUE, a legend accompanies the graph.  If FALSE, 
 #'   no legend appears.  Defaults to TRUE. 
+#' @param cex par(cex) value. Default is 1.5
 #' @param ... addition inputs, mostly from plotSEMM_GUI()
 #' @author Bethany Kok and Phil Chalmers \email{rphilip.chalmers@@gmail.com}
 #' @keywords hplot color
@@ -42,8 +43,7 @@
 #' plotSEMM_probability(plotobj , EtaName = "Latent Predictor", lnty = 2, title = "Probability")
 #' }
 plotSEMM_probability <- function(SEMLIdatapks, EtaName = "Eta1", lnty = 3, lncol = 1, 
-                                 title = "", leg = TRUE, ...) {
-    cex <- 1.5
+                                 title = "", leg = TRUE, cex = 1.5, ...) {
     dots <- list(...)
     input <- dots$input
     if(!is.null(input$xlab)) EtaName <- input$xlab
@@ -105,7 +105,7 @@ plotSEMM_probability <- function(SEMLIdatapks, EtaName = "Eta1", lnty = 3, lncol
         xlabel = substring(xlabel, 2, nchar(xlabel) - 1)
     }
     
-    ylabel = paste(paste("Probability(Class|", xlabel, sep = ""), ")", sep = "")
+    ylabel = paste(paste("Probability(Class | ", xlabel, sep = ""), ")", sep = "")
     
     plot(SEMLIdatapks$Eta1, SEMLIdatapks$class_prob[, 1], type = "n", xlab = xlabel, ylab = ylabel, main = "", cex.lab=cex, cex.axis=cex)
     for (i in 1:SEMLIdatapks$classes[1]) {

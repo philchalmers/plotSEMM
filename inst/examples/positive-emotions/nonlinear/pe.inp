@@ -1,0 +1,36 @@
+  title:
+    Positive emotions -> Heuristic processing
+  data:
+    file is hp.dat;
+  variable:
+    names are sid pe1 pe2 pe3 ne1 ne2 ne3 hp1 hp2 hp3;
+    usevariables pe1-pe3 hp1-hp3;
+    classes = class(2);
+  analysis:
+    type = mixture;
+    estimator = ml;
+    starts = 500 10;
+  model:
+    %overall%
+    PE by pe1@1 pe2* pe3*;
+    [pe1@0];
+    PE;
+
+    HP by hp1@1 hp2* hp3*;
+    [hp1@0];
+    HP;
+
+  %class#1%
+    [PE*];
+    [HP*];
+    HP on PE;
+
+  %class#2%
+    [PE*];
+    [HP*];
+    HP on PE;
+
+ output: tech1 tech3 tech11;
+  savedata: tech3=acov.dat; 
+  !savedata: estimates=est.dat;
+  savedata: results=result.dat;
