@@ -54,7 +54,7 @@ plotSEMM_GUI.internal <- function(){
                 headerPanel("PlotSEMM"),
                  
                 sidebarPanel(
-                    h5 ('The accompanying Online Appendix for this web application is located at xxx.'),  
+                    h5 ('The accompanying Online Appendix for this web application is located at http://www.xxx.html.'),  
                     h4('User Input:'),
                     #h5('Note: The \'Mplus Files\' option requires a single
                        #Mplus output file (.out) is in the directory.'),
@@ -107,11 +107,10 @@ plotSEMM_GUI.internal <- function(){
                                                    value=TRUE),
                                      
                                      checkboxInput(inputId='include_title', 
-                                                   label='Include a text header line when the Line Finding Algorithms
-                                                   fail to locate a possible line.',
+                                                   label='Allow plot title to indicate "No Line was Found within the Confidence Envelope(s)". ',
                                                    value=TRUE),
                                      
-                                     numericInput('cex', 'The par(cex) value, used to control font sizes', 1.5,
+                                     numericInput('cex', 'Font size (cex):', 1.5,
                                                   min = 1e-2, max = 20),
                                      
                                      checkboxInput(inputId='save_data', 
@@ -176,7 +175,7 @@ plotSEMM_GUI.internal <- function(){
                                      
                                      hr(),
                                      h5 ('\nNote: Numbers must contain values on both sides of the decimal.
-                                         E.g., .520 must be input as 0.520'),
+                                         \nE.g., .520 must be input as 0.520'),
                                      
                                      hr(),    
                                      h6('Class 1:'),
