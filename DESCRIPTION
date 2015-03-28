@@ -1,7 +1,7 @@
 Package: plotSEMM
 Type: Package
 Title: Graphing nonlinear latent variable interactions in SEMM
-Version: 2.0
+Version: 2.1
 Date: 2008-03-11
 Authors@R: c(person("Bethany", "Kok", role = c('ctb')), person("Jolynn",
     "Pek", role = c('ctb')), person("Sonya", "Sterba", role = c('ctb')),
