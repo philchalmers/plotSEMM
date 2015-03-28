@@ -1,33 +1,33 @@
 #' PlotSEMM GUI
-#' 
+#'
 #' Graphical user interface with the shiny package. Supports manual input as well as importing
-#' from precomputed Mplus files. An online tutorial and additional materials can be found at 
+#' from precomputed Mplus files. An online tutorial and additional materials can be found at
 #' \url{http://www.yorku.ca/pek/index_files/appendices.htm}
-#' 
-#' @param ... additional arguments passed to \code{shiny::runApp}, such as 
+#'
+#' @param ... additional arguments passed to \code{shiny::runApp}, such as
 #'   \code{launch.browser = TRUE}
-#' 
+#'
 #' @aliases plotSEMM_GUI
-#' @author Phil Chalmers \email{rphilip.chalmers@@gmail.com} and Jolynn Pek 
+#' @author Phil Chalmers \email{rphilip.chalmers@@gmail.com} and Jolynn Pek
 #' @keywords shiny GUI
 #' @export plotSEMM_GUI
 #' @references
-#' Bauer, D.J. (2005). A semiparametric approach to modeling nonlinear relations among latent variables. 
+#' Bauer, D.J. (2005). A semiparametric approach to modeling nonlinear relations among latent variables.
 #' Structural Equation Modeling: A Multidisciplinary Journal, 12(4), 513-535.
-#' 
-#' Pek, J. & Chalmers, R. P. (in press). Confidence Envelopes for a Semiparametric 
-#' Approach to Modeling Bivariate Nonlinear Relations among Latent Variables. 
-#' 
+#'
+#' Pek, J. & Chalmers, R. P. (in press). Confidence Envelopes for a Semiparametric
+#' Approach to Modeling Bivariate Nonlinear Relations among Latent Variables.
+#'
 #' Pek, J., Losardo, D., & Bauer, D. J. (2011). Confidence intervals for a semiparametric
 #' approach to modeling nonlinear relations among latent variables. Structural Equation
 #' Modeling, 18 , 537-553.
 #'
-#' Pek, J., Sterba, S. K., Kok, B. E., & Bauer, D. J. (2009). Estimating and visualizing non-linear 
-#' relations among latent variables: A semiparametric approach. Multivariate 
+#' Pek, J., Sterba, S. K., Kok, B. E., & Bauer, D. J. (2009). Estimating and visualizing non-linear
+#' relations among latent variables: A semiparametric approach. Multivariate
 #' Behavioral Research, 44 , 407-436.
 #' \emph{Structural Equation Modeling}.
-#' @examples 
-#' \dontrun{ 
+#' @examples
+#' \dontrun{
 #' plotSEMM_GUI()
 #' plotSEMM_GUI(launch.browser=TRUE) #if using RStudio, will launch system browser default
 #' }
@@ -36,148 +36,149 @@ plotSEMM_GUI <- function(...){
 }
 
 plotSEMM_GUI.internal <- function(){
-    
+
     #custom function to put user text input boxes side-by-side
-    numberInputRow<-function (inputId, label, value = "") 
-    {        
+    numberInputRow<-function (inputId, label, value = "")
+    {
         div(style="display:inline-block",
-            tags$label(label, `for` = inputId), 
+            tags$label(label, `for` = inputId),
             tags$input(id = inputId, type = "number", value = value,class="input-small"))
     }
-        
+
         ret <- list(
-            
+
             #--------------------------------------------------------------------
             ui = pageWithSidebar(
-                
+
                 # Application title
                 headerPanel("PlotSEMM"),
-                 
+
                 sidebarPanel(
-                    h5 ('The accompanying Online Appendix for this web application is located at http://www.xxx.html.'),  
+                    h5 ('The accompanying Online Appendix for this web application is located at:
+                        http://www.yorku.ca/pek/index_files/appendices.htm'),
                     h4('User Input:'),
                     #h5('Note: The \'Mplus Files\' option requires a single
                        #Mplus output file (.out) is in the directory.'),
-                    
+
                     selectInput(inputId="method", label="Type of Input:",
                                 choices=c("Mplus Files"="Mplusfile", "Manual Input"="Manually", " "=" "), selected=" "),
-                    
+
                     conditionalPanel(condition = "input.method != ' '",
                                      selectInput(inputId="plottype",label="Type of Output:",
                                                  choices=c("Contour"="contour", 'Probability'='probability',
                                                            "Confidence Bands (Mplus Input Only)"="ci",
-                                                           " "=" "), 
+                                                           " "=" "),
                                                  selected=" ")
                     ),
-                    
+
                     conditionalPanel(condition = "input.method == 'Mplusfile'",
                                      textInput(inputId='Mpath', label='Directory containing Mplus files:',
                                                value=getwd())
                     ),
-                    
+
                     ###
                     # tech extras for plotting features
                     conditionalPanel(condition = "input.method != ' '",
-                                     checkboxInput(inputId='tech_extras', 
+                                     checkboxInput(inputId='tech_extras',
                                                    label='Override various plotting defaults.',
                                                    value=FALSE)
                     ),
-                    
+
                     conditionalPanel(condition = "input.tech_extras == true",
-                                     
+
                                      selectInput(inputId="legend_location", label="Legend location",
-                                                 choices=c("default"="default", "bottomright"="bottomright", "bottom"="bottom", 
+                                                 choices=c("default"="default", "bottomright"="bottomright", "bottom"="bottom",
                                                            "bottomleft"="bottomleft", "left"="left", "topleft"="topleft",
                                                            "top"="top", "topright"="topright", "right"="right", "center"="center",
-                                                           "none"="none"), 
+                                                           "none"="none"),
                                                  selected="default"),
-                                     
+
                                      textInput(inputId='xlab', label='X-axis label:',
                                                value='Latent Predictor'),
-                                     
+
                                      textInput(inputId='ylab', label='Y-axis label:',
                                                value='Latent Outcome'),
-                                     
+
                                      numericInput('npoints', 'Number of points to evaluate', 50,
                                                   min = 25, max = 1000),
-                                     
-                                     checkboxInput(inputId='class_info', 
-                                                   label='Show class specific distributions, regression lines, 
+
+                                     checkboxInput(inputId='class_info',
+                                                   label='Show class specific distributions, regression lines,
                                                    and mixing probabilities for Contour plot.',
                                                    value=TRUE),
-                                     
-                                     checkboxInput(inputId='include_title', 
+
+                                     checkboxInput(inputId='include_title',
                                                    label='Allow plot title to indicate "No Line was Found within the Confidence Envelope(s)". ',
                                                    value=TRUE),
-                                     
+
                                      numericInput('cex', 'Font size (cex):', 1.5,
                                                   min = 1e-2, max = 20),
-                                     
-                                     checkboxInput(inputId='save_data', 
-                                                   label='Save the data used to plot the graphics to working 
+
+                                     checkboxInput(inputId='save_data',
+                                                   label='Save the data used to plot the graphics to working
                                                    directory in R.',
                                                    value=FALSE),
-                                     
+
                                      textInput(inputId='save_filename', label='Saved data file name:',
                                                value='plotSEMM_saved_data.Rdata')
-                                     
-                    ),                    
-                    
+
+                    ),
+
                     ###
-                    
+
                     conditionalPanel(condition = "input.plottype == 'ci'",
                                      selectInput(inputId='CI', label='Confidence Level:',
                                                  choices=c("95%", "90%"), selected="95%")
                     ),
-                    
+
                     conditionalPanel(condition = "input.plottype == 'ci'",
-                                     numberInputRow(inputId="citable_value", 
+                                     numberInputRow(inputId="citable_value",
                                                     label=HTML("Conditional Value of Latent Predictor (&eta;<sub>1</sub>) for Confidence Interval(s) about E[&eta;<sub>2</sub>|&eta;<sub>1</sub>]:"))
                     ),
-                    
+
                     conditionalPanel(condition = "input.plottype == 'ci'",
-                                     checkboxInput(inputId='plot_deltaci', 
+                                     checkboxInput(inputId='plot_deltaci',
                                                           label='Delta Method Wald-type Confidence Intervals.',
                                                           value=TRUE)
                     ),
-                    
+
                     conditionalPanel(condition = "input.plottype == 'ci'",
-                                     checkboxInput(inputId='plot_bsci', 
+                                     checkboxInput(inputId='plot_bsci',
                                                           label='Parametric Bootstrap Confidence Intervals.',
                                                           value=FALSE)
                     ),
-                    
+
                     conditionalPanel(condition = "input.plottype == 'ci'",
-                                     checkboxInput(inputId='plot_deltace', 
+                                     checkboxInput(inputId='plot_deltace',
                                                           label='Delta Method Wald-type Confidence Envelope.',
                                                           value=TRUE)
                     ),
-                    
-                    
-                                     
+
+
+
                     conditionalPanel(condition = "input.plottype == 'ci'",
-                                     checkboxInput(inputId='boot', 
+                                     checkboxInput(inputId='boot',
                                                           label='Parametric Bootstrap Confidence Envelope.',
                                                           value=FALSE)
                     ),
 
 		     conditionalPanel(condition = "input.plottype == 'ci'",
-                                     checkboxInput(inputId='linesearch', 
+                                     checkboxInput(inputId='linesearch',
                                                label='Run Line Finding Algorithm.',
                                                value=TRUE)
                     ),
-                    
+
                     #Manual input
                     conditionalPanel(condition = "input.method == 'Manually'",
                                      sliderInput(inputId = "nclass",
                                                  label = "Number of latent classes:",
                                                  min = 1, max = 7, value = 2, step = 1),
-                                     
+
                                      hr(),
                                      h5 ('\nNote: Numbers must contain values on both sides of the decimal.
                                          \nE.g., .520 must be input as 0.520'),
-                                     
-                                     hr(),    
+
+                                     hr(),
                                      h6('Class 1:'),
                                      numberInputRow(inputId="pi1", label=HTML("&pi;")),
                                      numberInputRow(inputId="alpha1.1", label=HTML("&alpha;<sub>1</sub>")),
@@ -185,7 +186,7 @@ plotSEMM_GUI.internal <- function(){
                                      numberInputRow(inputId="beta21.1", label=HTML("&beta;<sub>21</sub>")),
                                      numberInputRow(inputId="psi11.1", label=HTML("&psi;<sub>11</sub>")),
                                      numberInputRow(inputId="psi22.1", label=HTML("&psi;<sub>22</sub>")),
-                                     
+
                                      conditionalPanel(condition = "input.nclass > 1",
                                                       hr(),
                                                       h6('Class 2:'),
@@ -196,7 +197,7 @@ plotSEMM_GUI.internal <- function(){
                                                       numberInputRow(inputId="psi11.2", label=HTML("&psi;<sub>11</sub>")),
                                                       numberInputRow(inputId="psi22.2", label=HTML("&psi;<sub>22</sub>"))
                                                       ),
-                                     
+
                                      conditionalPanel(condition = "input.nclass > 2",
                                                       hr(),
                                                       h6('Class 3:'),
@@ -207,7 +208,7 @@ plotSEMM_GUI.internal <- function(){
                                                       numberInputRow(inputId="psi11.3", label=HTML("&psi;<sub>11</sub>")),
                                                       numberInputRow(inputId="psi22.3", label=HTML("&psi;<sub>22</sub>"))
                                      ),
-                                     
+
                                      conditionalPanel(condition = "input.nclass > 3",
                                                       hr(),
                                                       h6('Class 4:'),
@@ -218,7 +219,7 @@ plotSEMM_GUI.internal <- function(){
                                                       numberInputRow(inputId="psi11.4", label=HTML("&psi;<sub>11</sub>")),
                                                       numberInputRow(inputId="psi22.4", label=HTML("&psi;<sub>22</sub>"))
                                      ),
-                                     
+
                                      conditionalPanel(condition = "input.nclass > 4",
                                                       hr(),
                                                       h6('Class 5:'),
@@ -229,7 +230,7 @@ plotSEMM_GUI.internal <- function(){
                                                       numberInputRow(inputId="psi11.5", label=HTML("&psi;<sub>11</sub>")),
                                                       numberInputRow(inputId="psi22.5", label=HTML("&psi;<sub>22</sub>"))
                                      ),
-                                     
+
                                      conditionalPanel(condition = "input.nclass > 5",
                                                       hr(),
                                                       h6('Class 6:'),
@@ -240,7 +241,7 @@ plotSEMM_GUI.internal <- function(){
                                                       numberInputRow(inputId="psi11.6", label=HTML("&psi;<sub>11</sub>")),
                                                       numberInputRow(inputId="psi22.6", label=HTML("&psi;<sub>22</sub>"))
                                      ),
-                                     
+
                                      conditionalPanel(condition = "input.nclass > 6",
                                                       hr(),
                                                       h6('Class 7:'),
@@ -251,36 +252,36 @@ plotSEMM_GUI.internal <- function(){
                                                       numberInputRow(inputId="psi11.7", label=HTML("&psi;<sub>11</sub>")),
                                                       numberInputRow(inputId="psi22.7", label=HTML("&psi;<sub>22</sub>"))
                                      )
-                                     
+
                     ),
 
                     hr(),
 
                     submitButton(text = "Update")
-                    
+
                     ), #end sidebarPanel
-                
+
                 #------------------------------------------------------------------------
-                
+
                 mainPanel(
                     plotOutput(outputId = "main_plot", height = '800px', width = "100%")
                     )
-            
+
                 ), #end pageWithSidebar
-            
+
             #--------------------------------------------------------------------
-            
+
             server = function(input, output) {
-                
+
                 #preamble function here to grab input data
                 GUI_setup <- function(input){
-                    
+
                     nclass <- input$nclass
                     ret <- NULL
                     original_dir <- getwd()
                     on.exit(setwd(original_dir))
                     if(input$method == 'Manually'){
-                        
+
                         pi <- alpha1 <- alpha2 <- beta21 <- psi11 <- psi22 <- numeric(nclass)
                         if(is.na(input$pi1))
                             return(NULL)
@@ -290,14 +291,14 @@ plotSEMM_GUI.internal <- function(){
                         alpha2.names <- paste0('alpha2.', 1:7)
                         beta21.names <- paste0('beta21.', 1:7)
                         psi11.names <- paste0('psi11.', 1:7)
-                        psi22.names <- paste0('psi22.', 1:7)                        
+                        psi22.names <- paste0('psi22.', 1:7)
                         for(i in 1L:nclass){
                             pi[i] <- input[[Names[which(Names %in% pi.names)[i]]]]
                             alpha1[i] <- input[[Names[which(Names %in% alpha1.names)[i]]]]
                             alpha2[i] <- input[[Names[which(Names %in% alpha2.names)[i]]]]
                             beta21[i] <- input[[Names[which(Names %in% beta21.names)[i]]]]
                             psi11[i] <- input[[Names[which(Names %in% psi11.names)[i]]]]
-                            psi22[i] <- input[[Names[which(Names %in% psi22.names)[i]]]]                            
+                            psi22[i] <- input[[Names[which(Names %in% psi22.names)[i]]]]
                         }
                         test <- c(pi, alpha1, alpha2, beta21, psi11, psi22)
                         if(any(is.na(test)))
@@ -308,7 +309,7 @@ plotSEMM_GUI.internal <- function(){
                             stop('Negative variances supplied. Please fix.')
                         ret <- plotSEMM_setup(pi, alpha1, alpha2, beta21, psi11, psi22, points=input$npoints)
                     } else if(input$method == 'Mplusfile'){
-                        
+
                         if(!is.null(input$Mpath)){
                             setwd(input$Mpath)
                             files <- dir()
@@ -330,7 +331,7 @@ plotSEMM_GUI.internal <- function(){
                             ON <- pars$paramHeader[tmp]
                             DV <- strsplit(ON, '.ON')[[1L]]
                             IV <- pars$param[tmp]
-                            pars <- pars[pars$param %in% c(IV,DV), ] 
+                            pars <- pars[pars$param %in% c(IV,DV), ]
                             alpha1 <- pars$est[pars$paramHeader == 'Means']
                             alpha2 <- pars$est[pars$paramHeader == 'Intercepts']
                             beta21 <- pars$est[pars$paramHeader == ON]
@@ -374,7 +375,7 @@ plotSEMM_GUI.internal <- function(){
                     }
                     return(ret)
                 }
-                
+
                 #-----------------------------------------------------------------
 
                 output$main_plot <- renderPlot({
@@ -386,7 +387,7 @@ plotSEMM_GUI.internal <- function(){
                                                                    cex=input$cex)
                         if(plottype == 'probability') plotSEMM_probability(ret, input=input,
                                                                            cex=input$cex)
-                        if(plottype == 'ci') 
+                        if(plottype == 'ci')
                             plotSEMM_ci(ret, linesearch=input$linesearch,
                                         deltaci=input$plot_deltaci,
                                         bsci=input$plot_bsci,
@@ -397,12 +398,12 @@ plotSEMM_GUI.internal <- function(){
                                         use_fixed_value=!is.na(input$citable_value),
                                         cex=input$cex)
                     } else examplePlot()
-                })                
-                
+                })
+
             } #end server function
-            
+
         ) #end list collector
-        
+
         return(ret)
 }
- 
+

@@ -37,7 +37,7 @@ the capability of estimating SEMMs.
 \examples{
 \dontrun{
 # 2 class empirical example on positive emotions and heuristic processing
-# in Pek, Sterba, Kok & Bauer (XXXX)
+# in Pek, Sterba, Kok & Bauer (2009)
 pi <- c(0.602, 0.398)
 
 alpha1 <- c(3.529, 2.317)
