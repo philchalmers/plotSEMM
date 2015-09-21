@@ -16,6 +16,7 @@ Depends:
     plyr,
     shiny
 Imports:
+    stats,
     MplusAutomation,
     Rcpp,
     plotrix
