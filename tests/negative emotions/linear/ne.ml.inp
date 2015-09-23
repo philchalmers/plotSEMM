@@ -1,0 +1,33 @@
+  title:
+    Negative emotions -> Heuristic processing (1 class)
+  data:
+    file is hp.dat;
+  variable:
+    names are sid pe1 pe2 pe3 ne1 ne2 ne3 hp1 hp2 hp3;
+    usevariables ne1-ne3 hp1-hp3;
+    classes = class(1);
+  analysis:
+    type=mixture;
+    estimator = ml;
+    starts = 500 10;
+model:
+  %overall%
+    NE by ne1@1 ne2* ne3*;
+    [ne1@0];
+    HP by hp1@1 hp2* hp3*;
+    [hp1@0];
+    NE* HP*;
+    HP on NE;
+    [NE*] ;
+    [HP*] ;
+   %class#1%
+    [NE*];
+    [HP*];
+    NE* HP*;
+    HP on NE;
+
+
+ output: tech1 tech3 tech11;
+  savedata: tech3=acov.dat; 
+  !savedata: estimates=est.dat;
+  savedata: results=result.dat;

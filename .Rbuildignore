@@ -3,3 +3,4 @@
 .gitignore
 COPYING
 TODO.txt
+tests/
