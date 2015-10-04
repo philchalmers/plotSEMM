@@ -4,9 +4,9 @@
 \name{plotSEMM}
 \alias{plotSEMM}
 \alias{plotSEMM-package}
-\title{Graphing nonlinear relations among latent variables from Structural Equation Mixture Models}
+\title{Graphing Nonlinear Relations Among Latent Variables from Structural Equation Mixture Models}
 \description{
-Graphing nonlinear relations among latent variables from Structural Equation Mixture Models
+Graphing Nonlinear Relations Among Latent Variables from Structural Equation Mixture Models
 }
 \details{
 Contains a graphical user interface to generate the

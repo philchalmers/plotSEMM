@@ -1,4 +1,4 @@
-#' Graphing nonlinear relations among latent variables from Structural Equation Mixture Models
+#' Graphing Nonlinear Relations Among Latent Variables from Structural Equation Mixture Models
 #'
 #' Contains a graphical user interface to generate the
 #' diagnostic plots proposed by Bauer (2005) and Pek & Chalmers (2015) to investigate
@@ -13,13 +13,10 @@
 #' @name plotSEMM
 #' @docType package
 #' @useDynLib plotSEMM
-#' @title Graphing nonlinear relations among latent variables from Structural Equation Mixture Models
+#' @title Graphing Nonlinear Relations Among Latent Variables from Structural Equation Mixture Models
 #' @author Bethany Kok and Phil Chalmers \email{rphilip.chalmers@@gmail.com}
 #' @keywords package
-# @importFrom stats anova residuals
-# @importFrom MASS ginv
-#' @import shiny MplusAutomation plotrix Rcpp plyr stats
-# @exportMethod anova
-# @exportMethod residuals
-# @exportMethod summary
+#' @importFrom methods is
+#' @importFrom utils read.table
+#' @import shiny MplusAutomation plotrix Rcpp plyr stats graphics
 NULL
