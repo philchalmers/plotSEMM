@@ -16,6 +16,7 @@ Depends:
     shiny
 Imports:
     graphics,
+    methods,
     stats,
     MplusAutomation,
     Rcpp,
