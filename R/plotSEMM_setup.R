@@ -20,6 +20,14 @@
 #' @param psi22 Vector: \emph{K} within-class variances of the latent outcome.
 #' @param points number of points to use. Default is 50
 #' @author Bethany Kok and Phil Chalmers \email{rphilip.chalmers@@gmail.com}
+#' @references
+#' Pek, J. & Chalmers, R. P. (2015). Diagnosing Nonlinearity With Confidence Envelopes for a
+#' Semiparametric Approach to Modeling Bivariate Nonlinear Relations Among Latent Variables.
+#' \emph{Structural Equation Modeling, 22}, 288-293. \doi{10.1080/10705511.2014.937790}
+#'
+#' Pek, J., Chalmers, R. P., Kok B. E., & Losardo, D. (2015). Visualizing Confidence Bands for
+#' Semiparametrically Estimated Nonlinear Relations among Latent Variables.
+#' \emph{Journal of Educational and Behavioral Statistics, 40}, 402-423. \doi{10.3102/1076998615589129}
 #' @keywords dplot data manip array
 #' @export plotSEMM_setup
 #' @seealso \code{\link{plotSEMM_contour}},\code{\link{plotSEMM_probability}}

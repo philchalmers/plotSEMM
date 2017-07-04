@@ -2,7 +2,7 @@ Package: plotSEMM
 Type: Package
 Title: Graphing Nonlinear Relations Among Latent Variables from Structural
     Equation Mixture Models
-Version: 2.2
+Version: 2.3
 Authors@R: c(person("Bethany", "Kok", role = c('aut')), person("Jolynn",
     "Pek", role = c('aut')), person("Sonya", "Sterba", role = c('ctb')),
     person("Dan", "Bauer", role = c('ctb')), person("Phil", "Chalmers", email =
@@ -28,4 +28,4 @@ LazyData: yes
 LinkingTo: Rcpp
 Repository: github
 URL: https://github.com/philchalmers/plotSEMM
-RoxygenNote: 5.0.1
+RoxygenNote: 6.0.1

@@ -1,6 +1,12 @@
 #include <Rcpp.h>
 using namespace Rcpp;
 
+// hack fix
+void R_init_mirt(DllInfo* info) {
+    R_registerRoutines(info, NULL, NULL, NULL, NULL);
+    R_useDynamicSymbols(info, TRUE);
+}
+
 RcppExport SEXP linear(SEXP RlbCE, SEXP RubCE, SEXP Rx) 
 {
     BEGIN_RCPP

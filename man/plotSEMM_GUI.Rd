@@ -21,20 +21,17 @@ plotSEMM_GUI()
 plotSEMM_GUI(launch.browser=TRUE) #if using RStudio, will launch system browser default
 }
 }
-\author{
-Phil Chalmers \email{rphilip.chalmers@gmail.com} and Jolynn Pek
-}
 \references{
 Bauer, D.J. (2005). A semiparametric approach to modeling nonlinear relations among latent variables.
 \emph{Structural Equation Modeling: A Multidisciplinary Journal, 12}(4), 513-535.
 
 Pek, J. & Chalmers, R. P. (2015). Diagnosing Nonlinearity With Confidence Envelopes for a
 Semiparametric Approach to Modeling Bivariate Nonlinear Relations Among Latent Variables.
-\emph{Structural Equation Modeling, 22}, 288-293.
+\emph{Structural Equation Modeling, 22}, 288-293. \doi{10.1080/10705511.2014.937790}
 
 Pek, J., Chalmers, R. P., Kok B. E., & Losardo, D. (2015). Visualizing Confidence Bands for
 Semiparametrically Estimated Nonlinear Relations among Latent Variables.
-\emph{Journal of Educational and Behavioral Statistics, 40}, 402-423.
+\emph{Journal of Educational and Behavioral Statistics, 40}, 402-423. \doi{10.3102/1076998615589129}
 
 Pek, J., Losardo, D., & Bauer, D. J. (2011). Confidence intervals for a semiparametric
 approach to modeling nonlinear relations among latent variables. \emph{Structural Equation
@@ -44,6 +41,8 @@ Pek, J., Sterba, S. K., Kok, B. E., & Bauer, D. J. (2009). Estimating and visual
 relations among latent variables: A semiparametric approach.
 \emph{Multivariate Behavioral Research, 44}, 407-436.
 }
+\author{
+Phil Chalmers \email{rphilip.chalmers@gmail.com} and Jolynn Pek
+}
 \keyword{GUI}
 \keyword{shiny}
-
