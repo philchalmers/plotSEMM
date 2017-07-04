@@ -2,13 +2,15 @@ Package: plotSEMM
 Type: Package
 Title: Graphing Nonlinear Relations Among Latent Variables from Structural
     Equation Mixture Models
-Version: 2.3
+Version: 2.4
 Authors@R: c(person("Bethany", "Kok", role = c('aut')), person("Jolynn",
     "Pek", role = c('aut')), person("Sonya", "Sterba", role = c('ctb')),
     person("Dan", "Bauer", role = c('ctb')), person("Phil", "Chalmers", email =
     "rphilip.chalmers@gmail.com", role = c('cre', 'aut')))
 Description: Contains a graphical user interface to generate the diagnostic
-    plots proposed by Bauer (2005) and Pek & Chalmers (2015) to investigate
+    plots proposed by Bauer (2005; <doi:10.1207/s15328007sem1204_1>), 
+    Pek & Chalmers (2015; <doi:10.1080/10705511.2014.937790>), and
+    Pek, Chalmers, R. Kok, & Losardo (2015; <doi:10.3102/1076998615589129>) to investigate
     nonlinear bivariate relationships in latent regression models using structural
     equation mixture models (SEMMs).
 Depends:
