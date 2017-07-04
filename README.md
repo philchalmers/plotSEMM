@@ -1,3 +1,5 @@
+[![](http://www.r-pkg.org/badges/version/plotSEMM)](http://www.r-pkg.org/pkg/plotSEMM) [![](http://cranlogs.r-pkg.org/badges/grand-total/plotSEMM)](https://CRAN.R-project.org/package=plotSEMM)
+
 # plotSEMM
 
 Graphing nonlinear latent variable interactions in SEMM.
